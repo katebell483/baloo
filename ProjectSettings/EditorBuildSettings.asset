@@ -1,0 +1,13 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/UnityARKitScene.unity
+    guid: c159f2591a9b5c843b0a0442451f78f8
+  - enabled: 1
+    path: Assets/UnityARKitPlugin/Examples/UnityARKitScene/UnityARKitScene.unity
+    guid: 7d7623a4e755340f6950e5addcafd7c5
