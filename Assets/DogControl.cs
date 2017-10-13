@@ -28,20 +28,21 @@ public class DogControl : MonoBehaviour {
 		if (shouldMove) {
 			transform.Translate (Vector3.forward * Time.deltaTime * (transform.localScale.x * .25f));
 		} 
+
 		/*
-		Vector3 down = transform.TransformDirection(Vector3.down);
+		Vector3 fwd = transform.TransformDirection(Vector3.forward);
 	
-		Vector3 dir = new Vector3(0,-1,0);
+		Vector3 dir = new Vector3);
+
+		
 		if (Physics.Raycast (transform.position, down, 10)) {
 			Debug.Log ("There is something in front of the object!");
-			if (shouldMove) {
-				transform.Translate (Vector3.forward * Time.deltaTime * (transform.localScale.x * .25f));
-			} 
+
 		} else {
 			Debug.Log ("NOPE NO PLANE!");
 
-		}
-		*/
+		}*/
+
 		// check for plane collision
 
 	}
