@@ -15,17 +15,13 @@ public class DogControl : MonoBehaviour {
 	private ARPlaneAnchorGameObject currentPlane;
 	private Vector3 lastTransform;
 
-	private GameObject qrcodePlane;
-	private GameObject plane;
-
-	private GameObject corgi;
+	public GameObject corgi;
 
 	// Use this for initialization
 	void Start () {
 		animation = GetComponent<Animation> ();
 		rb = gameObject.GetComponent<Rigidbody> ();
 		unityARAnchorManager = new UnityARAnchorManager();
-		qrcodePlane = transform.Find ("QRCodePlane").gameObject;
 		corgi = transform.Find ("Corgi").gameObject;
 	}
 
@@ -51,10 +47,9 @@ public class DogControl : MonoBehaviour {
 		Sit ();
 		Debug.Log("Enter Exit");    
 	}
-
+		
 	public void placeDog() {
 
-		/*
 		// check for planes
 		List<ARHitTestResult> hitResults = getHitTest();
 
@@ -70,22 +65,23 @@ public class DogControl : MonoBehaviour {
 		currentPlane = planeObj;
 
 		// set the dog on the platform
-		transform.rotation = Quaternion.Euler (Vector3.zero);
-		transform.position = UnityARMatrixOps.GetPosition (result.worldTransform);
+		corgi.transform.rotation = Quaternion.Euler (Vector3.zero);
+		corgi.transform.position = UnityARMatrixOps.GetPosition (result.worldTransform);
 
-		*/
+		/*
 		try {
 			//DebqrcodePlane.transform.GetChild();
 			//plane = qrcodePlane.transform.Find ("Plane").gameObject;
-			Transform transforms = qrcodePlane.transform;
+			//Transform transforms = qrcodePlane.transform;
 			foreach(Transform child in transform) {
 				Debug.Log(child.name);
 			}
 			//Debug.Log (plane);
-			corgi.transform.position = plane.transform.position;
+			corgi.transform.position = dogPlane.transform.position;
 		} catch (Exception ex) {
 			Debug.Log (ex.ToString());
 		}
+		*/
 
 		// initial animation sequence
 		//initialAnimationSequence();
