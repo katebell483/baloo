@@ -26,12 +26,14 @@ public class QRCodeReader : MonoBehaviour {
 	private UnityARSessionNativeInterface arSession = null;
 	private GameObject qrcodePlane;
 	private GameObject plane;
+	private GameObject corgi;
 
 	// Use this for initialization
 	void Start () {
 		arSession = UnityARSessionNativeInterface.GetARSessionNativeInterface ();
 		qrcodePlane = transform.Find ("QRCodePlane").gameObject;
 		plane = transform.Find ("QRCodePlane/Plane").gameObject;
+		corgi = GameObject.FindWithTag("Corgi");
 	}
 
 	// Update is called once per frame
@@ -79,10 +81,16 @@ public class QRCodeReader : MonoBehaviour {
 				var leftToRight = worldBottomRight - worldBottomLeft;
 				qrcodePlane.transform.forward = bottomToTop;
 				qrcodePlane.transform.position = worldBottomLeft + (bottomToTop + leftToRight) * 0.5f;
-				plane.transform.localScale = new Vector3(leftToRight.magnitude, 1, bottomToTop.magnitude) * 0.1f;
+				plane.transform.localScale = new Vector3(leftToRight.magnitude, 1, bottomToTop.magnitude) * 0.2f;
+
+				//DogControl dc = new DogControl ();
+				//dc.putDog (qrcodePlane.transform);
+				corgi.transform.position = qrcodePlane.transform.position;
+
 				break;
 			}
 		}
+
 	}
 
 	private void HitTest(Vector3 point, Dictionary<string, List<ARHitTestResult>> results) {

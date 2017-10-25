@@ -22,13 +22,12 @@ public class DogControl : MonoBehaviour {
 		animation = GetComponent<Animation> ();
 		rb = gameObject.GetComponent<Rigidbody> ();
 		unityARAnchorManager = new UnityARAnchorManager();
-		corgi = transform.Find ("Corgi").gameObject;
 	}
 
 	// Update is called once per frame
 	void Update () {
 		if (shouldMove) {
-			corgi.transform.Translate (Vector3.forward * Time.deltaTime * (transform.localScale.x * .25f));
+			transform.Translate (Vector3.forward * Time.deltaTime * (transform.localScale.x * .25f));
 		} 
 	}
 		
@@ -65,8 +64,8 @@ public class DogControl : MonoBehaviour {
 		currentPlane = planeObj;
 
 		// set the dog on the platform
-		corgi.transform.rotation = Quaternion.Euler (Vector3.zero);
-		corgi.transform.position = UnityARMatrixOps.GetPosition (result.worldTransform);
+		transform.rotation = Quaternion.Euler (Vector3.zero);
+		transform.position = UnityARMatrixOps.GetPosition (result.worldTransform);
 
 		/*
 		try {
@@ -86,6 +85,13 @@ public class DogControl : MonoBehaviour {
 		// initial animation sequence
 		//initialAnimationSequence();
 
+	}
+
+	public void putDog(Transform transformP) {
+		Debug.Log ("PUTDOG");
+		Debug.Log (transformP.position);
+		Debug.Log (transform.position);
+		//transform.position = transformP.position;
 	}
 
 	private void initialAnimationSequence() {
