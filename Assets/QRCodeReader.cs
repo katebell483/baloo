@@ -25,20 +25,24 @@ public class QRCodeReader : MonoBehaviour {
 	private bool done = false;
 	private UnityARSessionNativeInterface arSession = null;
 	private GameObject qrcodePlane;
-	private GameObject plane;
+	//private GameObject plane;
 	private GameObject corgi;
+	private GameObject mat;
+	private bool detectQR = true;
 
 	// Use this for initialization
 	void Start () {
 		arSession = UnityARSessionNativeInterface.GetARSessionNativeInterface ();
 		qrcodePlane = transform.Find ("QRCodePlane").gameObject;
-		plane = transform.Find ("QRCodePlane/Plane").gameObject;
+		//plane = transform.Find ("QRCodePlane/Plane").gameObject;
 		corgi = GameObject.FindWithTag("Corgi");
+		mat = GameObject.FindWithTag("Mat");
+
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (!done) {
+		if (!done && detectQR) {
 			ARTextureHandles handles = arSession.GetARVideoTextureHandles ();
 			if (handles.textureY != System.IntPtr.Zero) {
 				ReadQRCode (handles.textureY.ToInt64 ());
@@ -81,12 +85,13 @@ public class QRCodeReader : MonoBehaviour {
 				var leftToRight = worldBottomRight - worldBottomLeft;
 				qrcodePlane.transform.forward = bottomToTop;
 				qrcodePlane.transform.position = worldBottomLeft + (bottomToTop + leftToRight) * 0.5f;
-				plane.transform.localScale = new Vector3(leftToRight.magnitude, 1, bottomToTop.magnitude) * 0.2f;
+				//plane.transform.localScale = new Vector3(leftToRight.magnitude, 1, bottomToTop.magnitude) * 0.2f;
 
-				//DogControl dc = new DogControl ();
-				//dc.putDog (qrcodePlane.transform);
-				corgi.transform.position = qrcodePlane.transform.position;
-
+				mat.transform.forward = bottomToTop;
+				mat.transform.position = worldBottomLeft + (bottomToTop + leftToRight) * 0.5f;
+				mat.transform.localScale = new Vector3(leftToRight.magnitude, 1, bottomToTop.magnitude) * 0.4f;
+				corgi.transform.position = mat.transform.position;
+				detectQR = false;
 				break;
 			}
 		}
