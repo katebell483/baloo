@@ -24,20 +24,17 @@ public class QRCodeReader : MonoBehaviour {
 
 	private bool done = false;
 	private UnityARSessionNativeInterface arSession = null;
-	private GameObject qrcodePlane;
-	//private GameObject plane;
 	private GameObject corgi;
 	private GameObject mat;
+	private GameObject matPlane;
 	private bool detectQR = true;
 
 	// Use this for initialization
 	void Start () {
 		arSession = UnityARSessionNativeInterface.GetARSessionNativeInterface ();
-		qrcodePlane = transform.Find ("QRCodePlane").gameObject;
-		//plane = transform.Find ("QRCodePlane/Plane").gameObject;
 		corgi = GameObject.FindWithTag("Corgi");
 		mat = GameObject.FindWithTag("Mat");
-
+		matPlane = GameObject.FindWithTag ("MatPlane");
 	}
 
 	// Update is called once per frame
@@ -51,12 +48,11 @@ public class QRCodeReader : MonoBehaviour {
 	}
 
 	void OnReadQRCode(string arg) {
-		float[] bounds = GetQRCodeBounds ();
 
-		//Debug.Log (string.Format ("QR topLeft: {0:0.######},{1:0.######}", bounds [0], bounds [1]));
-		//Debug.Log (string.Format ("QR topRight: {0:0.######},{1:0.######}", bounds [2], bounds [3]));
-		//Debug.Log (string.Format ("QR bottomRight: {0:0.######},{1:0.######}", bounds [4], bounds [5]));
-		//Debug.Log (string.Format ("QR bottomLeft: {0:0.######},{1:0.######}", bounds [6], bounds [7]));
+		if (!detectQR)
+			return;
+		
+		float[] bounds = GetQRCodeBounds ();
 
 		var topLeft     = Camera.main.ScreenToViewportPoint (new Vector3 (bounds [0], bounds [1]));
 		var topRight    = Camera.main.ScreenToViewportPoint (new Vector3 (bounds [2], bounds [3]));
@@ -83,14 +79,14 @@ public class QRCodeReader : MonoBehaviour {
 
 				var bottomToTop = worldTopLeft - worldBottomLeft;
 				var leftToRight = worldBottomRight - worldBottomLeft;
-				qrcodePlane.transform.forward = bottomToTop;
-				qrcodePlane.transform.position = worldBottomLeft + (bottomToTop + leftToRight) * 0.5f;
-				//plane.transform.localScale = new Vector3(leftToRight.magnitude, 1, bottomToTop.magnitude) * 0.2f;
 
+				Debug.Log ("PLACING DOG");
 				mat.transform.forward = bottomToTop;
 				mat.transform.position = worldBottomLeft + (bottomToTop + leftToRight) * 0.5f;
-				mat.transform.localScale = new Vector3(leftToRight.magnitude, 1, bottomToTop.magnitude) * 0.4f;
-				corgi.transform.position = mat.transform.position;
+				matPlane.transform.localScale = new Vector3(leftToRight.magnitude, 1, bottomToTop.magnitude) * 0.4f;
+				//corgi.transform.LookAt (Camera.main.transform.position);
+				//corgi.transform.eulerAngles = new Vector3(0, corgi.transform.eulerAngles.y, 0);
+				corgi.transform.position = matPlane.transform.position;
 				detectQR = false;
 				break;
 			}

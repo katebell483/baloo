@@ -15,13 +15,15 @@ public class DogControl : MonoBehaviour {
 	private ARPlaneAnchorGameObject currentPlane;
 	private Vector3 lastTransform;
 
-	public GameObject corgi;
+	public GameObject mat;
 
 	// Use this for initialization
 	void Start () {
 		animation = GetComponent<Animation> ();
 		rb = gameObject.GetComponent<Rigidbody> ();
 		unityARAnchorManager = new UnityARAnchorManager();
+		mat = GameObject.FindWithTag ("Mat");
+
 	}
 
 	// Update is called once per frame
@@ -30,21 +32,12 @@ public class DogControl : MonoBehaviour {
 			transform.Translate (Vector3.forward * Time.deltaTime * (transform.localScale.x * .25f));
 		} 
 	}
-		
-	void OnCollisionEnter(Collision collision){
-		List<ARPlaneAnchorGameObject> availAnchors = unityARAnchorManager.GetCurrentPlaneAnchors ();
-		Debug.Log("Enter Called");
-		Debug.Log ("planes now avail:" + availAnchors.Count);
-	}
 
-	void OnCollisionStay(Collision collision){
-		Debug.Log("Enter Stay");    
-		lastTransform = corgi.transform.position;
-	}
-	void OnCollisionExit(Collision collision){
-		shouldMove = false;
+	void OnTriggerExit(Collider other) {
+		Debug.Log (other.tag);
+		Debug.Log ("BIG T");
+		transform.LookAt (mat.transform.position);
 		Sit ();
-		Debug.Log("Enter Exit");    
 	}
 		
 	public void placeDog() {
@@ -67,38 +60,6 @@ public class DogControl : MonoBehaviour {
 		transform.rotation = Quaternion.Euler (Vector3.zero);
 		transform.position = UnityARMatrixOps.GetPosition (result.worldTransform);
 
-		/*
-		try {
-			//DebqrcodePlane.transform.GetChild();
-			//plane = qrcodePlane.transform.Find ("Plane").gameObject;
-			//Transform transforms = qrcodePlane.transform;
-			foreach(Transform child in transform) {
-				Debug.Log(child.name);
-			}
-			//Debug.Log (plane);
-			corgi.transform.position = dogPlane.transform.position;
-		} catch (Exception ex) {
-			Debug.Log (ex.ToString());
-		}
-		*/
-
-		// initial animation sequence
-		//initialAnimationSequence();
-
-	}
-
-	public void putDog(Transform transformP) {
-		Debug.Log ("PUTDOG");
-		Debug.Log (transformP.position);
-		Debug.Log (transform.position);
-		//transform.position = transformP.position;
-	}
-
-	private void initialAnimationSequence() {
-		// have him sit and look at the camera
-		LookAt ();
-		//Jump ();
-		Invoke("LayDown", 1);
 	}
 
 	public void LayDown() {
@@ -143,11 +104,11 @@ public class DogControl : MonoBehaviour {
 		// Get the camera's y rotation, then rotate inputAxes by the rotation to get up/down/left/right according to the camera
 		Quaternion yRotation = Quaternion.Euler (0, Camera.main.transform.rotation.eulerAngles.y, 0);
 		Vector3 lookDirection = (yRotation * inputAxes).normalized;
-		corgi.transform.rotation = Quaternion.LookRotation (lookDirection);
+		transform.rotation = Quaternion.LookRotation (lookDirection);
 	}
 
 	public void LookAt() {
-		corgi.transform.LookAt (Camera.main.transform.position);
-		corgi.transform.eulerAngles = new Vector3(0, corgi.transform.eulerAngles.y, 0);
+		transform.LookAt (Camera.main.transform.position);
+		transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 	}
 }
