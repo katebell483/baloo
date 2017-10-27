@@ -74,7 +74,7 @@ public class DogControl : MonoBehaviour {
 
 	public void Walk() {
 		shouldMove = true;
-		animation.CrossFade ("CorgiWalk");
+		animation.CrossFade ("CorgiTrot");
 	}
 
 	public void Jump() {
