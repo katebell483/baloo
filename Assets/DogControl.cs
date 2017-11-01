@@ -111,4 +111,12 @@ public class DogControl : MonoBehaviour {
 		transform.LookAt (Camera.main.transform.position);
 		transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 	}
+
+	public void goBackToMenu(){
+		Application.LoadLevel ("menu");
+	}
+
+	public void goBackToQuestion(){
+		Application.LoadLevel ("questions");
+	}
 }
