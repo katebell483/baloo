@@ -28,6 +28,7 @@ public class QRCodeReader : MonoBehaviour {
 	private GameObject mat;
 	private GameObject matPlane;
 	private bool detectQR = true;
+	private Vector3 camPos;
 
 	// Use this for initialization
 	void Start () {
@@ -39,6 +40,7 @@ public class QRCodeReader : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		camPos = Camera.main.transform.position;
 		if (!done && detectQR) {
 			ARTextureHandles handles = arSession.GetARVideoTextureHandles ();
 			if (handles.textureY != System.IntPtr.Zero) {
@@ -48,10 +50,9 @@ public class QRCodeReader : MonoBehaviour {
 	}
 
 	void OnReadQRCode(string arg) {
-
-		if (!detectQR)
+		if (!detectQR) {
 			return;
-		
+		}
 		float[] bounds = GetQRCodeBounds ();
 
 		var topLeft     = Camera.main.ScreenToViewportPoint (new Vector3 (bounds [0], bounds [1]));
@@ -84,10 +85,10 @@ public class QRCodeReader : MonoBehaviour {
 				mat.transform.forward = bottomToTop;
 				mat.transform.position = worldBottomLeft + (bottomToTop + leftToRight) * 0.5f;
 				matPlane.transform.localScale = new Vector3(leftToRight.magnitude, 1, bottomToTop.magnitude) * 0.4f;
-				//corgi.transform.LookAt (Camera.main.transform.position);
-				//corgi.transform.eulerAngles = new Vector3(0, corgi.transform.eulerAngles.y, 0);
+				corgi.transform.LookAt (camPos);
+				corgi.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 				corgi.transform.position = matPlane.transform.position;
-				detectQR = false;
+				detectQR = false; 
 				break;
 			}
 		}
