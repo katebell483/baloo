@@ -119,4 +119,8 @@ public class DogControl : MonoBehaviour {
 	public void goBackToQuestion(){
 		Application.LoadLevel ("questions");
 	}
+
+	public void goBackToCamera(){
+		Application.LoadLevel ("camera");
+	}
 }

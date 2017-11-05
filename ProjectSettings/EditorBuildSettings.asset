@@ -7,16 +7,19 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 0
     path: 
-    guid: 58ad50d800ac443eeab4d3d3c1690283
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/menu.unity
-    guid: 52f300c0bcce74d05bac5360e4fc6e3c
-  - enabled: 1
     path: Assets/UnityARKitPlugin/Examples/UnityARKitScene/UnityARKitScene.unity
     guid: 7d7623a4e755340f6950e5addcafd7c5
+  - enabled: 1
+    path: Assets/camera.unity
+    guid: 9af080f1f66404cb89172ccc97822e85
+  - enabled: 1
+    path: Assets/menu.unity
+    guid: 52f300c0bcce74d05bac5360e4fc6e3c
   - enabled: 1
     path: Assets/questions.unity
     guid: 9225db08dcbfe44c2881c3bc9fccfa69
