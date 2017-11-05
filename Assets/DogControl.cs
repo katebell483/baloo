@@ -31,6 +31,10 @@ public class DogControl : MonoBehaviour {
 		if (shouldMove) {
 			transform.Translate (Vector3.forward * Time.deltaTime * (transform.localScale.x * .25f));
 		} 
+
+		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down)){
+			Sit ();
+		}
 	}
 
 	void OnTriggerExit(Collider other) {
