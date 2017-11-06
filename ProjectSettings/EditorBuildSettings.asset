@@ -23,3 +23,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/questions.unity
     guid: 9225db08dcbfe44c2881c3bc9fccfa69
+  - enabled: 0
+    path: Assets/UnityARKitPlugin/Examples/UnityARBallz/UnityARBallz.unity
+    guid: c665ec882714345bca60c313da89cd1a

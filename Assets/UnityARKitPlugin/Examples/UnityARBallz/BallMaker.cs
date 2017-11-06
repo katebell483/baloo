@@ -6,23 +6,41 @@ using UnityEngine.XR.iOS;
 public class BallMaker : MonoBehaviour {
 
 	public GameObject ballPrefab;
+	private GameObject currBall;
 	public float createHeight;
 	private MaterialPropertyBlock props;
+	private float minX, maxX, minY, maxY;
 
 	// Use this for initialization
 	void Start () {
 		props = new MaterialPropertyBlock ();
+		float camDistance = Vector3.Distance(transform.position, Camera.main.transform.position);
+		Vector2 bottomCorner = Camera.main.ViewportToWorldPoint(new Vector3(0,0, camDistance));
+		Vector2 topCorner = Camera.main.ViewportToWorldPoint(new Vector3(1,1, camDistance));
+
+		minX = bottomCorner.x;
+		maxX = topCorner.x;
+		minY = bottomCorner.y;
+		maxY = topCorner.y;
 
 	}
 
-	void CreateBall(Vector3 atPosition)
+	public void CreateBall()
 	{
-		GameObject ballGO = Instantiate (ballPrefab, atPosition, Quaternion.identity);
-			
-		
-		float r = Random.Range(0.0f, 1.0f);
-		float g = Random.Range(0.0f, 1.0f);
-		float b = Random.Range(0.0f, 1.0f);
+		Debug.Log ("creating Ball!");
+
+		// destroy any old balls
+		Destroy(currBall);
+
+		Vector3 position = Camera.main.transform.position + Camera.main.transform.forward * 1.0f;
+
+		GameObject ballGO = Instantiate (ballPrefab, position, Quaternion.identity);
+		ballGO.gameObject.tag = "Ball";
+		currBall = ballGO;
+
+		float r = 1.0f;
+		float g = 0.0f;
+		float b = 0.0f;
 
 		props.SetColor("_InstanceColor", new Color(r, g, b));
 
@@ -49,7 +67,7 @@ public class BallMaker : MonoBehaviour {
 				if (hitResults.Count > 0) {
 					foreach (var hitResult in hitResults) {
 						Vector3 position = UnityARMatrixOps.GetPosition (hitResult.worldTransform);
-						CreateBall (new Vector3 (position.x, position.y + createHeight, position.z));
+						//CreateBall (new Vector3 (position.x, position.y + createHeight, position.z));
 						break;
 					}
 				}
