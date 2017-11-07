@@ -1326,6 +1326,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mat: {fileID: 0}
+  corgi: {fileID: 0}
+  speed: 0.5
 --- !u!111 &484635118
 Animation:
   m_ObjectHideFlags: 0
@@ -3011,6 +3013,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mat: {fileID: 0}
+  corgi: {fileID: 0}
+  speed: 0.5
 --- !u!1001 &2050186695
 Prefab:
   m_ObjectHideFlags: 0

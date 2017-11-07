@@ -7,9 +7,11 @@ public class BallMaker : MonoBehaviour {
 
 	public GameObject ballPrefab;
 	public float Force;
-	private GameObject currBall;
+	public GameObject currBall;
 	public float createHeight;
 	private MaterialPropertyBlock props;
+
+	private GameObject corgi;
 
 
 	public bool hasbeenthrown;
@@ -21,7 +23,7 @@ public class BallMaker : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		props = new MaterialPropertyBlock ();
-
+		corgi = GameObject.FindWithTag("Corgi");
 		hasbeenthrown = false;
 	}
 
@@ -36,8 +38,8 @@ public class BallMaker : MonoBehaviour {
 		GameObject ballGO = Instantiate (ballPrefab, position, Quaternion.identity);
 		Rigidbody rb = ballGO.GetComponent<Rigidbody> ();
 		rb.useGravity = false;
-		//ballGO.gameObject.tag = "Ball";
 		currBall = ballGO;
+		ballGO.tag = "Ball";
 
 		startBallPos = currBall.transform.position;
 
@@ -75,16 +77,27 @@ public class BallMaker : MonoBehaviour {
 		if (inAir) {
 			
 			if(currBall.transform.position.y < startBallPos.y) {
-				Debug.Log("HEReeeeE!");
 				Rigidbody rb = currBall.GetComponent<Rigidbody> ();
 				rb.velocity = Vector3.zero;
 				rb.angularVelocity = Vector3.zero; 
 				endBallPos = currBall.transform.position;
 				rb.useGravity = false;
 				inAir = false;
+
+				corgi.GetComponent<DogControl>().fetchBall(endBallPos);
+
+				//StartCoroutine(sendDogForBall(endBallPos));
 			}
 		}
 
 	}
 
+	/* TODO: add delay by uncommenting this funciton + call
+	IEnumerator sendDogForBall(Vector3 endPos) {
+		// wait for one second and then send the dog to get it
+		yield return new WaitForSeconds(1);
+		DogControl dc = new DogControl ();
+		dc.fetchBall (endBallPos);
+	}
+	*/
 }

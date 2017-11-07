@@ -16,6 +16,16 @@ public class DogControl : MonoBehaviour {
 	private Vector3 lastTransform;
 
 	public GameObject mat;
+	public GameObject corgi;
+	public GameObject ball;
+	private bool fetching = false;
+
+
+	private Vector3 endFetchingPos;
+	private Vector3 startFetchingPos;
+	public float speed = .5f;
+	private float fraction = 0; 
+	private bool returnTrip = false;
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +33,7 @@ public class DogControl : MonoBehaviour {
 		rb = gameObject.GetComponent<Rigidbody> ();
 		unityARAnchorManager = new UnityARAnchorManager();
 		mat = GameObject.FindWithTag ("Mat");
-
+		corgi = GameObject.FindWithTag("Corgi");
 	}
 
 	// Update is called once per frame
@@ -35,11 +45,56 @@ public class DogControl : MonoBehaviour {
 		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down)){
 			Sit ();
 		}
+
+		if (fetching) {
+			
+			Debug.Log("fetching currently");
+
+			// move the dog forward
+			fraction += Time.deltaTime * speed;
+
+			Vector3 fetchingPos = Vector3.Lerp (startFetchingPos, endFetchingPos, fraction);
+			Debug.Log ("_________________________________________________");
+			Debug.Log ("fraction " + fraction);
+			Debug.Log ("fetchingPos " + fetchingPos);
+			Debug.Log ("endfetchingPos " + endFetchingPos);
+			Debug.Log ("_________________________________________________");
+
+			if (fetchingPos == endFetchingPos) {
+				Debug.Log ("made it to the ball!");
+
+				if (returnTrip) {
+					Debug.Log ("fetching complete!");
+					fetching = false;
+					returnTrip = false;
+					fraction = 0;
+
+					Debug.Log ("dropping ball!");
+					ball.transform.parent = null;
+
+				} else {
+					Debug.Log ("turning around");
+					returnTrip = true;
+					fraction = 0;
+					endFetchingPos = startFetchingPos;
+					startFetchingPos = fetchingPos;
+
+					Debug.Log ("grabbing ball");
+					ball = GameObject.FindWithTag ("Ball");
+					GameObject corgi = GameObject.FindWithTag ("Corgi");
+
+					Debug.Log ("ball pos " + ball.transform.position);
+					ball.transform.parent = corgi.transform;
+				}
+			} else {
+				transform.position = fetchingPos;
+			}
+		}
+			
 	}
 
 	void OnTriggerExit(Collider other) {
 		Debug.Log (other.tag);
-		Debug.Log ("BIG T");
 		transform.LookAt (mat.transform.position);
 		Sit ();
 	}
@@ -64,6 +119,18 @@ public class DogControl : MonoBehaviour {
 		transform.rotation = Quaternion.Euler (Vector3.zero);
 		transform.position = UnityARMatrixOps.GetPosition (result.worldTransform);
 
+	}
+
+	public void fetchBall(Vector3 ballPos) {
+		Debug.Log ("sending dog to fetch");
+
+		startFetchingPos = transform.position;
+		Debug.Log ("start fetching pos " + startFetchingPos);
+
+		endFetchingPos = ballPos;
+		Debug.Log ("end fetching pos " + endFetchingPos);
+
+		fetching = true;
 	}
 
 	public void LayDown() {
