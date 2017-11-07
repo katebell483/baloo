@@ -9,7 +9,7 @@ public class DogControl : MonoBehaviour {
 	private Animation animation;
 	private bool shouldMove = false;
 	private Rigidbody rb;
-	private bool dogInScene = false;
+	//private bool dogInScene = false;
 	//private int speedHash = Animator.StringToHash("speed");
 	private UnityARAnchorManager unityARAnchorManager;
 	private ARPlaneAnchorGameObject currentPlane;

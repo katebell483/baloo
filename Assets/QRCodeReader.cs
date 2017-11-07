@@ -85,7 +85,8 @@ public class QRCodeReader : MonoBehaviour {
 				mat.transform.forward = bottomToTop;
 				mat.transform.position = worldBottomLeft + (bottomToTop + leftToRight) * 0.5f;
 				matPlane.transform.localScale = new Vector3(leftToRight.magnitude, 1, bottomToTop.magnitude) * 0.4f;
-				corgi.transform.LookAt (camPos);
+				var fwd = Camera.main.transform.forward;
+				corgi.transform.LookAt(fwd);
 				corgi.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 				corgi.transform.position = matPlane.transform.position;
 				detectQR = false; 
