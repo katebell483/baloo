@@ -19,6 +19,7 @@ public class DogControl : MonoBehaviour {
 	public GameObject corgi;
 	public GameObject ball;
 	private bool fetching = false;
+	public GameObject eatButton;
 
 
 	private Vector3 endFetchingPos;
@@ -152,6 +153,11 @@ public class DogControl : MonoBehaviour {
 		isSitting = true;
 		shouldMove = false;
 		animation.CrossFade ("CorgiSitIdle");
+	}
+
+	public void Eat() {
+		shouldMove = false;
+		animation.CrossFade ("CorgiEat");
 	}
 
 	public void Walk() {
