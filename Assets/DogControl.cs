@@ -26,6 +26,7 @@ public class DogControl : MonoBehaviour {
 	public float speed = .5f;
 	private float fraction = 0; 
 	private bool returnTrip = false;
+	private bool isSitting = false;
 
 	// Use this for initialization
 	void Start () {
@@ -43,7 +44,11 @@ public class DogControl : MonoBehaviour {
 		} 
 
 		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down)){
-			Sit ();
+			if (!isSitting) {
+				Sit ();
+			} else {
+				Lay ();
+			}
 		}
 
 		if (fetching) {
@@ -133,17 +138,24 @@ public class DogControl : MonoBehaviour {
 		fetching = true;
 	}
 
+	public void Lay() {
+		shouldMove = false;
+		animation.CrossFade ("CorgiLayIdle");
+	}
+
 	public void LayDown() {
 		shouldMove = false;
 		animation.CrossFade ("CorgiSitToLay");
 	}
 
 	public void Sit() {
+		isSitting = true;
 		shouldMove = false;
 		animation.CrossFade ("CorgiSitIdle");
 	}
 
 	public void Walk() {
+		isSitting = false;
 		shouldMove = true;
 		animation.CrossFade ("CorgiTrot");
 	}
