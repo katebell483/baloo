@@ -69,7 +69,7 @@ public class BallMaker : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// if its not thrown keep ball in front of camera
-		if(!hasbeenthrown){
+		if(!hasbeenthrown && currBall != null){
 			Vector3 position = Camera.main.transform.position + Camera.main.transform.forward * 1.0f;
 			currBall.transform.position = position;
 		}
