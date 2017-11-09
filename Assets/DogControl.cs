@@ -9,7 +9,7 @@ public class DogControl : MonoBehaviour {
 	private Animation animation;
 	private bool shouldMove = false;
 	private Rigidbody rb;
-	//private bool dogInScene = false;
+	public bool dogInScene = false;
 	//private int speedHash = Animator.StringToHash("speed");
 	private UnityARAnchorManager unityARAnchorManager;
 	private ARPlaneAnchorGameObject currentPlane;
@@ -18,12 +18,12 @@ public class DogControl : MonoBehaviour {
 	public GameObject mat;
 	public GameObject corgi;
 	public GameObject ball;
-	private bool fetching = false;
+	public bool fetching = false;
 
 
 	private Vector3 endFetchingPos;
 	private Vector3 startFetchingPos;
-	public float speed = .5f;
+	private float speed = .5f;
 	private float fraction = 0; 
 	private bool returnTrip = false;
 
@@ -119,6 +119,7 @@ public class DogControl : MonoBehaviour {
 		transform.rotation = Quaternion.Euler (Vector3.zero);
 		transform.position = UnityARMatrixOps.GetPosition (result.worldTransform);
 
+		dogInScene = true;
 	}
 
 	public void fetchBall(Vector3 ballPos) {

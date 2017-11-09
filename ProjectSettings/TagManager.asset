@@ -9,6 +9,7 @@ TagManager:
   - MatPlane
   - Tag
   - Ball
+  - inScene
   layers:
   - Default
   - TransparentFX
