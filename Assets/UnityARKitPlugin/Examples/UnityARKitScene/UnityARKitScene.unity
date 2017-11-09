@@ -1317,10 +1317,7 @@ MonoBehaviour:
   mat: {fileID: 0}
   corgi: {fileID: 0}
   ball: {fileID: 0}
-<<<<<<< HEAD
-=======
   eatButton: {fileID: 0}
->>>>>>> 3cdc89827273722e33dc2df028a02eb77f57cfe1
   speed: 0.5
 --- !u!111 &484635118
 Animation:
@@ -1339,10 +1336,7 @@ Animation:
   - {fileID: 7400000, guid: b66f55b0f6bc1c04eb77134bb98c883e, type: 3}
   - {fileID: 7400000, guid: cb8b0e0e86afcfd46bcb51ef569a8bdd, type: 3}
   - {fileID: 7400000, guid: ca25ef4f974718745bf646418b4b6d0f, type: 3}
-<<<<<<< HEAD
-=======
   - {fileID: 7400000, guid: 44c319555d3b4c14195f45208a16c8c2, type: 3}
->>>>>>> 3cdc89827273722e33dc2df028a02eb77f57cfe1
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -2705,11 +2699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballPrefab: {fileID: 1154719652421038, guid: e11b49885a57845e3b22a6355928ed72, type: 2}
-<<<<<<< HEAD
-  Force: 700
-=======
   Force: 500
->>>>>>> 3cdc89827273722e33dc2df028a02eb77f57cfe1
   currBall: {fileID: 0}
   createHeight: 0.03
   hasbeenthrown: 0
@@ -3220,10 +3210,7 @@ MonoBehaviour:
   mat: {fileID: 0}
   corgi: {fileID: 0}
   ball: {fileID: 0}
-<<<<<<< HEAD
-=======
   eatButton: {fileID: 0}
->>>>>>> 3cdc89827273722e33dc2df028a02eb77f57cfe1
   speed: 0.5
 --- !u!1001 &2050186695
 Prefab:
