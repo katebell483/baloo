@@ -71,17 +71,8 @@ public class DogControl : MonoBehaviour {
 			
 
 		if (initialFetchSequence) {
-
 			rotating = true;
 			rotatingTargetPos = ball.transform.position;
-			
-			// turn dog to ball
-			/*
-			Debug.Log ("LOOKING AT POS: " + ball.transform.position);
-			Vector3 targetPoint = new Vector3(ball.transform.position.x, corgi.transform.position.y, ball.transform.position.z) - corgi.transform.position;
-			Quaternion targetRotation = Quaternion.LookRotation (targetPoint, Vector3.up);
-			corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 3.0f);
-			*/
 		}
 
 		if (fetching) {
