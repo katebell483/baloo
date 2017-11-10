@@ -6,68 +6,59 @@ using System;
 
 public class DogControl : MonoBehaviour {
 
+	// basic dog params
+	public GameObject corgi;
 	private Animation animation;
 	private bool shouldMove = false;
-	private Rigidbody rb;
 	public bool dogInScene = false;
-	//private int speedHash = Animator.StringToHash("speed");
-	private UnityARAnchorManager unityARAnchorManager;
-	private ARPlaneAnchorGameObject currentPlane;
-	private Vector3 lastTransform;
+	Collider corgiCollider;
 
+	// other game objects in the scene
 	public GameObject mat;
-	public GameObject corgi;
 	public GameObject ball;
+
+	// fetching params
+	private bool initialFetchSequence = false;
 	public bool fetching = false;
+	private bool returnTrip = false;
+	private Vector3 endFetchingPos;
+	private Vector3 startOffPlaneFetchingPos;
+	private Vector3 fetchOrigin;
+	private float speed = .3f;
+	private float fraction = 0; 
+
+	// rotating params
+	private bool rotating = false;
+	private Vector3 rotatingTargetPos;
+
+	// eating params
 	public GameObject eatButton;
 
-
-	private Vector3 endFetchingPos;
-	private Vector3 startFetchingPos;
-	private float speed = .5f;
-	private float fraction = 0; 
-	private bool returnTrip = false;
+	// sitting params
 	private bool isSitting = false;
-
-	private Vector3 startMovingPos;
-	private Vector3 endMovingPos;
-	private float moveFraction = 0;
-	private bool movingToPoint = false;
 
 	// Use this for initialization
 	void Start () {
 		animation = GetComponent<Animation> ();
-		rb = gameObject.GetComponent<Rigidbody> ();
-		unityARAnchorManager = new UnityARAnchorManager();
 		mat = GameObject.FindWithTag ("Mat");
 		corgi = GameObject.FindWithTag("Corgi");
+		ball = GameObject.FindWithTag ("Ball");
+		Physics.IgnoreCollision(corgi.GetComponent<Collider>(), ball.GetComponent<Collider>());
+		Physics.IgnoreCollision(corgi.GetComponent<Collider>(), mat.GetComponent<Collider>());
+		corgiCollider = corgi.GetComponent<Collider>();
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (shouldMove) {
 
-			// stop at specific point
-			if (movingToPoint) {
-				
-				// move the dog forward
-				moveFraction += Time.deltaTime * speed;
+		// is the dog rotating?
+		if (rotating) {
+			rotateDog (rotatingTargetPos);
+		}
 
-				Vector3 movingPos = Vector3.Lerp (startMovingPos, endMovingPos, moveFraction);
-				Debug.Log ("MOVING POS: " + movingPos);
-				Debug.Log ("END MOVING POS: " + endMovingPos);
-
-				if (movingPos == endMovingPos) {
-					shouldMove = false;
-					movingToPoint = false;
-					moveFraction = 0;
-					LookAt ();
-					Sit ();
-				} 
-
-			} else {
-				transform.Translate (Vector3.forward * Time.deltaTime * (transform.localScale.x * .25f));
-			}
+		if (shouldMove && !fetching) {
+			transform.Translate (Vector3.forward * Time.deltaTime * (transform.localScale.x * .25f));
+			startOffPlaneFetchingPos = transform.position;
 		} 
 
 		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down)){
@@ -77,21 +68,37 @@ public class DogControl : MonoBehaviour {
 				Lay ();
 			}
 		}
+			
+
+		if (initialFetchSequence) {
+
+			rotating = true;
+			rotatingTargetPos = ball.transform.position;
+			
+			// turn dog to ball
+			/*
+			Debug.Log ("LOOKING AT POS: " + ball.transform.position);
+			Vector3 targetPoint = new Vector3(ball.transform.position.x, corgi.transform.position.y, ball.transform.position.z) - corgi.transform.position;
+			Quaternion targetRotation = Quaternion.LookRotation (targetPoint, Vector3.up);
+			corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 3.0f);
+			*/
+		}
 
 		if (fetching) {
-			
-			Debug.Log("fetching currently");
 
 			// move the dog forward
 			fraction += Time.deltaTime * speed;
 
-			Vector3 fetchingPos = Vector3.Lerp (startFetchingPos, endFetchingPos, fraction);
+			// originally start from the last point that the dog was on the plane
+			Vector3 fetchingPos = Vector3.Lerp (startOffPlaneFetchingPos, endFetchingPos, fraction);
+
 			Debug.Log ("_________________________________________________");
 			Debug.Log ("fraction " + fraction);
 			Debug.Log ("fetchingPos " + fetchingPos);
 			Debug.Log ("endfetchingPos " + endFetchingPos);
 			Debug.Log ("_________________________________________________");
 
+			// if dog reaches its destination that means it either has to turn around of fetching done
 			if (fetchingPos == endFetchingPos) {
 				Debug.Log ("made it to the ball!");
 
@@ -102,33 +109,68 @@ public class DogControl : MonoBehaviour {
 					fraction = 0;
 
 					Debug.Log ("dropping ball!");
+					LookAt ();
+					Sit ();
 					ball.transform.parent = null;
+					rotating = false;
+					corgiCollider.enabled = true;
 
 				} else {
 					Debug.Log ("turning around");
 					returnTrip = true;
 					fraction = 0;
-					endFetchingPos = startFetchingPos;
-					startFetchingPos = fetchingPos;
+					endFetchingPos = fetchOrigin;
+					startOffPlaneFetchingPos = fetchingPos;
 
+					// rotate
+					rotating = true;
+					rotatingTargetPos = fetchOrigin;
+
+					// grab the ball by parenting it to the dog
 					Debug.Log ("grabbing ball");
-					ball = GameObject.FindWithTag ("Ball");
-					GameObject corgi = GameObject.FindWithTag ("Corgi");
-
-					Debug.Log ("ball pos " + ball.transform.position);
-					ball.transform.parent = corgi.transform;
+					ball.transform.parent = transform;
+					//ball.transform.Translate(0, .1f, -.1f);
 				}
 			} else {
 				transform.position = fetchingPos;
 			}
 		}
-			
+	}
+		
+	public void rotateDog(Vector3 targetPos) {
+		Vector3 targetPoint = new Vector3(targetPos.x, corgi.transform.position.y, targetPos.z) - corgi.transform.position;
+		Quaternion targetRotation = Quaternion.LookRotation (targetPoint, Vector3.up);
+		/*
+		if (targetRotation == corgi.transform.rotation) {
+			rotating = false;
+			return;
+		}*/
+		corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 3.0f);
 	}
 
 	void OnTriggerExit(Collider other) {
 		Debug.Log (other.tag);
-		transform.LookAt (mat.transform.position);
-		Sit ();
+
+		if (initialFetchSequence) {
+			
+			Debug.Log ("HIT WALL STARTING FETCH");
+
+			// disable colliders
+			corgiCollider.enabled = false;
+
+			endFetchingPos = ball.transform.position;
+			Debug.Log ("end fetching pos " + endFetchingPos);
+
+			Jump ();
+			Gallop ();
+
+			fetching = true;
+			initialFetchSequence = false;
+
+		} else {
+			transform.LookAt (mat.transform.position);
+			Sit ();
+		} 
 	}
 		
 	public void placeDog() {
@@ -142,11 +184,6 @@ public class DogControl : MonoBehaviour {
 
 		ARHitTestResult result = hitResults[0];
 
-		// get the actual game object corresponding to the hit result
-		List<ARPlaneAnchorGameObject> availAnchors = unityARAnchorManager.GetCurrentPlaneAnchors ();
-		ARPlaneAnchorGameObject planeObj = availAnchors.Find (plane => plane.planeAnchor.identifier == result.anchorIdentifier);
-		currentPlane = planeObj;
-
 		// set the dog on the platform
 		transform.rotation = Quaternion.Euler (Vector3.zero);
 		transform.position = UnityARMatrixOps.GetPosition (result.worldTransform);
@@ -159,13 +196,17 @@ public class DogControl : MonoBehaviour {
 	public void fetchBall(Vector3 ballPos) {
 		Debug.Log ("sending dog to fetch");
 
-		startFetchingPos = transform.position;
-		Debug.Log ("start fetching pos " + startFetchingPos);
+		// mark position
+		Debug.Log ("start fetching pos " + fetchOrigin);
+		fetchOrigin = transform.position;
 
-		endFetchingPos = ballPos;
-		Debug.Log ("end fetching pos " + endFetchingPos);
+		// walk to the edge
+		Walk ();
 
-		fetching = true;
+		// then turn and walk towards edge of platform
+		initialFetchSequence = true;
+
+		return;
 	}
 
 	public void Lay() {
@@ -196,18 +237,15 @@ public class DogControl : MonoBehaviour {
 		animation.CrossFade ("CorgiTrot");
 	}
 
+	public void Gallop() {
+		isSitting = false;
+		shouldMove = true;
+		animation.CrossFade ("CorgiGallop");
+	}
+
 	public void Jump() {
 		shouldMove = false;
 		animation.CrossFade ("CorgiJump");
-		rb.AddForce (Vector3.up * 80f);
-	}
-
-	// This isn't really working for some reason
-	public void WalkToPoint(Vector3 point) {
-		startMovingPos = corgi.transform.position;
-		endMovingPos = point;
-		shouldMove = true;
-		movingToPoint = true;
 	}
 
 	public void InitialSequenceWrapper() {
@@ -236,13 +274,6 @@ public class DogControl : MonoBehaviour {
 			ARHitTestResultType.ARHitTestResultTypeExistingPlaneUsingExtent);
 
 		return results;
-	}
-
-	private void SetLookDirection(Vector3 inputAxes) {
-		// Get the camera's y rotation, then rotate inputAxes by the rotation to get up/down/left/right according to the camera
-		Quaternion yRotation = Quaternion.Euler (0, Camera.main.transform.rotation.eulerAngles.y, 0);
-		Vector3 lookDirection = (yRotation * inputAxes).normalized;
-		transform.rotation = Quaternion.LookRotation (lookDirection);
 	}
 
 	public void LookAt() {

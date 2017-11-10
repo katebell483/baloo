@@ -15,11 +15,12 @@ public class BallMaker : MonoBehaviour {
 
 	Vector3 touchPosWorld;
 
-	public bool hasbeenthrown;
 	private bool inAir;
 
+	public Vector3 origBallPos;
 	private Vector3 startBallPos;
 	private Vector3 endBallPos;
+	private Vector3 nonTouchBallStart;
 
 	private float dist;
 	private bool dragging = false;
@@ -29,7 +30,7 @@ public class BallMaker : MonoBehaviour {
 	// for swiping code
 	bool isSwiping;
 	float maxTime = .5f;
-	float minSwipeDist = 100.0f;
+	float minSwipeDist = .07f;
 	float startTime;
 	Vector3 startSwipePos;
 
@@ -37,7 +38,7 @@ public class BallMaker : MonoBehaviour {
 	void Start () {
 		props = new MaterialPropertyBlock ();
 		corgi = GameObject.FindWithTag("Corgi");
-		hasbeenthrown = false;
+		currBall = GameObject.FindWithTag("Ball");
 	}
 
 
@@ -45,6 +46,7 @@ public class BallMaker : MonoBehaviour {
 	void Update () {
 		Vector3 v;
 
+		//Debug.Log ("CUR BALL POS: " + currBall.transform.position);
 
 		if (corgi.GetComponent<DogControl> ().fetching) {
 			return;
@@ -58,6 +60,8 @@ public class BallMaker : MonoBehaviour {
 
 			if (touch.phase == TouchPhase.Began) {
 				Debug.Log ("touch started");
+
+				nonTouchBallStart = currBall.transform.position;
 
 				startTime = Time.time;
 
@@ -83,35 +87,47 @@ public class BallMaker : MonoBehaviour {
 				Debug.Log ("dragging ball");
 				v = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, dist);
 				v = Camera.main.ScreenToWorldPoint (v);
-				toDrag.position = v + offset;
+				Vector3 dragPos = v + offset;
+				Debug.Log ("Ball Drag, Pos" + dragPos);
+
+				if (dragPos.y < origBallPos.y) {
+					dragPos.y = origBallPos.y;
+				}
+
+				if(dragPos.z > origBallPos.z) {
+					dragPos.z = origBallPos.z;
+				}
+
+				toDrag.position = dragPos;
 			}
 
+			// touch released. check if the movement was a swipe to indicate fetch
 			if (dragging && (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)) {
+				
 				Debug.Log ("dragging complete");
 				dragging = false;
 
-				float endTime = Time.time;
+				// compare the duration and movement of drag
 				Vector3 endPos = touch.position;
+				endPos.z = currBall.transform.position.z - Camera.main.transform.position.z;
+				endPos = Camera.main.ScreenToWorldPoint(endPos);
+
+				float endTime = Time.time;
 
 				float swipeDistance = Vector3.Distance(endPos, startBallPos);
 				float swipeTime = endTime - startTime;
 
-				// TODO: make sure its in the forward direction
-				Debug.Log ("SwipeTime: " + swipeTime);
-				Debug.Log ("SwipeDist: " + swipeDistance);
+				Debug.Log ("Ball Drag, Swipe Time: " + swipeTime);
+				Debug.Log ("Ball Drag, Swipe Dist: " + swipeDistance);
+
+				// if time is sig short and movement sig large shoot the ball
 				if (swipeTime < maxTime && swipeDistance > minSwipeDist) {
+					
 					isSwiping = true;
-					Debug.Log ("IS SWIPPING!");
+					Debug.Log ("Ball Drag, Launching ball");
 
-					Rigidbody rb = currBall.GetComponent<Rigidbody> ();
-					rb.useGravity = true;
-					rb.isKinematic = false;
-
-					endPos.z = currBall.transform.position.z - Camera.main.transform.position.z;
-					endPos = Camera.main.ScreenToWorldPoint(endPos);
-
+					// get swipe direction
 					var dir = endPos - startBallPos;
-
 					dir.Normalize ();
 
 					// don't shoot down
@@ -122,42 +138,46 @@ public class BallMaker : MonoBehaviour {
 					if (dir.y > .6f) {
 						dir.y = .6f;
 					}
-
-					/*
-					// clamp dir side to side at range -.5 to .5
-					if (dir.x > .5f) {
-						dir.x = .5f;
-					}
-
-					if (dir.x < -.5f) {
-						dir.x = -.5f;
-					}*/
-
+						
 					Debug.Log ("**********************************************");
 					Debug.Log ("VVVdir: " + dir);
 				
+					// now send ball flying in that direction
+					Rigidbody rb = currBall.GetComponent<Rigidbody> ();
 					rb.transform.LookAt (dir);
+					rb.useGravity = true;
+					rb.isKinematic = false;
 					rb.AddForce(dir * Force);
 
-					hasbeenthrown = true;
+					// keep track of flying ball
 					inAir = true;
 				}
 			}
 
-
-
 		}
 
 		if (inAir) {
+			
+			Debug.Log ("BALL MOVING Y " + currBall.transform.position.y);
+			Debug.Log ("BALL MOVING ORIG Y " + startBallPos.y);
 
-			if (currBall.transform.position.y < startBallPos.y) {
+			if (currBall.transform.position.y < startBallPos.y - .1f) {
+				
+				Debug.Log ("throw over!");
+
+				// remove velocity + gravity from ball so it hovers in the air
 				Rigidbody rb = currBall.GetComponent<Rigidbody> ();
 				rb.velocity = Vector3.zero;
 				rb.angularVelocity = Vector3.zero; 
-				endBallPos = currBall.transform.position;
 				rb.useGravity = false;
+
+				// track the landing spot so the dog can find it
+				endBallPos = currBall.transform.position;
+
+				// work of the ball is done
 				inAir = false;
 
+				// send the dog to fetch it
 				if(corgi.GetComponent<DogControl> ().dogInScene) {
 					corgi.GetComponent<DogControl> ().fetchBall (endBallPos);
 				}
@@ -167,14 +187,23 @@ public class BallMaker : MonoBehaviour {
 		}
 	}
 
+	public void setOrigPos(Vector3 pos) {
+		origBallPos = pos;
+	}
+
 	public void CreateBall() {
 
+		/*
 		if (corgi.GetComponent<DogControl> ().fetching) {
 			return;
-		}
+		}*/
 
-		Debug.Log ("creating Ball!");
+		Debug.Log ("putting ball back to: " + origBallPos);
 
+		currBall.transform.position = origBallPos;
+
+
+		/*
 		// destroy any old balls
 		Destroy(currBall);
 
@@ -196,6 +225,7 @@ public class BallMaker : MonoBehaviour {
 
 		MeshRenderer renderer = ballGO.GetComponent<MeshRenderer>();
 		renderer.SetPropertyBlock(props);
+		*/
 
 	}
 
@@ -207,7 +237,6 @@ public class BallMaker : MonoBehaviour {
 		currBall.transform.LookAt(fwd);
 		Vector3 dir = new Vector3 (transform.forward.x, transform.forward.y +.6f, transform.forward.z);
 		rb.AddForce (dir * Force);
-		hasbeenthrown = true;
 		inAir = true;
 	}
 

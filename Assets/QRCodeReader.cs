@@ -28,6 +28,7 @@ public class QRCodeReader : MonoBehaviour {
 	private GameObject mat;
 	private GameObject matPlane;
 	private GameObject corgiHouse;
+	private GameObject ball;
 
 	private bool detectQR = true;
 	private Vector3 camPos;
@@ -39,6 +40,7 @@ public class QRCodeReader : MonoBehaviour {
 		mat = GameObject.FindWithTag("Mat");
 		matPlane = GameObject.FindWithTag ("MatPlane");
 		corgiHouse = GameObject.FindWithTag ("CorgiHouse");
+		ball = GameObject.FindWithTag ("Ball");
 	}
 
 	// Update is called once per frame
@@ -89,8 +91,12 @@ public class QRCodeReader : MonoBehaviour {
 				matPlane.transform.localScale = new Vector3(.05f, .05f, .05f);
 				Vector3 center = matPlane.GetComponent<Renderer> ().bounds.center;
 
+				// TODO: this all seems a little out of place here
 				corgi.transform.parent = null; // is this necessary?
 				corgi.GetComponent<DogControl> ().InitialSequenceWrapper ();
+				corgi.GetComponent<DogControl> ().dogInScene = true;
+				Debug.Log ("QR CODE ORIG BALL POS: " + ball.transform.position);
+				ball.GetComponent<BallMaker> ().setOrigPos(ball.transform.position);
 
 				detectQR = false; 
 
