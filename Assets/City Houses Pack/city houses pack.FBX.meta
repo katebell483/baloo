@@ -1,0 +1,167 @@
+fileFormatVersion: 2
+guid: d301449de53ff0343a7befa5b5616088
+timeCreated: 18446744011573954816
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    4300000: big fence2
+    4300002: Cylinder001
+    4300004: fence
+    4300006: door fence 1
+    4300008: fence 3
+    4300010: big fence
+    4300012: door fence
+    4300014: fence3
+    4300016: gate
+    4300018: gate5
+    4300020: gate3
+    4300022: gate4
+    4300024: big fence 7
+    4300026: big fence 8
+    4300028: big fence3
+    4300030: big fence2
+    4300032: gate2
+    4300034: big fence 4
+    4300036: big fence 5
+    4300038: gate6
+    4300040: Plane001
+    4300042: road2
+    4300044: road4
+    4300046: road3
+    4300048: road1
+    4300050: Plane021
+    4300052: redy fence
+    4300054: fence004
+    4300056: door fence 002
+    4300058: door fence001
+    4300060: Cylinder002
+    4300062: gate007
+    4300064: gate008
+    4300066: big fence 009
+    4300068: big fence 010
+    4300070: street lamp
+    4300072: door001
+    4300074: post box001
+    4300076: envelope001
+    4300078: house006
+    4300080: Object001
+    4300082: garage road
+    4300084: Plane022
+    4300086: redy fence001
+    4300088: grass3
+    4300090: house007
+    4300092: Cylinder005
+    4300094: door fence002
+    4300096: door fence 003
+    4300098: house008
+    4300100: Cylinder006
+    4300102: door fence003
+    4300104: door fence 004
+    4300106: redy fence002
+    4300108: grass004
+    4300110: Plane025
+    4300112: house009
+    4300114: redy fence003
+    4300116: Plane026
+    4300118: garage road001
+    4300120: gate009
+    4300122: gate010
+    4300124: big fence 011
+    4300126: big fence 012
+    4300128: Cylinder007
+    4300130: door fence004
+    4300132: Object002
+    4300134: door fence 005
+    4300136: fence005
+    4300138: Plane027
+    4300140: house010
+    4300142: gate011
+    4300144: redy fence004
+    4300146: big fence 013
+    4300148: gate012
+    4300150: big fence 014
+    4300152: Object003
+    4300154: Cylinder008
+    4300156: fence006
+    4300158: door fence 006
+    4300160: door fence005
+    4300162: Plane028
+    4300164: garage road002
+    4300166: Plane029
+    4300168: dog hause001
+    4300170: Plane030
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 2
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.01
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 4
+    normalCalculationMode: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

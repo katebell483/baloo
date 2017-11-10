@@ -77,7 +77,6 @@ public class QRCodeReader : MonoBehaviour {
 			List<ARHitTestResult> list = result.Value;
 			if (list.Count == 4) {
 				var worldTopLeft     = UnityARMatrixOps.GetPosition (list[0].worldTransform);
-				//var worldTopRight    = UnityARMatrixOps.GetPosition (list[1].worldTransform);
 				var worldBottomRight = UnityARMatrixOps.GetPosition (list[2].worldTransform);
 				var worldBottomLeft  = UnityARMatrixOps.GetPosition (list[3].worldTransform);
 
@@ -90,12 +89,7 @@ public class QRCodeReader : MonoBehaviour {
 				matPlane.transform.localScale = new Vector3(.05f, .05f, .05f);
 				Vector3 center = matPlane.GetComponent<Renderer> ().bounds.center;
 
-				//corgi.GetComponent<DogControl> ().Sit ();
-				corgi.transform.parent = null;
-
-				//TODO: wait a second
-				//corgi.GetComponent<DogControl> ().WalkToPoint (center);
-
+				corgi.transform.parent = null; // is this necessary?
 				corgi.GetComponent<DogControl> ().InitialSequenceWrapper ();
 
 				detectQR = false; 
