@@ -140,11 +140,6 @@ public class DogControl : MonoBehaviour {
 	public void rotateDog(Vector3 targetPos) {
 		Vector3 targetPoint = new Vector3(targetPos.x, corgi.transform.position.y, targetPos.z) - corgi.transform.position;
 		Quaternion targetRotation = Quaternion.LookRotation (targetPoint, Vector3.up);
-		/*
-		if (targetRotation == corgi.transform.rotation) {
-			rotating = false;
-			return;
-		}*/
 		corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 3.0f);
 	}
 
