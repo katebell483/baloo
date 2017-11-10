@@ -29,6 +29,11 @@ public class DogControl : MonoBehaviour {
 	private bool returnTrip = false;
 	private bool isSitting = false;
 
+	private Vector3 startMovingPos;
+	private Vector3 endMovingPos;
+	private float moveFraction = 0;
+	private bool movingToPoint = false;
+
 	// Use this for initialization
 	void Start () {
 		animation = GetComponent<Animation> ();
@@ -41,7 +46,28 @@ public class DogControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (shouldMove) {
-			transform.Translate (Vector3.forward * Time.deltaTime * (transform.localScale.x * .25f));
+
+			// stop at specific point
+			if (movingToPoint) {
+				
+				// move the dog forward
+				moveFraction += Time.deltaTime * speed;
+
+				Vector3 movingPos = Vector3.Lerp (startMovingPos, endMovingPos, moveFraction);
+				Debug.Log ("MOVING POS: " + movingPos);
+				Debug.Log ("END MOVING POS: " + endMovingPos);
+
+				if (movingPos == endMovingPos) {
+					shouldMove = false;
+					movingToPoint = false;
+					moveFraction = 0;
+					LookAt ();
+					Sit ();
+				} 
+
+			} else {
+				transform.Translate (Vector3.forward * Time.deltaTime * (transform.localScale.x * .25f));
+			}
 		} 
 
 		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down)){
@@ -125,6 +151,8 @@ public class DogControl : MonoBehaviour {
 		transform.rotation = Quaternion.Euler (Vector3.zero);
 		transform.position = UnityARMatrixOps.GetPosition (result.worldTransform);
 
+		LookAt ();
+
 		dogInScene = true;
 	}
 
@@ -159,6 +187,7 @@ public class DogControl : MonoBehaviour {
 	public void Eat() {
 		shouldMove = false;
 		animation.CrossFade ("CorgiEat");
+
 	}
 
 	public void Walk() {
@@ -171,6 +200,25 @@ public class DogControl : MonoBehaviour {
 		shouldMove = false;
 		animation.CrossFade ("CorgiJump");
 		rb.AddForce (Vector3.up * 80f);
+	}
+
+	// This isn't really working for some reason
+	public void WalkToPoint(Vector3 point) {
+		startMovingPos = corgi.transform.position;
+		endMovingPos = point;
+		shouldMove = true;
+		movingToPoint = true;
+	}
+
+	public void InitialSequenceWrapper() {
+		StartCoroutine(InitialSequence());
+	}
+
+	public IEnumerator InitialSequence() {
+		Walk ();
+		yield return new WaitForSeconds(3.5f); // waits 2 seconds
+		Sit();
+		LookAt ();
 	}
 		
 	private List<ARHitTestResult> getHitTest() {

@@ -10,6 +10,7 @@ TagManager:
   - Tag
   - Ball
   - inScene
+  - CorgiHouse
   layers:
   - Default
   - TransparentFX

@@ -27,6 +27,8 @@ public class QRCodeReader : MonoBehaviour {
 	private GameObject corgi;
 	private GameObject mat;
 	private GameObject matPlane;
+	private GameObject corgiHouse;
+
 	private bool detectQR = true;
 	private Vector3 camPos;
 
@@ -36,6 +38,7 @@ public class QRCodeReader : MonoBehaviour {
 		corgi = GameObject.FindWithTag("Corgi");
 		mat = GameObject.FindWithTag("Mat");
 		matPlane = GameObject.FindWithTag ("MatPlane");
+		corgiHouse = GameObject.FindWithTag ("CorgiHouse");
 	}
 
 	// Update is called once per frame
@@ -84,12 +87,19 @@ public class QRCodeReader : MonoBehaviour {
 				Debug.Log ("PLACING DOG");
 				mat.transform.forward = bottomToTop;
 				mat.transform.position = worldBottomLeft + (bottomToTop + leftToRight) * 0.5f;
-				matPlane.transform.localScale = new Vector3(leftToRight.magnitude, 1, bottomToTop.magnitude) * 0.4f;
-				var fwd = Camera.main.transform.forward;
-				corgi.transform.LookAt(fwd);
-				corgi.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-				corgi.transform.position = matPlane.transform.position;
+				matPlane.transform.localScale = new Vector3(.05f, .05f, .05f);
+				Vector3 center = matPlane.GetComponent<Renderer> ().bounds.center;
+
+				//corgi.GetComponent<DogControl> ().Sit ();
+				corgi.transform.parent = null;
+
+				//TODO: wait a second
+				//corgi.GetComponent<DogControl> ().WalkToPoint (center);
+
+				corgi.GetComponent<DogControl> ().InitialSequenceWrapper ();
+
 				detectQR = false; 
+
 				break;
 			}
 		}
