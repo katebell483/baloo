@@ -1,0 +1,3469 @@
+fileFormatVersion: 2
+guid: dd93130a5abbb4c9091bf92e4387c2f9
+timeCreated: 1510121520
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: cropBreath_0
+    21300002: cropBreath_1
+    21300004: cropBreath_2
+    21300006: cropBreath_3
+    21300008: cropBreath_4
+    21300010: cropBreath_5
+    21300012: cropBreath_6
+    21300014: cropBreath_7
+    21300016: cropBreath_8
+    21300018: cropBreath_9
+    21300020: cropBreath_10
+    21300022: cropBreath_11
+    21300024: cropBreath_12
+    21300026: cropBreath_13
+    21300028: cropBreath_14
+    21300030: cropBreath_15
+    21300032: cropBreath_16
+    21300034: cropBreath_17
+    21300036: cropBreath_18
+    21300038: cropBreath_19
+    21300040: cropBreath_20
+    21300042: cropBreath_21
+    21300044: cropBreath_22
+    21300046: cropBreath_23
+    21300048: cropBreath_24
+    21300050: cropBreath_25
+    21300052: cropBreath_26
+    21300054: cropBreath_27
+    21300056: cropBreath_28
+    21300058: cropBreath_29
+    21300060: cropBreath_30
+    21300062: cropBreath_31
+    21300064: cropBreath_32
+    21300066: cropBreath_33
+    21300068: cropBreath_34
+    21300070: cropBreath_35
+    21300072: cropBreath_36
+    21300074: cropBreath_37
+    21300076: cropBreath_38
+    21300078: cropBreath_39
+    21300080: cropBreath_40
+    21300082: cropBreath_41
+    21300084: cropBreath_42
+    21300086: cropBreath_43
+    21300088: cropBreath_44
+    21300090: cropBreath_45
+    21300092: cropBreath_46
+    21300094: cropBreath_47
+    21300096: cropBreath_48
+    21300098: cropBreath_49
+    21300100: cropBreath_50
+    21300102: cropBreath_51
+    21300104: cropBreath_52
+    21300106: cropBreath_53
+    21300108: cropBreath_54
+    21300110: cropBreath_55
+    21300112: cropBreath_56
+    21300114: cropBreath_57
+    21300116: cropBreath_58
+    21300118: cropBreath_59
+    21300120: cropBreath_60
+    21300122: cropBreath_61
+    21300124: cropBreath_62
+    21300126: cropBreath_63
+    21300128: cropBreath_64
+    21300130: cropBreath_65
+    21300132: cropBreath_66
+    21300134: cropBreath_67
+    21300136: cropBreath_68
+    21300138: cropBreath_69
+    21300140: cropBreath_70
+    21300142: cropBreath_71
+    21300144: cropBreath_72
+    21300146: cropBreath_73
+    21300148: cropBreath_74
+    21300150: cropBreath_75
+    21300152: cropBreath_76
+    21300154: cropBreath_77
+    21300156: cropBreath_78
+    21300158: cropBreath_79
+    21300160: cropBreath_80
+    21300162: cropBreath_81
+    21300164: cropBreath_82
+    21300166: cropBreath_83
+    21300168: cropBreath_84
+    21300170: cropBreath_85
+    21300172: cropBreath_86
+    21300174: cropBreath_87
+    21300176: cropBreath_88
+    21300178: cropBreath_89
+    21300180: cropBreath_90
+    21300182: cropBreath_91
+    21300184: cropBreath_92
+    21300186: cropBreath_93
+    21300188: cropBreath_94
+    21300190: cropBreath_95
+    21300192: cropBreath_96
+    21300194: cropBreath_97
+    21300196: cropBreath_98
+    21300198: cropBreath_99
+    21300200: cropBreath_100
+    21300202: cropBreath_101
+    21300204: cropBreath_102
+    21300206: cropBreath_103
+    21300208: cropBreath_104
+    21300210: cropBreath_105
+    21300212: cropBreath_106
+    21300214: cropBreath_107
+    21300216: cropBreath_108
+    21300218: cropBreath_109
+    21300220: cropBreath_110
+    21300222: cropBreath_111
+    21300224: cropBreath_112
+    21300226: cropBreath_113
+    21300228: cropBreath_114
+    21300230: cropBreath_115
+    21300232: cropBreath_116
+    21300234: cropBreath_117
+    21300236: cropBreath_118
+    21300238: cropBreath_119
+    21300240: cropBreath_120
+    21300242: cropBreath_121
+    21300244: cropBreath_122
+    21300246: cropBreath_123
+    21300248: cropBreath_124
+    21300250: cropBreath_125
+    21300252: cropBreath_126
+    21300254: cropBreath_127
+    21300256: cropBreath_128
+    21300258: cropBreath_129
+    21300260: cropBreath_130
+    21300262: cropBreath_131
+    21300264: cropBreath_132
+    21300266: cropBreath_133
+    21300268: cropBreath_134
+    21300270: cropBreath_135
+    21300272: cropBreath_136
+    21300274: cropBreath_137
+    21300276: cropBreath_138
+    21300278: cropBreath_139
+    21300280: cropBreath_140
+    21300282: cropBreath_141
+    21300284: cropBreath_142
+    21300286: cropBreath_143
+    21300288: cropBreath_144
+    21300290: cropBreath_145
+    21300292: cropBreath_146
+    21300294: cropBreath_147
+    21300296: cropBreath_148
+    21300298: cropBreath_149
+    21300300: cropBreath_150
+    21300302: cropBreath_151
+    21300304: cropBreath_152
+    21300306: cropBreath_153
+    21300308: cropBreath_154
+    21300310: cropBreath_155
+    21300312: cropBreath_156
+    21300314: cropBreath_157
+    21300316: cropBreath_158
+    21300318: cropBreath_159
+    21300320: cropBreath_160
+    21300322: cropBreath_161
+    21300324: cropBreath_162
+    21300326: cropBreath_163
+    21300328: cropBreath_164
+    21300330: cropBreath_165
+    21300332: cropBreath_166
+    21300334: cropBreath_167
+    21300336: cropBreath_168
+    21300338: cropBreath_169
+    21300340: cropBreath_170
+    21300342: cropBreath_171
+    21300344: cropBreath_172
+    21300346: cropBreath_173
+    21300348: cropBreath_174
+    21300350: cropBreath_175
+    21300352: cropBreath_176
+    21300354: cropBreath_177
+    21300356: cropBreath_178
+    21300358: cropBreath_179
+    21300360: cropBreath_180
+    21300362: cropBreath_181
+    21300364: cropBreath_182
+    21300366: cropBreath_183
+    21300368: cropBreath_184
+    21300370: cropBreath_185
+    21300372: cropBreath_186
+    21300374: cropBreath_187
+    21300376: cropBreath_188
+    21300378: cropBreath_189
+    21300380: cropBreath_190
+    21300382: cropBreath_191
+    21300384: cropBreath_192
+    21300386: cropBreath_193
+    21300388: cropBreath_194
+    21300390: cropBreath_195
+    21300392: cropBreath_196
+    21300394: cropBreath_197
+    21300396: cropBreath_198
+    21300398: cropBreath_199
+    21300400: cropBreath_200
+    21300402: cropBreath_201
+    21300404: cropBreath_202
+    21300406: cropBreath_203
+    21300408: cropBreath_204
+    21300410: cropBreath_205
+    21300412: cropBreath_206
+    21300414: cropBreath_207
+    21300416: cropBreath_208
+    21300418: cropBreath_209
+    21300420: cropBreath_210
+    21300422: cropBreath_211
+    21300424: cropBreath_212
+    21300426: cropBreath_213
+    21300428: cropBreath_214
+    21300430: cropBreath_215
+    21300432: cropBreath_216
+    21300434: cropBreath_217
+    21300436: cropBreath_218
+    21300438: cropBreath_219
+    21300440: cropBreath_220
+    21300442: cropBreath_221
+    21300444: cropBreath_222
+    21300446: cropBreath_223
+    21300448: cropBreath_224
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: cropBreath_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4088
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_1
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 4088
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_2
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 4088
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_3
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 4088
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_4
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 4088
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_5
+      rect:
+        serializedVersion: 2
+        x: 1460
+        y: 4088
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_6
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 4088
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_7
+      rect:
+        serializedVersion: 2
+        x: 2044
+        y: 4088
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_8
+      rect:
+        serializedVersion: 2
+        x: 2336
+        y: 4088
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_9
+      rect:
+        serializedVersion: 2
+        x: 2628
+        y: 4088
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_10
+      rect:
+        serializedVersion: 2
+        x: 2920
+        y: 4088
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_11
+      rect:
+        serializedVersion: 2
+        x: 3212
+        y: 4088
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_12
+      rect:
+        serializedVersion: 2
+        x: 3504
+        y: 4088
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_13
+      rect:
+        serializedVersion: 2
+        x: 3796
+        y: 4088
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_14
+      rect:
+        serializedVersion: 2
+        x: 4088
+        y: 4088
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3796
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_16
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 3796
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_17
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 3796
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_18
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 3796
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_19
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 3796
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_20
+      rect:
+        serializedVersion: 2
+        x: 1460
+        y: 3796
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_21
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 3796
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_22
+      rect:
+        serializedVersion: 2
+        x: 2044
+        y: 3796
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_23
+      rect:
+        serializedVersion: 2
+        x: 2336
+        y: 3796
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_24
+      rect:
+        serializedVersion: 2
+        x: 2628
+        y: 3796
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_25
+      rect:
+        serializedVersion: 2
+        x: 2920
+        y: 3796
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_26
+      rect:
+        serializedVersion: 2
+        x: 3212
+        y: 3796
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_27
+      rect:
+        serializedVersion: 2
+        x: 3504
+        y: 3796
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_28
+      rect:
+        serializedVersion: 2
+        x: 3796
+        y: 3796
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_29
+      rect:
+        serializedVersion: 2
+        x: 4088
+        y: 3796
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3504
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_31
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 3504
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_32
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 3504
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_33
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 3504
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_34
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 3504
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_35
+      rect:
+        serializedVersion: 2
+        x: 1460
+        y: 3504
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_36
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 3504
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_37
+      rect:
+        serializedVersion: 2
+        x: 2044
+        y: 3504
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_38
+      rect:
+        serializedVersion: 2
+        x: 2336
+        y: 3504
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_39
+      rect:
+        serializedVersion: 2
+        x: 2628
+        y: 3504
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_40
+      rect:
+        serializedVersion: 2
+        x: 2920
+        y: 3504
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_41
+      rect:
+        serializedVersion: 2
+        x: 3212
+        y: 3504
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_42
+      rect:
+        serializedVersion: 2
+        x: 3504
+        y: 3504
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_43
+      rect:
+        serializedVersion: 2
+        x: 3796
+        y: 3504
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_44
+      rect:
+        serializedVersion: 2
+        x: 4088
+        y: 3504
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3212
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_46
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 3212
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_47
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 3212
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_48
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 3212
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_49
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 3212
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_50
+      rect:
+        serializedVersion: 2
+        x: 1460
+        y: 3212
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_51
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 3212
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_52
+      rect:
+        serializedVersion: 2
+        x: 2044
+        y: 3212
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_53
+      rect:
+        serializedVersion: 2
+        x: 2336
+        y: 3212
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_54
+      rect:
+        serializedVersion: 2
+        x: 2628
+        y: 3212
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_55
+      rect:
+        serializedVersion: 2
+        x: 2920
+        y: 3212
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_56
+      rect:
+        serializedVersion: 2
+        x: 3212
+        y: 3212
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_57
+      rect:
+        serializedVersion: 2
+        x: 3504
+        y: 3212
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_58
+      rect:
+        serializedVersion: 2
+        x: 3796
+        y: 3212
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_59
+      rect:
+        serializedVersion: 2
+        x: 4088
+        y: 3212
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2920
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_61
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 2920
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_62
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 2920
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_63
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 2920
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_64
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 2920
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_65
+      rect:
+        serializedVersion: 2
+        x: 1460
+        y: 2920
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_66
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 2920
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_67
+      rect:
+        serializedVersion: 2
+        x: 2044
+        y: 2920
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_68
+      rect:
+        serializedVersion: 2
+        x: 2336
+        y: 2920
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_69
+      rect:
+        serializedVersion: 2
+        x: 2628
+        y: 2920
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_70
+      rect:
+        serializedVersion: 2
+        x: 2920
+        y: 2920
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_71
+      rect:
+        serializedVersion: 2
+        x: 3212
+        y: 2920
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_72
+      rect:
+        serializedVersion: 2
+        x: 3504
+        y: 2920
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_73
+      rect:
+        serializedVersion: 2
+        x: 3796
+        y: 2920
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_74
+      rect:
+        serializedVersion: 2
+        x: 4088
+        y: 2920
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_75
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2628
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_76
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 2628
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_77
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 2628
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_78
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 2628
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_79
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 2628
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_80
+      rect:
+        serializedVersion: 2
+        x: 1460
+        y: 2628
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_81
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 2628
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_82
+      rect:
+        serializedVersion: 2
+        x: 2044
+        y: 2628
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_83
+      rect:
+        serializedVersion: 2
+        x: 2336
+        y: 2628
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_84
+      rect:
+        serializedVersion: 2
+        x: 2628
+        y: 2628
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_85
+      rect:
+        serializedVersion: 2
+        x: 2920
+        y: 2628
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_86
+      rect:
+        serializedVersion: 2
+        x: 3212
+        y: 2628
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_87
+      rect:
+        serializedVersion: 2
+        x: 3504
+        y: 2628
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_88
+      rect:
+        serializedVersion: 2
+        x: 3796
+        y: 2628
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_89
+      rect:
+        serializedVersion: 2
+        x: 4088
+        y: 2628
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_90
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2336
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_91
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 2336
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_92
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 2336
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_93
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 2336
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_94
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 2336
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_95
+      rect:
+        serializedVersion: 2
+        x: 1460
+        y: 2336
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_96
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 2336
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_97
+      rect:
+        serializedVersion: 2
+        x: 2044
+        y: 2336
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_98
+      rect:
+        serializedVersion: 2
+        x: 2336
+        y: 2336
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_99
+      rect:
+        serializedVersion: 2
+        x: 2628
+        y: 2336
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_100
+      rect:
+        serializedVersion: 2
+        x: 2920
+        y: 2336
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_101
+      rect:
+        serializedVersion: 2
+        x: 3212
+        y: 2336
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_102
+      rect:
+        serializedVersion: 2
+        x: 3504
+        y: 2336
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_103
+      rect:
+        serializedVersion: 2
+        x: 3796
+        y: 2336
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_104
+      rect:
+        serializedVersion: 2
+        x: 4088
+        y: 2336
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_105
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2044
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_106
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 2044
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_107
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 2044
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_108
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 2044
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_109
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 2044
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_110
+      rect:
+        serializedVersion: 2
+        x: 1460
+        y: 2044
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_111
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 2044
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_112
+      rect:
+        serializedVersion: 2
+        x: 2044
+        y: 2044
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_113
+      rect:
+        serializedVersion: 2
+        x: 2336
+        y: 2044
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_114
+      rect:
+        serializedVersion: 2
+        x: 2628
+        y: 2044
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_115
+      rect:
+        serializedVersion: 2
+        x: 2920
+        y: 2044
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_116
+      rect:
+        serializedVersion: 2
+        x: 3212
+        y: 2044
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_117
+      rect:
+        serializedVersion: 2
+        x: 3504
+        y: 2044
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_118
+      rect:
+        serializedVersion: 2
+        x: 3796
+        y: 2044
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_119
+      rect:
+        serializedVersion: 2
+        x: 4088
+        y: 2044
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_120
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1752
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_121
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 1752
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_122
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 1752
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_123
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 1752
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_124
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 1752
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_125
+      rect:
+        serializedVersion: 2
+        x: 1460
+        y: 1752
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_126
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 1752
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_127
+      rect:
+        serializedVersion: 2
+        x: 2044
+        y: 1752
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_128
+      rect:
+        serializedVersion: 2
+        x: 2336
+        y: 1752
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_129
+      rect:
+        serializedVersion: 2
+        x: 2628
+        y: 1752
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_130
+      rect:
+        serializedVersion: 2
+        x: 2920
+        y: 1752
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_131
+      rect:
+        serializedVersion: 2
+        x: 3212
+        y: 1752
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_132
+      rect:
+        serializedVersion: 2
+        x: 3504
+        y: 1752
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_133
+      rect:
+        serializedVersion: 2
+        x: 3796
+        y: 1752
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_134
+      rect:
+        serializedVersion: 2
+        x: 4088
+        y: 1752
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_135
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1460
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_136
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 1460
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_137
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 1460
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_138
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 1460
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_139
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 1460
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_140
+      rect:
+        serializedVersion: 2
+        x: 1460
+        y: 1460
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_141
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 1460
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_142
+      rect:
+        serializedVersion: 2
+        x: 2044
+        y: 1460
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_143
+      rect:
+        serializedVersion: 2
+        x: 2336
+        y: 1460
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_144
+      rect:
+        serializedVersion: 2
+        x: 2628
+        y: 1460
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_145
+      rect:
+        serializedVersion: 2
+        x: 2920
+        y: 1460
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_146
+      rect:
+        serializedVersion: 2
+        x: 3212
+        y: 1460
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_147
+      rect:
+        serializedVersion: 2
+        x: 3504
+        y: 1460
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_148
+      rect:
+        serializedVersion: 2
+        x: 3796
+        y: 1460
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_149
+      rect:
+        serializedVersion: 2
+        x: 4088
+        y: 1460
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_150
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1168
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_151
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 1168
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_152
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 1168
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_153
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 1168
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_154
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 1168
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_155
+      rect:
+        serializedVersion: 2
+        x: 1460
+        y: 1168
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_156
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 1168
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_157
+      rect:
+        serializedVersion: 2
+        x: 2044
+        y: 1168
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_158
+      rect:
+        serializedVersion: 2
+        x: 2336
+        y: 1168
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_159
+      rect:
+        serializedVersion: 2
+        x: 2628
+        y: 1168
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_160
+      rect:
+        serializedVersion: 2
+        x: 2920
+        y: 1168
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_161
+      rect:
+        serializedVersion: 2
+        x: 3212
+        y: 1168
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_162
+      rect:
+        serializedVersion: 2
+        x: 3504
+        y: 1168
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_163
+      rect:
+        serializedVersion: 2
+        x: 3796
+        y: 1168
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_164
+      rect:
+        serializedVersion: 2
+        x: 4088
+        y: 1168
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_165
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 876
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_166
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 876
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_167
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 876
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_168
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 876
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_169
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 876
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_170
+      rect:
+        serializedVersion: 2
+        x: 1460
+        y: 876
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_171
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 876
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_172
+      rect:
+        serializedVersion: 2
+        x: 2044
+        y: 876
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_173
+      rect:
+        serializedVersion: 2
+        x: 2336
+        y: 876
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_174
+      rect:
+        serializedVersion: 2
+        x: 2628
+        y: 876
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_175
+      rect:
+        serializedVersion: 2
+        x: 2920
+        y: 876
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_176
+      rect:
+        serializedVersion: 2
+        x: 3212
+        y: 876
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_177
+      rect:
+        serializedVersion: 2
+        x: 3504
+        y: 876
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_178
+      rect:
+        serializedVersion: 2
+        x: 3796
+        y: 876
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_179
+      rect:
+        serializedVersion: 2
+        x: 4088
+        y: 876
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_180
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 584
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_181
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 584
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_182
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 584
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_183
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 584
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_184
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 584
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_185
+      rect:
+        serializedVersion: 2
+        x: 1460
+        y: 584
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_186
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 584
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_187
+      rect:
+        serializedVersion: 2
+        x: 2044
+        y: 584
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_188
+      rect:
+        serializedVersion: 2
+        x: 2336
+        y: 584
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_189
+      rect:
+        serializedVersion: 2
+        x: 2628
+        y: 584
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_190
+      rect:
+        serializedVersion: 2
+        x: 2920
+        y: 584
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_191
+      rect:
+        serializedVersion: 2
+        x: 3212
+        y: 584
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_192
+      rect:
+        serializedVersion: 2
+        x: 3504
+        y: 584
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_193
+      rect:
+        serializedVersion: 2
+        x: 3796
+        y: 584
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_194
+      rect:
+        serializedVersion: 2
+        x: 4088
+        y: 584
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_195
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 292
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_196
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 292
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_197
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 292
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_198
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 292
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_199
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 292
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_200
+      rect:
+        serializedVersion: 2
+        x: 1460
+        y: 292
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_201
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 292
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_202
+      rect:
+        serializedVersion: 2
+        x: 2044
+        y: 292
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_203
+      rect:
+        serializedVersion: 2
+        x: 2336
+        y: 292
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_204
+      rect:
+        serializedVersion: 2
+        x: 2628
+        y: 292
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_205
+      rect:
+        serializedVersion: 2
+        x: 2920
+        y: 292
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_206
+      rect:
+        serializedVersion: 2
+        x: 3212
+        y: 292
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_207
+      rect:
+        serializedVersion: 2
+        x: 3504
+        y: 292
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_208
+      rect:
+        serializedVersion: 2
+        x: 3796
+        y: 292
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_209
+      rect:
+        serializedVersion: 2
+        x: 4088
+        y: 292
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_210
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_211
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 0
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_212
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 0
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_213
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 0
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_214
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 0
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_215
+      rect:
+        serializedVersion: 2
+        x: 1460
+        y: 0
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_216
+      rect:
+        serializedVersion: 2
+        x: 1752
+        y: 0
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_217
+      rect:
+        serializedVersion: 2
+        x: 2044
+        y: 0
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_218
+      rect:
+        serializedVersion: 2
+        x: 2336
+        y: 0
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_219
+      rect:
+        serializedVersion: 2
+        x: 2628
+        y: 0
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_220
+      rect:
+        serializedVersion: 2
+        x: 2920
+        y: 0
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_221
+      rect:
+        serializedVersion: 2
+        x: 3212
+        y: 0
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_222
+      rect:
+        serializedVersion: 2
+        x: 3504
+        y: 0
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_223
+      rect:
+        serializedVersion: 2
+        x: 3796
+        y: 0
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cropBreath_224
+      rect:
+        serializedVersion: 2
+        x: 4088
+        y: 0
+        width: 292
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

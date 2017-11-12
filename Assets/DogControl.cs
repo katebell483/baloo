@@ -16,12 +16,15 @@ public class DogControl : MonoBehaviour {
 	// other game objects in the scene
 	public GameObject mat;
 	public GameObject ball;
+	public GameObject dogFood;
 
 	// fetching params
 	private bool initialFetchSequence = false;
 	public bool fetching = false;
+	public bool goingToFood = false;
 	private bool returnTrip = false;
 	private Vector3 endFetchingPos;
+	private Vector3 foodPos;
 	private Vector3 startOffPlaneFetchingPos;
 	private Vector3 fetchOrigin;
 	private float speed = .3f;
@@ -46,6 +49,7 @@ public class DogControl : MonoBehaviour {
 		Physics.IgnoreCollision(corgi.GetComponent<Collider>(), ball.GetComponent<Collider>());
 		Physics.IgnoreCollision(corgi.GetComponent<Collider>(), mat.GetComponent<Collider>());
 		corgiCollider = corgi.GetComponent<Collider>();
+		foodPos = dogFood.transform.position;
 	}
 
 	// Update is called once per frame
@@ -117,7 +121,7 @@ public class DogControl : MonoBehaviour {
 					rotating = true;
 					rotatingTargetPos = fetchOrigin;
 
-					// grab the ball by parenting it to the dog
+					// grarb the ball by parenting it to the dog
 					Debug.Log ("grabbing ball");
 					ball.transform.parent = transform;
 					//ball.transform.Translate(0, .1f, -.1f);
@@ -125,6 +129,23 @@ public class DogControl : MonoBehaviour {
 			} else {
 				transform.position = fetchingPos;
 			}
+		}
+
+
+		if (goingToFood) {
+
+
+			float step = 10 * Time.deltaTime;
+
+			Debug.Log ("HELLO");
+			Vector3 fetchingPos  = Vector3.Lerp(transform.position, foodPos, step);
+			if (fetchingPos == foodPos) {
+
+			} else {
+				transform.position = fetchingPos;
+			}
+			Debug.Log ("_________________________________________________");
+			//Walk ();
 		}
 	}
 		
@@ -213,7 +234,18 @@ public class DogControl : MonoBehaviour {
 
 	public void Eat() {
 		shouldMove = false;
-		animation.CrossFade ("CorgiEat");
+		rotating = true;
+		goingToFood = true;
+		rotatingTargetPos = dogFood.transform.position;
+
+
+		rotateDog (rotatingTargetPos);
+
+		/*Vector3 targetPoint = new Vector3(dogFood.transform.position.x, corgi.transform.position.y, dogFood.transform.position.z) - corgi.transform.position;
+		Quaternion targetRotation = Quaternion.LookRotation (-targetPoint, Vector3.up);
+		transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 2.0f);*/
+
+		//animation.CrossFade ("CorgiEat");
 
 	}
 
