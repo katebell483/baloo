@@ -49,6 +49,8 @@ public class DogControl : MonoBehaviour {
 		Physics.IgnoreCollision(corgi.GetComponent<Collider>(), ball.GetComponent<Collider>());
 		Physics.IgnoreCollision(corgi.GetComponent<Collider>(), mat.GetComponent<Collider>());
 		corgiCollider = corgi.GetComponent<Collider>();
+
+		dogFood = GameObject.FindWithTag ("dogFood");
 		foodPos = dogFood.transform.position;
 	}
 
@@ -133,19 +135,18 @@ public class DogControl : MonoBehaviour {
 
 
 		if (goingToFood) {
+			float step = 1 * Time.deltaTime;
+			Debug.Log ("HELL");
+			Debug.Log (transform.position);
+			Debug.Log ("BYE");
+			Debug.Log (foodPos);
 
-
-			float step = 10 * Time.deltaTime;
-
-			Debug.Log ("HELLO");
 			Vector3 fetchingPos  = Vector3.Lerp(transform.position, foodPos, step);
 			if (fetchingPos == foodPos) {
-
+				Eat ();
 			} else {
 				transform.position = fetchingPos;
 			}
-			Debug.Log ("_________________________________________________");
-			//Walk ();
 		}
 	}
 		
@@ -236,6 +237,7 @@ public class DogControl : MonoBehaviour {
 		shouldMove = false;
 		rotating = true;
 		goingToFood = true;
+
 		rotatingTargetPos = dogFood.transform.position;
 
 

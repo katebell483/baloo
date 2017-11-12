@@ -11,6 +11,7 @@ TagManager:
   - Ball
   - inScene
   - CorgiHouse
+  - dogFood
   layers:
   - Default
   - TransparentFX
