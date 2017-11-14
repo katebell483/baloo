@@ -148,7 +148,7 @@ public class DogControl : MonoBehaviour {
 			Debug.Log ("DISTANCE: " + distance);
 
 			// got to food so stop + eat
-			if (distance < .75) {
+			if (distance < .075) {
 				Debug.Log ("GOT TO FOOD!");
 				rotating = false;
 				fraction = 0;
