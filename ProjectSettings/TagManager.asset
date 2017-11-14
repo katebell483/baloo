@@ -12,6 +12,7 @@ TagManager:
   - inScene
   - CorgiHouse
   - dogFood
+  - speechBubble
   layers:
   - Default
   - TransparentFX

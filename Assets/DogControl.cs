@@ -8,6 +8,7 @@ public class DogControl : MonoBehaviour {
 
 	// basic dog params
 	public GameObject corgi;
+	public GameObject speechBubble;
 	private Animation animation;
 	private bool shouldMove = false;
 	public bool dogInScene = false;
@@ -39,6 +40,7 @@ public class DogControl : MonoBehaviour {
 
 	// sitting params
 	private bool isSitting = false;
+	public bool speechBubbleShown = false;
 
 	// Use this for initialization
 	void Start () {
@@ -50,6 +52,9 @@ public class DogControl : MonoBehaviour {
 		Physics.IgnoreCollision(corgi.GetComponent<Collider>(), mat.GetComponent<Collider>());
 		corgiCollider = corgi.GetComponent<Collider>();
 		dogFood = GameObject.FindWithTag ("dogFood");
+		speechBubble = GameObject.FindWithTag ("speechBubble");
+		speechBubble.SetActive(false);
+		//speechBubble.SetActive(true);
 	}
 
 	// Update is called once per frame
@@ -319,7 +324,15 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void goBackToQuestion(){
-		Application.LoadLevel ("questions");
+		if (!speechBubbleShown) {
+			speechBubble.SetActive(true);
+		}
+		else {
+			speechBubble.SetActive(false);
+		}
+		speechBubbleShown = !speechBubbleShown;
+
+		//Application.LoadLevel ("questions");
 	}
 
 	public void goBackToCamera(){
