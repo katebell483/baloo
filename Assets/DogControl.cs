@@ -24,7 +24,7 @@ public class DogControl : MonoBehaviour {
 	public bool goingToFood = false;
 	private bool returnTrip = false;
 	private Vector3 endFetchingPos;
-	private Vector3 foodPos;
+	public Vector3 foodPos;
 	private Vector3 startOffPlaneFetchingPos;
 	private Vector3 fetchOrigin;
 	private float speed = .3f;
@@ -49,9 +49,7 @@ public class DogControl : MonoBehaviour {
 		Physics.IgnoreCollision(corgi.GetComponent<Collider>(), ball.GetComponent<Collider>());
 		Physics.IgnoreCollision(corgi.GetComponent<Collider>(), mat.GetComponent<Collider>());
 		corgiCollider = corgi.GetComponent<Collider>();
-
 		dogFood = GameObject.FindWithTag ("dogFood");
-		foodPos = dogFood.transform.position;
 	}
 
 	// Update is called once per frame
@@ -135,18 +133,31 @@ public class DogControl : MonoBehaviour {
 
 
 		if (goingToFood) {
-			float step = 1 * Time.deltaTime;
+
+			// move dog forward
+			fraction += Time.deltaTime * .05f;
+			Vector3 fetchingPos  = Vector3.Lerp(transform.position, foodPos, fraction);
+
 			Debug.Log ("HELL");
 			Debug.Log (transform.position);
 			Debug.Log ("BYE");
 			Debug.Log (foodPos);
 
-			Vector3 fetchingPos  = Vector3.Lerp(transform.position, foodPos, step);
-			if (fetchingPos == foodPos) {
-				Eat ();
+			//check distance
+			float distance = Math.Abs(Vector3.Distance(fetchingPos, foodPos));
+			Debug.Log ("DISTANCE: " + distance);
+
+			// got to food so stop + eat
+			if (distance < .05) {
+				Debug.Log ("GOT TO FOOD!");
+				rotating = false;
+				fraction = 0;
+				goingToFood = false;
+				EatWrapper ();
 			} else {
 				transform.position = fetchingPos;
 			}
+
 		}
 	}
 		
@@ -233,22 +244,24 @@ public class DogControl : MonoBehaviour {
 		animation.CrossFade ("CorgiSitIdle");
 	}
 
-	public void Eat() {
-		shouldMove = false;
-		rotating = true;
+	public void GoToBowl() {
+		Debug.Log ("GOING TO BOWL");
 		goingToFood = true;
-
 		rotatingTargetPos = dogFood.transform.position;
+		rotating = true;
+		Walk ();
+	}
 
+	public void EatWrapper() {
+		StartCoroutine(Eat());
+	}
 
-		rotateDog (rotatingTargetPos);
-
-		/*Vector3 targetPoint = new Vector3(dogFood.transform.position.x, corgi.transform.position.y, dogFood.transform.position.z) - corgi.transform.position;
-		Quaternion targetRotation = Quaternion.LookRotation (-targetPoint, Vector3.up);
-		transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 2.0f);*/
-
-		//animation.CrossFade ("CorgiEat");
-
+	public IEnumerator Eat() {
+		Debug.Log ("EATING");
+		shouldMove = false;
+		animation.CrossFade ("CorgiEat");
+		yield return new WaitForSeconds(5f); // waits 5 seconds
+		Sit();
 	}
 
 	public void Walk() {
@@ -274,7 +287,7 @@ public class DogControl : MonoBehaviour {
 
 	public IEnumerator InitialSequence() {
 		Walk ();
-		yield return new WaitForSeconds(3.5f); // waits 2 seconds
+		yield return new WaitForSeconds(3.5f); // waits 3.5 seconds
 		Sit();
 		LookAt ();
 	}
