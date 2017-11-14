@@ -13,6 +13,7 @@ TagManager:
   - CorgiHouse
   - dogFood
   - speechBubble
+  - infoBubble
   layers:
   - Default
   - TransparentFX

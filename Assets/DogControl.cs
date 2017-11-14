@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.iOS;
 using System;
+using UnityEngine.UI;
 
 public class DogControl : MonoBehaviour {
 
@@ -18,6 +19,7 @@ public class DogControl : MonoBehaviour {
 	public GameObject mat;
 	public GameObject ball;
 	public GameObject dogFood;
+	public GameObject infoBubble;
 
 	// fetching params
 	private bool initialFetchSequence = false;
@@ -54,6 +56,7 @@ public class DogControl : MonoBehaviour {
 		dogFood = GameObject.FindWithTag ("dogFood");
 		speechBubble = GameObject.FindWithTag ("speechBubble");
 		speechBubble.SetActive(false);
+		infoBubble = GameObject.FindWithTag ("infoBubble");
 		//speechBubble.SetActive(true);
 	}
 
@@ -291,6 +294,7 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public IEnumerator InitialSequence() {
+		infoBubble.GetComponentInChildren<Text>().text = "I'm here!";
 		Walk ();
 		yield return new WaitForSeconds(3.5f); // waits 3.5 seconds
 		Sit();
