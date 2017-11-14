@@ -135,7 +135,7 @@ public class DogControl : MonoBehaviour {
 		if (goingToFood) {
 
 			// move dog forward
-			fraction += Time.deltaTime * .05f;
+			fraction += Time.deltaTime * .025f;
 			Vector3 fetchingPos  = Vector3.Lerp(transform.position, foodPos, fraction);
 
 			Debug.Log ("HELL");
@@ -148,7 +148,7 @@ public class DogControl : MonoBehaviour {
 			Debug.Log ("DISTANCE: " + distance);
 
 			// got to food so stop + eat
-			if (distance < .05) {
+			if (distance < .75) {
 				Debug.Log ("GOT TO FOOD!");
 				rotating = false;
 				fraction = 0;
