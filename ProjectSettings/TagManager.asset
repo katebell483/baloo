@@ -14,6 +14,7 @@ TagManager:
   - dogFood
   - speechBubble
   - infoBubble
+  - Aura
   layers:
   - Default
   - TransparentFX

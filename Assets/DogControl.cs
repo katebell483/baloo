@@ -14,6 +14,8 @@ public class DogControl : MonoBehaviour {
 	private bool shouldMove = false;
 	public bool dogInScene = false;
 	Collider corgiCollider;
+	//Daniel
+	public GameObject aura;
 
 	// other game objects in the scene
 	public GameObject mat;
@@ -32,6 +34,13 @@ public class DogControl : MonoBehaviour {
 	private Vector3 fetchOrigin;
 	private float speed = .3f;
 	private float fraction = 0; 
+
+	//Daniel: breathing params
+	private bool isBreathing = false;
+	private bool auraGrowing = true; //true if growing, false if reducing
+	private float nbBreathingCycles = 0;
+
+
 
 	// rotating params
 	private bool rotating = false;
@@ -58,10 +67,18 @@ public class DogControl : MonoBehaviour {
 		speechBubble.SetActive(false);
 		infoBubble = GameObject.FindWithTag ("infoBubble");
 		//speechBubble.SetActive(true);
+		//Daniel
+		aura = GameObject.FindWithTag("Aura");
+		aura.SetActive(false);
 	}
 
 	// Update is called once per frame
 	void Update () {
+
+		//Daniel: Breathing phase:
+		if (isBreathing){
+			Breathe ();
+		}
 
 		// is the dog rotating?
 		if (rotating) {
@@ -287,6 +304,59 @@ public class DogControl : MonoBehaviour {
 	public void Jump() {
 		shouldMove = false;
 		animation.CrossFade ("CorgiJump");
+	}
+
+	//Daniel
+	public void AuraWarper(){
+		StartCoroutine(Aura());
+	}
+	public IEnumerator Aura() {
+		yield return new WaitForSeconds(3f); // waits 3 seconds
+		auraGrowing = false;
+	}
+
+	public void BarkLong() {
+		Debug.Log ("Barking dog !");
+		shouldMove = false;
+		animation.CrossFade ("CorgiIdleBarkingLong");
+		isBreathing = true;
+	}
+
+	public void Bark(){
+		shouldMove = false;
+		animation.CrossFade ("CorgiIdleBarking");
+		isBreathing = true;
+	}
+
+	public void Breathe(){
+		aura.transform.position = transform.position;
+		aura.SetActive (true);
+
+		// End of the 3 cycles of breathing
+		if (nbBreathingCycles >= 3) {
+			isBreathing = false;
+			nbBreathingCycles = 0;
+			auraGrowing = false;
+			aura.SetActive (false);
+			Sit();
+			LookAt ();
+		} else if (nbBreathingCycles >= 1) {
+			Bark ();
+		}
+
+		if (auraGrowing && aura.transform.localScale.x < 4.5) {
+			infoBubble.GetComponentInChildren<Text> ().text = "Breathe in to calm Baloo";
+			aura.transform.localScale += new Vector3 (0.01F, 0.01F, 0.01F);
+		} else if (auraGrowing && aura.transform.localScale.x >= 4.5) {
+			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
+			AuraWarper ();
+		} else if (!auraGrowing && aura.transform.localScale.x > 1.5) {
+			infoBubble.GetComponentInChildren<Text> ().text = "Breathe out slowly";
+			aura.transform.localScale -= new Vector3 (0.01F, 0.01F, 0.01F);
+		} else if (aura.transform.localScale.x <= 1.5) {
+			auraGrowing = true;
+			nbBreathingCycles += 1;
+		}
 	}
 
 	public void InitialSequenceWrapper() {
