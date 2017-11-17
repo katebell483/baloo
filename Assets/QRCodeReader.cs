@@ -30,6 +30,7 @@ public class QRCodeReader : MonoBehaviour {
 	private GameObject corgiHouse;
 	private GameObject ball;
 	private GameObject food;
+	private GameObject dogNamePanel;
 
 	private bool detectQR = true;
 	private Vector3 camPos;
@@ -43,6 +44,7 @@ public class QRCodeReader : MonoBehaviour {
 		corgiHouse = GameObject.FindWithTag ("CorgiHouse");
 		ball = GameObject.FindWithTag ("Ball");
 		food = GameObject.FindWithTag ("dogFood");
+		dogNamePanel = GameObject.FindWithTag ("dogNamePanel");
 	}
 
 	// Update is called once per frame
@@ -100,6 +102,7 @@ public class QRCodeReader : MonoBehaviour {
 				Debug.Log ("QR CODE ORIG BALL POS: " + ball.transform.position);
 				ball.GetComponent<BallMaker> ().setOrigPos(ball.transform.position);
 				corgi.GetComponent<DogControl>().foodPos = food.transform.position;
+				dogNamePanel.SetActive (true);
 
 				detectQR = false; 
 
