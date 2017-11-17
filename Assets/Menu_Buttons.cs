@@ -9,6 +9,8 @@ public class Menu_Buttons : MonoBehaviour {
 	public GameObject LevelSelectPanel;
 	public GameObject LoginPanel;
 	public GameObject SignUpPanel;
+	public InputField nameField;
+	public Text howFeelingText;
 	Vector3 endPos;
 
 	public Sprite scaredSelected;
@@ -26,6 +28,7 @@ public class Menu_Buttons : MonoBehaviour {
 	public Sprite orangeButton;
 
 	private bool selectedEmoji;
+	private string nameUser;
 
 	// Use this for initialization
 	void Start () {
@@ -65,8 +68,11 @@ public class Menu_Buttons : MonoBehaviour {
 
 	public void ShowSignUpPanel()
 	{
+		nameUser = nameField.text;
+		Debug.Log (nameUser);
 		MenuPanel.SetActive(false);
 		SignUpPanel.SetActive(true);
+		howFeelingText.text = "Hey " + nameUser +"!\n How are you feeling?";
 	}
 
 	public void ShowMenuFromLoginPanel()
