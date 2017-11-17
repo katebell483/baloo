@@ -3,20 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.iOS;
 using System;
+using UnityEngine.UI;
 
 public class DogControl : MonoBehaviour {
 
 	// basic dog params
 	public GameObject corgi;
+	public GameObject speechBubble;
 	private Animation animation;
 	private bool shouldMove = false;
 	public bool dogInScene = false;
 	Collider corgiCollider;
+	//Daniel
+	public GameObject aura;
 
 	// other game objects in the scene
 	public GameObject mat;
 	public GameObject ball;
 	public GameObject dogFood;
+	public GameObject infoBubble;
 
 	// fetching params
 	private bool initialFetchSequence = false;
@@ -30,6 +35,13 @@ public class DogControl : MonoBehaviour {
 	private float speed = .3f;
 	private float fraction = 0; 
 
+	//Daniel: breathing params
+	private bool isBreathing = false;
+	private bool auraGrowing = true; //true if growing, false if reducing
+	private float nbBreathingCycles = 0;
+
+
+
 	// rotating params
 	private bool rotating = false;
 	private Vector3 rotatingTargetPos;
@@ -39,6 +51,7 @@ public class DogControl : MonoBehaviour {
 
 	// sitting params
 	private bool isSitting = false;
+	public bool speechBubbleShown = false;
 
 	// petting params
 	private bool corgiTouched = false;
@@ -57,10 +70,22 @@ public class DogControl : MonoBehaviour {
 		Physics.IgnoreCollision(corgi.GetComponent<Collider>(), mat.GetComponent<Collider>());
 		corgiCollider = corgi.GetComponent<Collider>();
 		dogFood = GameObject.FindWithTag ("dogFood");
+		speechBubble = GameObject.FindWithTag ("speechBubble");
+		speechBubble.SetActive(false);
+		infoBubble = GameObject.FindWithTag ("infoBubble");
+		//speechBubble.SetActive(true);
+		//Daniel
+		aura = GameObject.FindWithTag("Aura");
+		aura.SetActive(false);
 	}
 
 	// Update is called once per frame
 	void Update () {
+
+		//Daniel: Breathing phase:
+		if (isBreathing){
+			Breathe ();
+		}
 
 		// is the dog rotating?
 		if (rotating) {
@@ -326,11 +351,68 @@ public class DogControl : MonoBehaviour {
 		animation.CrossFade ("CorgiJump");
 	}
 
+	//Daniel
+	public void AuraWarper(){
+		StartCoroutine(Aura());
+	}
+	public IEnumerator Aura() {
+		yield return new WaitForSeconds(3f); // waits 3 seconds
+		auraGrowing = false;
+	}
+
+	public void BarkLong() {
+		Debug.Log ("Barking dog !");
+		shouldMove = false;
+		animation.CrossFade ("CorgiIdleBarkingLong");
+		isBreathing = true;
+	}
+
+	public void Bark(){
+		shouldMove = false;
+		animation.CrossFade ("CorgiIdleBarking");
+		isBreathing = true;
+	}
+
+	public void Breathe(){
+		aura.transform.position = transform.position;
+		aura.SetActive (true);
+
+		// End of the 3 cycles of breathing => re-initialize the parameters
+		if (nbBreathingCycles >= 3) {
+			isBreathing = false;
+			nbBreathingCycles = 0;
+			auraGrowing = false;
+			aura.SetActive (false);
+			Sit();
+			LookAt ();
+		}
+		// After 1 cycle Baloo is Barking less
+		else if (nbBreathingCycles >= 1) {
+			Bark ();
+		}
+
+		// Transformation of the sphere
+		if (auraGrowing && aura.transform.localScale.x < 4.5) {
+			infoBubble.GetComponentInChildren<Text> ().text = "Breathe in to calm Baloo";
+			aura.transform.localScale += new Vector3 (0.01F, 0.01F, 0.01F);
+		} else if (auraGrowing && aura.transform.localScale.x >= 4.5) {
+			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
+			AuraWarper ();
+		} else if (!auraGrowing && aura.transform.localScale.x > 1.5) {
+			infoBubble.GetComponentInChildren<Text> ().text = "Breathe out slowly";
+			aura.transform.localScale -= new Vector3 (0.01F, 0.01F, 0.01F);
+		} else if (aura.transform.localScale.x <= 1.5) {
+			auraGrowing = true;
+			nbBreathingCycles += 1;
+		}
+	}
+
 	public void InitialSequenceWrapper() {
 		StartCoroutine(InitialSequence());
 	}
 
 	public IEnumerator InitialSequence() {
+		infoBubble.GetComponentInChildren<Text>().text = "I'm here!";
 		Walk ();
 		yield return new WaitForSeconds(3.5f); // waits 3.5 seconds
 		Sit();
@@ -364,7 +446,15 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void goBackToQuestion(){
-		Application.LoadLevel ("questions");
+		if (!speechBubbleShown) {
+			speechBubble.SetActive(true);
+		}
+		else {
+			speechBubble.SetActive(false);
+		}
+		speechBubbleShown = !speechBubbleShown;
+
+		//Application.LoadLevel ("questions");
 	}
 
 	public void goBackToCamera(){
