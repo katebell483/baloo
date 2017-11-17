@@ -40,6 +40,13 @@ public class DogControl : MonoBehaviour {
 	// sitting params
 	private bool isSitting = false;
 
+	// petting params
+	private bool corgiTouched = false;
+	private IEnumerator sittingCoroutine;
+	private bool waitingToLay = false;
+	private bool waitingToSit = false;
+	private IEnumerator layingCoroutine;
+
 	// Use this for initialization
 	void Start () {
 		animation = GetComponent<Animation> ();
@@ -69,11 +76,38 @@ public class DogControl : MonoBehaviour {
 			if (!isSitting) {
 				Sit ();
 			} else {
-				Lay ();
+				Debug.Log ("laying down");
+				//Lay ();
+			}
+		}
+
+		if (Input.touchCount > 0) {
+
+
+			Touch touch = Input.touches [0];
+			Vector3 pos = touch.position;
+
+			RaycastHit hit;
+			Ray ray = Camera.main.ScreenPointToRay (pos); 
+
+			if(touch.phase == TouchPhase.Began) {
+				if (Physics.Raycast (ray, out hit) && hit.transform.gameObject.tag == "Corgi") {
+					Debug.Log ("corgi touched");
+					corgiTouched = true;
+					if (waitingToSit) StopCoroutine (sittingCoroutine);
+					layingCoroutine = WaitAndLay(.5f);
+					StartCoroutine(layingCoroutine);
+				}
+			}
+
+			if (touch.phase == TouchPhase.Ended) {
+				sittingCoroutine = WaitAndSit(3.0f);
+				StartCoroutine(sittingCoroutine);
+				corgiTouched = false;
 			}
 		}
 			
-
+		// TODO: is it necessary to have this separate?
 		if (initialFetchSequence) {
 			rotating = true;
 			rotatingTargetPos = ball.transform.position;
@@ -137,11 +171,6 @@ public class DogControl : MonoBehaviour {
 			// move dog forward
 			fraction += Time.deltaTime * .025f;
 			Vector3 fetchingPos  = Vector3.Lerp(transform.position, foodPos, fraction);
-
-			Debug.Log ("HELL");
-			Debug.Log (transform.position);
-			Debug.Log ("BYE");
-			Debug.Log (foodPos);
 
 			//check distance
 			float distance = Math.Abs(Vector3.Distance(fetchingPos, foodPos));
@@ -236,6 +265,22 @@ public class DogControl : MonoBehaviour {
 	public void LayDown() {
 		shouldMove = false;
 		animation.CrossFade ("CorgiSitToLay");
+	}
+
+	public IEnumerator WaitAndSit(float waitTime) {
+		Debug.Log ("waiting to sit");
+		waitingToSit = true;
+		yield return new WaitForSeconds (waitTime);
+		waitingToSit = false;
+		Sit ();
+	}
+
+	public IEnumerator WaitAndLay(float waitTime) {
+		Debug.Log ("waiting to lay");
+		waitingToLay = true;
+		yield return new WaitForSeconds(waitTime); // waits 5 seconds
+		waitingToLay = false;
+		Lay ();
 	}
 
 	public void Sit() {

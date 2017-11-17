@@ -81,6 +81,7 @@ public class BallMaker : MonoBehaviour {
 					offset = toDrag.position - v;
 					dragging = true;
 				}
+					
 			}
 
 			if (dragging && touch.phase == TouchPhase.Moved) {

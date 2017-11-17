@@ -101,7 +101,6 @@ public class QRCodeReader : MonoBehaviour {
 				ball.GetComponent<BallMaker> ().setOrigPos(ball.transform.position);
 				corgi.GetComponent<DogControl>().foodPos = food.transform.position;
 
-
 				detectQR = false; 
 
 				break;
