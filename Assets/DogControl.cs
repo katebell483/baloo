@@ -332,7 +332,7 @@ public class DogControl : MonoBehaviour {
 		aura.transform.position = transform.position;
 		aura.SetActive (true);
 
-		// End of the 3 cycles of breathing
+		// End of the 3 cycles of breathing => re-initialize the parameters
 		if (nbBreathingCycles >= 3) {
 			isBreathing = false;
 			nbBreathingCycles = 0;
@@ -340,10 +340,13 @@ public class DogControl : MonoBehaviour {
 			aura.SetActive (false);
 			Sit();
 			LookAt ();
-		} else if (nbBreathingCycles >= 1) {
+		}
+		// After 1 cycle Baloo is Barking less
+		else if (nbBreathingCycles >= 1) {
 			Bark ();
 		}
 
+		// Transformation of the sphere
 		if (auraGrowing && aura.transform.localScale.x < 4.5) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Breathe in to calm Baloo";
 			aura.transform.localScale += new Vector3 (0.01F, 0.01F, 0.01F);
