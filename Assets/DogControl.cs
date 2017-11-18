@@ -30,7 +30,7 @@ public class DogControl : MonoBehaviour {
 	private bool returnTrip = false;
 	private Vector3 endFetchingPos;
 	public Vector3 foodPos;
-	private Vector3 startOffPlaneFetchingPos;
+	private Vector3 startFetchingPos;
 	private Vector3 fetchOrigin;
 	private float speed = .3f;
 	private float fraction = 0; 
@@ -40,8 +40,6 @@ public class DogControl : MonoBehaviour {
 	private bool auraGrowing = true; //true if growing, false if reducing
 	private float nbBreathingCycles = 0;
 
-
-
 	// rotating params
 	private bool rotating = false;
 	private Vector3 rotatingTargetPos;
@@ -50,7 +48,6 @@ public class DogControl : MonoBehaviour {
 	public GameObject eatButton;
 
 	// sitting params
-	private bool isSitting = false;
 	public bool speechBubbleShown = false;
 
 	// petting params
@@ -65,7 +62,6 @@ public class DogControl : MonoBehaviour {
 		animation = GetComponent<Animation> ();
 		mat = GameObject.FindWithTag ("Mat");
 		corgi = GameObject.FindWithTag("Corgi");
-		ball = GameObject.FindWithTag ("Ball");
 		Physics.IgnoreCollision(corgi.GetComponent<Collider>(), ball.GetComponent<Collider>());
 		Physics.IgnoreCollision(corgi.GetComponent<Collider>(), mat.GetComponent<Collider>());
 		corgiCollider = corgi.GetComponent<Collider>();
@@ -91,127 +87,30 @@ public class DogControl : MonoBehaviour {
 		if (rotating) {
 			rotateDog (rotatingTargetPos);
 		}
-
+			
 		if (shouldMove && !fetching) {
 			transform.Translate (Vector3.forward * Time.deltaTime * (transform.localScale.x * .25f));
-			startOffPlaneFetchingPos = transform.position;
+			// we want to keep track of the corgis position before it leaves the plane
+			startFetchingPos = transform.position;
 		} 
 
 		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down)){
-			if (!isSitting) {
-				Sit ();
-			} else {
-				Debug.Log ("laying down");
-				//Lay ();
-			}
+			Sit ();
 		}
 
-		if (Input.touchCount > 0) {
+		// PETTING
+		if (!fetching && !goingToFood) {
+			CheckForPetting();
+		}
 
-
-			Touch touch = Input.touches [0];
-			Vector3 pos = touch.position;
-
-			RaycastHit hit;
-			Ray ray = Camera.main.ScreenPointToRay (pos); 
-
-			if(touch.phase == TouchPhase.Began) {
-				if (Physics.Raycast (ray, out hit) && hit.transform.gameObject.tag == "Corgi") {
-					Debug.Log ("corgi touched");
-					corgiTouched = true;
-					if (waitingToSit) StopCoroutine (sittingCoroutine);
-					layingCoroutine = WaitAndLay(.5f);
-					StartCoroutine(layingCoroutine);
-				}
-			}
-
-			if (touch.phase == TouchPhase.Ended) {
-				sittingCoroutine = WaitAndSit(3.0f);
-				StartCoroutine(sittingCoroutine);
-				corgiTouched = false;
-			}
+		// FETCHING
+		if (fetching) {
+			Fetch (); 
 		}
 			
-		// TODO: is it necessary to have this separate?
-		if (initialFetchSequence) {
-			rotating = true;
-			rotatingTargetPos = ball.transform.position;
-		}
-
-		if (fetching) {
-
-			// move the dog forward
-			fraction += Time.deltaTime * speed;
-
-			// originally start from the last point that the dog was on the plane
-			Vector3 fetchingPos = Vector3.Lerp (startOffPlaneFetchingPos, endFetchingPos, fraction);
-
-			Debug.Log ("_________________________________________________");
-			Debug.Log ("fraction " + fraction);
-			Debug.Log ("fetchingPos " + fetchingPos);
-			Debug.Log ("endfetchingPos " + endFetchingPos);
-			Debug.Log ("_________________________________________________");
-
-			// if dog reaches its destination that means it either has to turn around of fetching done
-			if (fetchingPos == endFetchingPos) {
-				Debug.Log ("made it to the ball!");
-
-				if (returnTrip) {
-					Debug.Log ("fetching complete!");
-					fetching = false;
-					returnTrip = false;
-					fraction = 0;
-
-					Debug.Log ("dropping ball!");
-					LookAt ();
-					Sit ();
-					ball.transform.parent = null;
-					rotating = false;
-					corgiCollider.enabled = true;
-
-				} else {
-					Debug.Log ("turning around");
-					returnTrip = true;
-					fraction = 0;
-					endFetchingPos = fetchOrigin;
-					startOffPlaneFetchingPos = fetchingPos;
-
-					// rotate
-					rotating = true;
-					rotatingTargetPos = fetchOrigin;
-
-					// grarb the ball by parenting it to the dog
-					Debug.Log ("grabbing ball");
-					ball.transform.parent = transform;
-					//ball.transform.Translate(0, .1f, -.1f);
-				}
-			} else {
-				transform.position = fetchingPos;
-			}
-		}
-
-
+		// EATING
 		if (goingToFood) {
-
-			// move dog forward
-			fraction += Time.deltaTime * .025f;
-			Vector3 fetchingPos  = Vector3.Lerp(transform.position, foodPos, fraction);
-
-			//check distance
-			float distance = Math.Abs(Vector3.Distance(fetchingPos, foodPos));
-			Debug.Log ("DISTANCE: " + distance);
-
-			// got to food so stop + eat
-			if (distance < .06) {
-				Debug.Log ("GOT TO FOOD!");
-				rotating = false;
-				fraction = 0;
-				goingToFood = false;
-				EatWrapper ();
-			} else {
-				transform.position = fetchingPos;
-			}
-
+			GoToFoodAndEat ();
 		}
 	}
 		
@@ -229,13 +128,12 @@ public class DogControl : MonoBehaviour {
 			Debug.Log ("HIT WALL STARTING FETCH");
 
 			// disable colliders
+			corgiCollider = corgi.GetComponent<Collider>();
 			corgiCollider.enabled = false;
+			Debug.Log ("HIT WALL STARTING FETCH2");
 
-			endFetchingPos = ball.transform.position;
-			Debug.Log ("end fetching pos " + endFetchingPos);
-
-			Jump ();
 			Gallop ();
+			Debug.Log ("HIT WALL STARTING FETCH3");
 
 			fetching = true;
 			initialFetchSequence = false;
@@ -266,12 +164,18 @@ public class DogControl : MonoBehaviour {
 		dogInScene = true;
 	}
 
-	public void fetchBall(Vector3 ballPos) {
+	public void StartFetchingSequence(Vector3 ballPos) {
 		Debug.Log ("sending dog to fetch");
 
 		// mark position
 		Debug.Log ("start fetching pos " + fetchOrigin);
+		Debug.Log ("ball pos " + ballPos);
+
 		fetchOrigin = transform.position;
+		endFetchingPos = ballPos;
+
+		rotating = true;
+		rotatingTargetPos = endFetchingPos;
 
 		// walk to the edge
 		Walk ();
@@ -309,17 +213,65 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void Sit() {
-		isSitting = true;
 		shouldMove = false;
 		animation.CrossFade ("CorgiSitIdle");
 	}
 
-	public void GoToBowl() {
+	public void CheckForPetting() {
+		if (Input.touchCount > 0) {
+
+			Touch touch = Input.touches [0];
+			Vector3 pos = touch.position;
+
+			RaycastHit hit;
+			Ray ray = Camera.main.ScreenPointToRay (pos); 
+
+			if (touch.phase == TouchPhase.Began) {
+				if (Physics.Raycast (ray, out hit) && hit.transform.gameObject.tag == "Corgi") {
+					Debug.Log ("corgi touched");
+					corgiTouched = true;
+					if (waitingToSit)
+						StopCoroutine (sittingCoroutine);
+					layingCoroutine = WaitAndLay (.5f);
+					StartCoroutine (layingCoroutine);
+				}
+			}
+
+			if (touch.phase == TouchPhase.Ended && corgiTouched) {
+				sittingCoroutine = WaitAndSit (3.0f);
+				StartCoroutine (sittingCoroutine);
+				corgiTouched = false;
+			}
+		}
+	}
+
+	public void StartEatingSequence() {
 		Debug.Log ("GOING TO BOWL");
 		goingToFood = true;
 		rotatingTargetPos = dogFood.transform.position;
 		rotating = true;
 		Walk ();
+	}
+		
+	public void GoToFoodAndEat() {
+		// move dog forward
+		fraction += Time.deltaTime * .025f;
+		Vector3 fetchingPos  = Vector3.Lerp(transform.position, foodPos, fraction);
+
+		//check distance
+		float distance = Math.Abs(Vector3.Distance(fetchingPos, foodPos));
+		Debug.Log ("DISTANCE: " + distance);
+
+		// got to food so stop + eat
+		if (distance < .06) {
+			Debug.Log ("GOT TO FOOD!");
+			rotating = false;
+			fraction = 0;
+			goingToFood = false;
+			EatWrapper ();
+		} else {
+			transform.position = fetchingPos;
+		}
 	}
 
 	public void EatWrapper() {
@@ -335,13 +287,11 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void Walk() {
-		isSitting = false;
 		shouldMove = true;
 		animation.CrossFade ("CorgiTrot");
 	}
 
 	public void Gallop() {
-		isSitting = false;
 		shouldMove = true;
 		animation.CrossFade ("CorgiGallop");
 	}
@@ -371,6 +321,59 @@ public class DogControl : MonoBehaviour {
 		shouldMove = false;
 		animation.CrossFade ("CorgiIdleBarking");
 		isBreathing = true;
+	}
+
+	public void Fetch() {
+		
+		// move the dog forward
+		fraction += Time.deltaTime * speed;
+
+		// originally start from the last point that the dog was on the plane
+		Vector3 fetchingPos = Vector3.Lerp (startFetchingPos, endFetchingPos, fraction);
+
+		// if dog reaches its destination that means it either has to turn around of fetching done
+		if (fetchingPos == endFetchingPos) {
+			Debug.Log ("made it to the ball!");
+
+			if (returnTrip) {
+				Debug.Log ("fetching complete!");
+				fetching = false;
+				returnTrip = false;
+				fraction = 0;
+
+				Debug.Log ("dropping ball!");
+				LookAt ();
+				Sit ();
+
+				// destroy current fetch ball
+				// TODO: do something more clever here
+				ball.transform.parent = null;
+				Destroy (ball);
+
+				// restore corgi settings
+				rotating = false;
+				corgiCollider = corgi.GetComponent<Collider>();
+				corgiCollider.enabled = true;
+
+			} else {
+				Debug.Log ("turning around");
+				returnTrip = true;
+				fraction = 0;
+				endFetchingPos = mat.transform.position;
+				startFetchingPos = fetchingPos;
+
+				// rotate
+				rotating = true;
+				rotatingTargetPos = fetchOrigin;
+
+				// grarb the ball by parenting it to the dog
+				Debug.Log ("grabbing ball");
+				ball = GameObject.FindWithTag ("Ball");
+				ball.transform.parent = transform;
+			}
+		} else {
+			transform.position = fetchingPos;
+		}
 	}
 
 	public void Breathe(){
@@ -412,7 +415,8 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public IEnumerator InitialSequence() {
-		infoBubble.GetComponentInChildren<Text>().text = "I'm here!";
+		Debug.Log ("Dog starting initial sequence");
+		//infoBubble.GetComponentInChildren<Text>().text = "I'm here!";
 		Walk ();
 		yield return new WaitForSeconds(3.5f); // waits 3.5 seconds
 		Sit();

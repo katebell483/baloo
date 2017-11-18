@@ -84,6 +84,7 @@ public class BallMaker : MonoBehaviour {
 					
 			}
 
+			/*
 			if (dragging && touch.phase == TouchPhase.Moved) {
 				Debug.Log ("dragging ball");
 				v = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, dist);
@@ -101,6 +102,7 @@ public class BallMaker : MonoBehaviour {
 
 				toDrag.position = dragPos;
 			}
+			*/
 
 			// touch released. check if the movement was a swipe to indicate fetch
 			if (dragging && (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)) {
@@ -180,7 +182,7 @@ public class BallMaker : MonoBehaviour {
 
 				// send the dog to fetch it
 				if(corgi.GetComponent<DogControl> ().dogInScene) {
-					corgi.GetComponent<DogControl> ().fetchBall (endBallPos);
+					corgi.GetComponent<DogControl> ().StartFetchingSequence (endBallPos);
 				}
 
 				//StartCoroutine(sendDogForBall(endBallPos));
@@ -194,23 +196,14 @@ public class BallMaker : MonoBehaviour {
 
 	public void CreateBall() {
 
-		/*
-		if (corgi.GetComponent<DogControl> ().fetching) {
-			return;
-		}*/
-
-		Debug.Log ("putting ball back to: " + origBallPos);
-
-		currBall.transform.position = origBallPos;
-
-
-		/*
 		// destroy any old balls
 		Destroy(currBall);
 
-		Vector3 position = Camera.main.transform.position + Camera.main.transform.forward * 1.0f;
+		Vector3 position = Camera.main.transform.position + Camera.main.transform.forward * .1f;
+		position.y = position.y - .3f;
 
 		GameObject ballGO = Instantiate (ballPrefab, position, Quaternion.identity);
+
 		Rigidbody rb = ballGO.GetComponent<Rigidbody> ();
 		rb.useGravity = false;
 		currBall = ballGO;
@@ -226,7 +219,6 @@ public class BallMaker : MonoBehaviour {
 
 		MeshRenderer renderer = ballGO.GetComponent<MeshRenderer>();
 		renderer.SetPropertyBlock(props);
-		*/
 
 	}
 
