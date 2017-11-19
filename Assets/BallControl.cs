@@ -6,9 +6,7 @@ using UnityEngine.XR.iOS;
 public class BallControl : MonoBehaviour {
 
 	public GameObject ballPrefab;
-	public float Force;
 	public GameObject currBall;
-	public float createHeight;
 	private MaterialPropertyBlock props;
 
 	private GameObject corgi;

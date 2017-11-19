@@ -22,6 +22,8 @@ public class DogControl : MonoBehaviour {
 	public GameObject ball;
 	public GameObject dogFood;
 	public GameObject infoBubble;
+	public GameObject introPanel;
+	public GameObject dogNamePanel;
 
 	// fetching params
 	private bool initialFetchSequence = false;
@@ -34,6 +36,12 @@ public class DogControl : MonoBehaviour {
 	private Vector3 fetchOrigin;
 	private float speed = .3f;
 	private float fraction = 0; 
+
+	// petting params
+	private bool corgiTouched = false;
+	private IEnumerator sittingCoroutine;
+	private bool waitingToSit = false;
+	private IEnumerator layingCoroutine;
 
 	//Daniel: breathing params
 	private bool isBreathing = false;
@@ -50,26 +58,27 @@ public class DogControl : MonoBehaviour {
 	// sitting params
 	public bool speechBubbleShown = false;
 
-	// petting params
-	private bool corgiTouched = false;
-	private IEnumerator sittingCoroutine;
-	private bool waitingToLay = false;
-	private bool waitingToSit = false;
-	private IEnumerator layingCoroutine;
-
 	// Use this for initialization
 	void Start () {
-		animation = GetComponent<Animation> ();
+		animation = corgi.GetComponent<Animation> ();
+
+		introPanel = GameObject.FindWithTag ("introPanel");
+		dogNamePanel = GameObject.FindWithTag ("dogNamePanel");
+		dogNamePanel.SetActive(false);
+
 		mat = GameObject.FindWithTag ("Mat");
 		corgi = GameObject.FindWithTag("Corgi");
-		Physics.IgnoreCollision(corgi.GetComponent<Collider>(), ball.GetComponent<Collider>());
-		Physics.IgnoreCollision(corgi.GetComponent<Collider>(), mat.GetComponent<Collider>());
-		corgiCollider = corgi.GetComponent<Collider>();
 		dogFood = GameObject.FindWithTag ("dogFood");
+
+		//Physics.IgnoreCollision(corgi.GetComponent<Collider>(), ball.GetComponent<Collider>());
+		//Physics.IgnoreCollision(corgi.GetComponent<Collider>(), mat.GetComponent<Collider>());
+		//corgiCollider = corgi.GetComponent<Collider>();
+
 		speechBubble = GameObject.FindWithTag ("speechBubble");
 		speechBubble.SetActive(false);
 		infoBubble = GameObject.FindWithTag ("infoBubble");
 		//speechBubble.SetActive(true);
+
 		//Daniel
 		aura = GameObject.FindWithTag("Aura");
 		aura.SetActive(false);
@@ -82,16 +91,16 @@ public class DogControl : MonoBehaviour {
 		if (isBreathing){
 			Breathe ();
 		}
-
+			
 		// is the dog rotating?
 		if (rotating) {
 			rotateDog (rotatingTargetPos);
 		}
 			
 		if (shouldMove && !fetching) {
-			transform.Translate (Vector3.forward * Time.deltaTime * (transform.localScale.x * .25f));
+			corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .25f));
 			// we want to keep track of the corgis position before it leaves the plane
-			startFetchingPos = transform.position;
+			startFetchingPos = corgi.transform.position;
 		} 
 
 		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down)){
@@ -102,7 +111,7 @@ public class DogControl : MonoBehaviour {
 		if (!fetching && !goingToFood) {
 			CheckForPetting();
 		}
-
+			
 		// FETCHING
 		if (fetching) {
 			Fetch (); 
@@ -110,11 +119,12 @@ public class DogControl : MonoBehaviour {
 			
 		// EATING
 		if (goingToFood) {
-			GoToFoodAndEat ();
+			GoToFoodAndEat();
 		}
 	}
 		
 	public void rotateDog(Vector3 targetPos) {
+		Debug.Log ("ROTATING");
 		Vector3 targetPoint = new Vector3(targetPos.x, corgi.transform.position.y, targetPos.z) - corgi.transform.position;
 		Quaternion targetRotation = Quaternion.LookRotation (targetPoint, Vector3.up);
 		corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 3.0f);
@@ -139,7 +149,7 @@ public class DogControl : MonoBehaviour {
 			initialFetchSequence = false;
 
 		} else {
-			transform.LookAt (mat.transform.position);
+			corgi.transform.LookAt (mat.transform.position);
 			Sit ();
 		} 
 	}
@@ -156,8 +166,8 @@ public class DogControl : MonoBehaviour {
 		ARHitTestResult result = hitResults[0];
 
 		// set the dog on the platform
-		transform.rotation = Quaternion.Euler (Vector3.zero);
-		transform.position = UnityARMatrixOps.GetPosition (result.worldTransform);
+		corgi.transform.rotation = Quaternion.Euler (Vector3.zero);
+		corgi.transform.position = UnityARMatrixOps.GetPosition (result.worldTransform);
 
 		LookAt ();
 
@@ -168,10 +178,10 @@ public class DogControl : MonoBehaviour {
 		Debug.Log ("sending dog to fetch");
 
 		// mark position
-		Debug.Log ("start fetching pos " + fetchOrigin);
+		//Debug.Log ("start fetching pos " + fetchOrigin);
 		Debug.Log ("ball pos " + ballPos);
 
-		fetchOrigin = transform.position;
+		//fetchOrigin = corgi.transform.position;
 		endFetchingPos = ballPos;
 
 		rotating = true;
@@ -182,8 +192,21 @@ public class DogControl : MonoBehaviour {
 
 		// then turn and walk towards edge of platform
 		initialFetchSequence = true;
+	}
 
-		return;
+	public void Walk() {
+		shouldMove = true;
+		animation.CrossFade ("CorgiTrot");
+	}
+
+	public void Gallop() {
+		shouldMove = true;
+		animation.CrossFade ("CorgiGallop");
+	}
+
+	public void Jump() {
+		shouldMove = false;
+		animation.CrossFade ("CorgiJump");
 	}
 
 	public void Lay() {
@@ -196,6 +219,11 @@ public class DogControl : MonoBehaviour {
 		animation.CrossFade ("CorgiSitToLay");
 	}
 
+	public void Sit() {
+		shouldMove = false;
+		animation.CrossFade ("CorgiSitIdle");
+	}
+
 	public IEnumerator WaitAndSit(float waitTime) {
 		Debug.Log ("waiting to sit");
 		waitingToSit = true;
@@ -206,15 +234,8 @@ public class DogControl : MonoBehaviour {
 
 	public IEnumerator WaitAndLay(float waitTime) {
 		Debug.Log ("waiting to lay");
-		waitingToLay = true;
-		yield return new WaitForSeconds(waitTime); // waits 5 seconds
-		waitingToLay = false;
+		yield return new WaitForSeconds(waitTime); 
 		Lay ();
-	}
-
-	public void Sit() {
-		shouldMove = false;
-		animation.CrossFade ("CorgiSitIdle");
 	}
 
 	public void CheckForPetting() {
@@ -254,12 +275,13 @@ public class DogControl : MonoBehaviour {
 	}
 		
 	public void GoToFoodAndEat() {
+		
 		// move dog forward
 		fraction += Time.deltaTime * .025f;
-		Vector3 fetchingPos  = Vector3.Lerp(transform.position, foodPos, fraction);
+		Vector3 currPos  = Vector3.Lerp(corgi.transform.position, foodPos, fraction);
 
 		//check distance
-		float distance = Math.Abs(Vector3.Distance(fetchingPos, foodPos));
+		float distance = Math.Abs(Vector3.Distance(currPos, foodPos));
 		Debug.Log ("DISTANCE: " + distance);
 
 		// got to food so stop + eat
@@ -270,7 +292,7 @@ public class DogControl : MonoBehaviour {
 			goingToFood = false;
 			EatWrapper ();
 		} else {
-			transform.position = fetchingPos;
+			corgi.transform.position = currPos;
 		}
 	}
 
@@ -284,21 +306,6 @@ public class DogControl : MonoBehaviour {
 		animation.CrossFade ("CorgiEat");
 		yield return new WaitForSeconds(5f); // waits 5 seconds
 		Sit();
-	}
-
-	public void Walk() {
-		shouldMove = true;
-		animation.CrossFade ("CorgiTrot");
-	}
-
-	public void Gallop() {
-		shouldMove = true;
-		animation.CrossFade ("CorgiGallop");
-	}
-
-	public void Jump() {
-		shouldMove = false;
-		animation.CrossFade ("CorgiJump");
 	}
 
 	//Daniel
@@ -359,25 +366,27 @@ public class DogControl : MonoBehaviour {
 				Debug.Log ("turning around");
 				returnTrip = true;
 				fraction = 0;
+				startFetchingPos = endFetchingPos;
 				endFetchingPos = mat.transform.position;
-				startFetchingPos = fetchingPos;
+				Debug.Log(endFetchingPos);
+				Debug.Log(startFetchingPos);
 
 				// rotate
 				rotating = true;
-				rotatingTargetPos = fetchOrigin;
+				rotatingTargetPos = mat.transform.position;
 
-				// grarb the ball by parenting it to the dog
+				// grab the ball by parenting it to the dog
 				Debug.Log ("grabbing ball");
 				ball = GameObject.FindWithTag ("Ball");
-				ball.transform.parent = transform;
+				ball.transform.parent = corgi.transform;
 			}
 		} else {
-			transform.position = fetchingPos;
+			corgi.transform.position = fetchingPos;
 		}
 	}
 
 	public void Breathe(){
-		aura.transform.position = transform.position;
+		aura.transform.position = corgi.transform.position;
 		aura.SetActive (true);
 
 		// End of the 3 cycles of breathing => re-initialize the parameters
@@ -441,13 +450,23 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void LookAt() {
-		transform.LookAt (Camera.main.transform.position);
-		transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+		corgi.transform.LookAt (Camera.main.transform.position);
+		corgi.transform.eulerAngles = new Vector3(0, corgi.transform.eulerAngles.y, 0);
 	}
 
 	public void goBackToMenu(){
 		Application.LoadLevel ("menu");
 	}
+
+	public void hideIntroPanel(){
+		Debug.Log ("HERE!!!");
+		introPanel.SetActive (false);
+	}
+
+	public void hideDogNamePanel(){
+		dogNamePanel.SetActive (false);
+	}
+
 
 	public void goBackToQuestion(){
 		if (!speechBubbleShown) {
@@ -460,7 +479,7 @@ public class DogControl : MonoBehaviour {
 
 		//Application.LoadLevel ("questions");
 	}
-
+		
 	public void goBackToCamera(){
 		Application.LoadLevel ("camera");
 	}
