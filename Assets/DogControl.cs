@@ -9,11 +9,17 @@ public class DogControl : MonoBehaviour {
 
 	// basic dog params
 	public GameObject corgi;
-	public GameObject speechBubble;
 	private Animation animation;
 	private bool shouldMove = false;
 	public bool dogInScene = false;
 	Collider corgiCollider;
+
+	// UI elements
+	public GameObject speechBubble;
+	public GameObject fetchButton;
+	public GameObject eatButton;
+	public GameObject breatheButton;
+
 	//Daniel
 	public GameObject aura;
 
@@ -52,9 +58,6 @@ public class DogControl : MonoBehaviour {
 	private bool rotating = false;
 	private Vector3 rotatingTargetPos;
 
-	// eating params
-	public GameObject eatButton;
-
 	// sitting params
 	public bool speechBubbleShown = false;
 
@@ -65,7 +68,7 @@ public class DogControl : MonoBehaviour {
 		introPanel = GameObject.FindWithTag ("introPanel");
 		dogNamePanel = GameObject.FindWithTag ("dogNamePanel");
 		dogNamePanel.SetActive(false);
-
+			
 		mat = GameObject.FindWithTag ("Mat");
 		corgi = GameObject.FindWithTag("Corgi");
 		dogFood = GameObject.FindWithTag ("dogFood");
@@ -86,6 +89,20 @@ public class DogControl : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
+
+		// turn off buttons until dog in scene
+		if (dogInScene) {
+			Debug.Log ("setting buttons to true");
+			fetchButton.SetActive (true);
+			eatButton.SetActive (true);
+			breatheButton.SetActive (true);
+		} else {
+			Debug.Log ("setting buttons to false");
+			fetchButton.SetActive (false);
+			eatButton.SetActive (false);
+			breatheButton.SetActive (false);
+		}
 
 		//Daniel: Breathing phase:
 		if (isBreathing){
