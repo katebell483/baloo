@@ -46,7 +46,6 @@ public class DogControl : MonoBehaviour {
 
 	// Random walking parameters
 	private bool isRandomlyWalking = false;
-	private bool reachedRandomTarget = true;
 	float randX, randZ;
 
 	// petting params
@@ -114,27 +113,11 @@ public class DogControl : MonoBehaviour {
 		}
 			
 		if (shouldMove && !fetching) {
-			if (isRandomlyWalking && reachedRandomTarget) {
-				reachedRandomTarget = false;
-				rotating = true;
-				rotatingTargetPos = newRandomDirection ();
-				Debug.Log ("rotatingTargetPos: " + rotatingTargetPos);
-				Walk ();
-				fraction += Time.deltaTime * .025f;
-				Vector3 fetchingPos = Vector3.Lerp (transform.position, rotatingTargetPos, fraction);
 
-				transform.position = fetchingPos;
-
-			} else if (isRandomlyWalking && !reachedRandomTarget) {
-				float distanceToRandPosition = Math.Abs (Vector3.Distance (transform.position, rotatingTargetPos));
-				if (distanceToRandPosition < .06) {
-					Debug.Log("Baloo arrived to the random destination");
-					reachedRandomTarget = true;
-					rotating = false;
-					fraction = 0;
-					//Sit ();
-				}
+			if (isRandomlyWalking) {
+				RandomWalk ();
 			}
+				
 			else{
 				corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .25f));
 				// we want to keep track of the corgis position before it leaves the plane
@@ -308,8 +291,6 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void StartEatingSequence() {
-		Debug.Log ("Parameters Value : isBreathing: " + isBreathing + ", isRandomly walking: "+ isRandomlyWalking);
-
 
 		Debug.Log ("GOING TO BOWL");
 		goingToFood = true;
@@ -433,10 +414,14 @@ public class DogControl : MonoBehaviour {
 	//// Returns a return value among {-1,0,1}
 	//// randomNumber is between 0.0 and 1.0
 	public float returnRandomInteger(float randomNumber){
-		if (randomNumber <= .5f) {
+		if (randomNumber <= .25f) {
+			return -2;
+		} else if (randomNumber <= .5f) {
 			return -1;
-		}else{
+		} else if (randomNumber <= .75f) {
 			return 1;
+		} else {
+			return 2;
 		}
 	}
 	public Vector3 newRandomDirection(){
@@ -447,9 +432,28 @@ public class DogControl : MonoBehaviour {
 		if (randVector.magnitude > 0) {
 			randVector = randVector / randVector.magnitude;
 		}
+		randVector = transform.position + randVector*transform.localScale.x;//Random position next to the dog
 		return randVector;
 	}
 
+	public void RandomWalk(){
+		Debug.Log ("Random Walk called");
+		Debug.Log ("Parameters Value : isBreathing: " + isBreathing + ", isRandomly walking: "+ isRandomlyWalking+ ", shouldMove: "+ shouldMove);
+		Debug.Log ("rotatingTargetPos: "+rotatingTargetPos);
+		rotating = true;
+		Walk ();
+		fraction += Time.deltaTime * .025f;
+		Vector3 curPos = Vector3.Lerp (transform.position, rotatingTargetPos, fraction);
+		float distanceToRandPosition = Math.Abs (Vector3.Distance (transform.position, rotatingTargetPos));
+		if (distanceToRandPosition < .2) {
+			Debug.Log ("Baloo arrived to the random destination, ditance: "+distanceToRandPosition);
+			fraction = 0;
+			rotatingTargetPos = newRandomDirection ();
+			RandomWalk ();
+		} else {
+			transform.position = curPos;
+		}
+	}
 
 	public void Breathe(){
 		LookAt ();
@@ -471,14 +475,14 @@ public class DogControl : MonoBehaviour {
 		}
 
 		// Transformation of the sphere
-		if (auraGrowing && aura.transform.localScale.x < 7) {
-			//infoBubble.GetComponentInChildren<Text> ().text = "Breathe in to calm Baloo";
+		if (auraGrowing && aura.transform.localScale.x < 6) {
+			infoBubble.GetComponentInChildren<Text> ().text = "Breathe in to calm Baloo";
 			aura.transform.localScale += new Vector3 (0.02F, 0.02F, 0.02F);
-		} else if (auraGrowing && aura.transform.localScale.x >= 7) {
-			//infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
+		} else if (auraGrowing && aura.transform.localScale.x >= 6) {
+			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
 			AuraWarper ();
 		} else if (!auraGrowing && aura.transform.localScale.x > 2) {
-			//infoBubble.GetComponentInChildren<Text> ().text = "Breathe out slowly";
+			infoBubble.GetComponentInChildren<Text> ().text = "Breathe out slowly";
 			aura.transform.localScale -= new Vector3 (0.02F, 0.02F, 0.02F);
 		} else if (aura.transform.localScale.x <= 2) {
 			auraGrowing = true;
@@ -499,6 +503,8 @@ public class DogControl : MonoBehaviour {
 		Sit();
 		LookAt ();
 		isRandomlyWalking = true;
+		shouldMove = true;
+		rotatingTargetPos = newRandomDirection ();
 	}
 		
 	private List<ARHitTestResult> getHitTest() {
