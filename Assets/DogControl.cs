@@ -10,7 +10,7 @@ public class DogControl : MonoBehaviour {
 	// basic dog params
 	public GameObject corgi;
 	private Animation animation;
-	private bool shouldMove = false;
+	private bool shouldMove = true;
 	public bool dogInScene = false;
 	Collider corgiCollider;
 
@@ -42,6 +42,12 @@ public class DogControl : MonoBehaviour {
 	private Vector3 fetchOrigin;
 	private float speed = .3f;
 	private float fraction = 0; 
+
+
+	// Random walking parameters
+	private bool isRandomlyWalking = false;
+	private bool reachedRandomTarget = true;
+	float randX, randZ;
 
 	// petting params
 	private bool corgiTouched = false;
@@ -78,10 +84,7 @@ public class DogControl : MonoBehaviour {
 		infoBubble = GameObject.FindWithTag ("infoBubble");
 		//speechBubble.SetActive(true);
 
-
-		//Daniel this is now happening below
-		//aura = GameObject.FindWithTag("Aura");
-		//aura.SetActive(false);
+	
 	}
 
 	// Update is called once per frame
@@ -111,9 +114,32 @@ public class DogControl : MonoBehaviour {
 		}
 			
 		if (shouldMove && !fetching) {
-			corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .25f));
-			// we want to keep track of the corgis position before it leaves the plane
-			startFetchingPos = corgi.transform.position;
+			if (isRandomlyWalking && reachedRandomTarget) {
+				reachedRandomTarget = false;
+				rotating = true;
+				rotatingTargetPos = newRandomDirection ();
+				Debug.Log ("rotatingTargetPos: " + rotatingTargetPos);
+				Walk ();
+				fraction += Time.deltaTime * .025f;
+				Vector3 fetchingPos = Vector3.Lerp (transform.position, rotatingTargetPos, fraction);
+
+				transform.position = fetchingPos;
+
+			} else if (isRandomlyWalking && !reachedRandomTarget) {
+				float distanceToRandPosition = Math.Abs (Vector3.Distance (transform.position, rotatingTargetPos));
+				if (distanceToRandPosition < .06) {
+					Debug.Log("Baloo arrived to the random destination");
+					reachedRandomTarget = true;
+					rotating = false;
+					fraction = 0;
+					//Sit ();
+				}
+			}
+			else{
+				corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .25f));
+				// we want to keep track of the corgis position before it leaves the plane
+				startFetchingPos = corgi.transform.position;
+			}
 		} 
 
 		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down)){
@@ -158,8 +184,14 @@ public class DogControl : MonoBehaviour {
 			initialFetchSequence = false;
 
 		} else {
-			corgi.transform.LookAt (mat.transform.position);
-			Sit ();
+			Debug.Log ("HIT WALL GENERAL CASE: " + other.tag);
+			//corgi.transform.LookAt (mat.transform.position);
+			//Sit ();
+			rotatingTargetPos = mat.transform.position;
+			rotating = true;
+			shouldMove = true;
+			isRandomlyWalking = true;
+
 		} 
 	}
 		
@@ -276,6 +308,9 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void StartEatingSequence() {
+		Debug.Log ("Parameters Value : isBreathing: " + isBreathing + ", isRandomly walking: "+ isRandomlyWalking);
+
+
 		Debug.Log ("GOING TO BOWL");
 		goingToFood = true;
 		rotatingTargetPos = dogFood.transform.position;
@@ -394,7 +429,30 @@ public class DogControl : MonoBehaviour {
 		}
 	}
 
+	// Random Walking
+	//// Returns a return value among {-1,0,1}
+	//// randomNumber is between 0.0 and 1.0
+	public float returnRandomInteger(float randomNumber){
+		if (randomNumber <= .5f) {
+			return -1;
+		}else{
+			return 1;
+		}
+	}
+	public Vector3 newRandomDirection(){
+		randX = returnRandomInteger (UnityEngine.Random.value);
+		randZ = returnRandomInteger (UnityEngine.Random.value);
+		Debug.Log("New direction: randX: "+ randX + ", randZ: "+randZ);
+		Vector3 randVector = new Vector3 (randX, 0, randZ);
+		if (randVector.magnitude > 0) {
+			randVector = randVector / randVector.magnitude;
+		}
+		return randVector;
+	}
+
+
 	public void Breathe(){
+		LookAt ();
 		aura.transform.position = new Vector3 (corgi.transform.position.x, aura.transform.position.y, corgi.transform.position.z);
 		aura.SetActive (true);
 
@@ -414,19 +472,20 @@ public class DogControl : MonoBehaviour {
 
 		// Transformation of the sphere
 		if (auraGrowing && aura.transform.localScale.x < 7) {
-			infoBubble.GetComponentInChildren<Text> ().text = "Breathe in to calm Baloo";
+			//infoBubble.GetComponentInChildren<Text> ().text = "Breathe in to calm Baloo";
 			aura.transform.localScale += new Vector3 (0.02F, 0.02F, 0.02F);
 		} else if (auraGrowing && aura.transform.localScale.x >= 7) {
-			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
+			//infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
 			AuraWarper ();
 		} else if (!auraGrowing && aura.transform.localScale.x > 2) {
-			infoBubble.GetComponentInChildren<Text> ().text = "Breathe out slowly";
+			//infoBubble.GetComponentInChildren<Text> ().text = "Breathe out slowly";
 			aura.transform.localScale -= new Vector3 (0.02F, 0.02F, 0.02F);
 		} else if (aura.transform.localScale.x <= 2) {
 			auraGrowing = true;
 			nbBreathingCycles += 1;
 		}
 	}
+
 
 	public void InitialSequenceWrapper() {
 		StartCoroutine(InitialSequence());
@@ -439,6 +498,7 @@ public class DogControl : MonoBehaviour {
 		yield return new WaitForSeconds(1.5f); // waits 3.5 seconds
 		Sit();
 		LookAt ();
+		isRandomlyWalking = true;
 	}
 		
 	private List<ARHitTestResult> getHitTest() {
