@@ -9,11 +9,18 @@ public class DogControl : MonoBehaviour {
 
 	// basic dog params
 	public GameObject corgi;
-	public GameObject speechBubble;
 	private Animation animation;
 	private bool shouldMove = false;
 	public bool dogInScene = false;
 	Collider corgiCollider;
+
+	// UI elements
+	public GameObject speechBubble;
+	public GameObject fetchButton;
+	public GameObject eatButton;
+	public GameObject breatheButton;
+
+	// Breathing objects
 	public GameObject aura;
 
 	// other game objects in the scene
@@ -51,9 +58,6 @@ public class DogControl : MonoBehaviour {
 	private bool rotating = false;
 	private Vector3 rotatingTargetPos;
 
-	// eating params
-	public GameObject eatButton;
-
 	// sitting params
 	public bool speechBubbleShown = false;
 
@@ -64,31 +68,41 @@ public class DogControl : MonoBehaviour {
 		introPanel = GameObject.FindWithTag ("introPanel");
 		dogNamePanel = GameObject.FindWithTag ("dogNamePanel");
 		dogNamePanel.SetActive(false);
-
+			
 		mat = GameObject.FindWithTag ("Mat");
 		corgi = GameObject.FindWithTag("Corgi");
 		dogFood = GameObject.FindWithTag ("dogFood");
-
-		//Physics.IgnoreCollision(corgi.GetComponent<Collider>(), ball.GetComponent<Collider>());
-		//Physics.IgnoreCollision(corgi.GetComponent<Collider>(), mat.GetComponent<Collider>());
-		//corgiCollider = corgi.GetComponent<Collider>();
 
 		speechBubble = GameObject.FindWithTag ("speechBubble");
 		speechBubble.SetActive(false);
 		infoBubble = GameObject.FindWithTag ("infoBubble");
 		//speechBubble.SetActive(true);
 
-		//Breathing initialization
-		aura = GameObject.FindWithTag("Aura");
-		aura.SetActive(false);
+
+		//Daniel this is now happening below
+		//aura = GameObject.FindWithTag("Aura");
+		//aura.SetActive(false);
 	}
 
 	// Update is called once per frame
 	void Update () {
 
+		// turn off buttons until dog in scene
+		if (dogInScene) {
+			fetchButton.SetActive (true);
+			eatButton.SetActive (true);
+			breatheButton.SetActive (true);
+		} else {
+			fetchButton.SetActive (false);
+			eatButton.SetActive (false);
+			breatheButton.SetActive (false);
+		}
+
 		//Daniel: Breathing phase:
-		if (isBreathing){
+		if (isBreathing) {
 			Breathe ();
+		} else {
+			aura.SetActive (false);
 		}
 			
 		// is the dog rotating?
@@ -133,16 +147,12 @@ public class DogControl : MonoBehaviour {
 		Debug.Log (other.tag);
 
 		if (initialFetchSequence) {
-			
-			Debug.Log ("HIT WALL STARTING FETCH");
 
 			// disable colliders
 			corgiCollider = corgi.GetComponent<Collider>();
 			corgiCollider.enabled = false;
-			Debug.Log ("HIT WALL STARTING FETCH2");
 
 			Gallop ();
-			Debug.Log ("HIT WALL STARTING FETCH3");
 
 			fetching = true;
 			initialFetchSequence = false;
@@ -284,7 +294,7 @@ public class DogControl : MonoBehaviour {
 		Debug.Log ("DISTANCE: " + distance);
 
 		// got to food so stop + eat
-		if (distance < .06) {
+		if (distance < .2) {
 			Debug.Log ("GOT TO FOOD!");
 			rotating = false;
 			fraction = 0;
@@ -385,7 +395,7 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void Breathe(){
-		aura.transform.position = corgi.transform.position;
+		aura.transform.position = new Vector3 (corgi.transform.position.x, aura.transform.position.y, corgi.transform.position.z);
 		aura.SetActive (true);
 
 		// End of the 3 cycles of breathing => re-initialize the parameters
@@ -403,16 +413,16 @@ public class DogControl : MonoBehaviour {
 		}
 
 		// Transformation of the sphere
-		if (auraGrowing && aura.transform.localScale.x < 4.5) {
+		if (auraGrowing && aura.transform.localScale.x < 7) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Breathe in to calm Baloo";
-			aura.transform.localScale += new Vector3 (0.01F, 0.01F, 0.01F);
-		} else if (auraGrowing && aura.transform.localScale.x >= 4.5) {
+			aura.transform.localScale += new Vector3 (0.02F, 0.02F, 0.02F);
+		} else if (auraGrowing && aura.transform.localScale.x >= 7) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
 			AuraWarper ();
-		} else if (!auraGrowing && aura.transform.localScale.x > 1.5) {
+		} else if (!auraGrowing && aura.transform.localScale.x > 2) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Breathe out slowly";
-			aura.transform.localScale -= new Vector3 (0.01F, 0.01F, 0.01F);
-		} else if (aura.transform.localScale.x <= 1.5) {
+			aura.transform.localScale -= new Vector3 (0.02F, 0.02F, 0.02F);
+		} else if (aura.transform.localScale.x <= 2) {
 			auraGrowing = true;
 			nbBreathingCycles += 1;
 		}
@@ -426,7 +436,7 @@ public class DogControl : MonoBehaviour {
 		Debug.Log ("Dog starting initial sequence");
 		//infoBubble.GetComponentInChildren<Text>().text = "I'm here!";
 		Walk ();
-		yield return new WaitForSeconds(3.5f); // waits 3.5 seconds
+		yield return new WaitForSeconds(1.5f); // waits 3.5 seconds
 		Sit();
 		LookAt ();
 	}
