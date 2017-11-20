@@ -20,7 +20,7 @@ public class DogControl : MonoBehaviour {
 	public GameObject eatButton;
 	public GameObject breatheButton;
 
-	//Daniel
+	// Breathing objects
 	public GameObject aura;
 
 	// other game objects in the scene
@@ -77,6 +77,7 @@ public class DogControl : MonoBehaviour {
 		speechBubble.SetActive(false);
 		infoBubble = GameObject.FindWithTag ("infoBubble");
 		//speechBubble.SetActive(true);
+
 
 		//Daniel this is now happening below
 		//aura = GameObject.FindWithTag("Aura");
@@ -316,7 +317,7 @@ public class DogControl : MonoBehaviour {
 		Sit();
 	}
 
-	//Daniel
+	//Breathing action
 	public void AuraWarper(){
 		StartCoroutine(Aura());
 	}
