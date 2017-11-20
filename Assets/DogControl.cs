@@ -14,7 +14,6 @@ public class DogControl : MonoBehaviour {
 	private bool shouldMove = false;
 	public bool dogInScene = false;
 	Collider corgiCollider;
-	//Daniel
 	public GameObject aura;
 
 	// other game objects in the scene
@@ -79,7 +78,7 @@ public class DogControl : MonoBehaviour {
 		infoBubble = GameObject.FindWithTag ("infoBubble");
 		//speechBubble.SetActive(true);
 
-		//Daniel
+		//Breathing initialization
 		aura = GameObject.FindWithTag("Aura");
 		aura.SetActive(false);
 	}
@@ -308,7 +307,7 @@ public class DogControl : MonoBehaviour {
 		Sit();
 	}
 
-	//Daniel
+	//Breathing action
 	public void AuraWarper(){
 		StartCoroutine(Aura());
 	}
