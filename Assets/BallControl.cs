@@ -153,6 +153,13 @@ public class BallControl : MonoBehaviour {
 
 		Debug.Log ("creating ball");
 
+		// have dog sit and look at camera
+		corgi.GetComponent<DogControl> ().isRandomlyWalking = false;       
+		corgi.GetComponent<DogControl> ().rotating = false;                                                                                                                                                                                                                                                                                                                                                                                                      
+		corgi.GetComponent<DogControl> ().LookAt();
+		corgi.GetComponent<DogControl> ().Sit ();
+	
+
 		// destroy any old balls
 		Destroy(currBall);
 

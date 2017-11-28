@@ -42,10 +42,10 @@ public class DogControl : MonoBehaviour {
 	private Vector3 fetchOrigin;
 	private float speed = .3f;
 	private float fraction = 0; 
-
+	private int numFetches = 0;
 
 	// Random walking parameters
-	private bool isRandomlyWalking = false;
+	public bool isRandomlyWalking = false;
 	float randX, randZ;
 
 	// petting params
@@ -60,8 +60,9 @@ public class DogControl : MonoBehaviour {
 	private float nbBreathingCycles = 0;
 
 	// rotating params
-	private bool rotating = false;
+	public bool rotating = false;
 	private Vector3 rotatingTargetPos;
+	private int randomWalkTime = 0;
 
 	// sitting params
 	public bool speechBubbleShown = false;
@@ -82,8 +83,7 @@ public class DogControl : MonoBehaviour {
 		speechBubble.SetActive(false);
 		infoBubble = GameObject.FindWithTag ("infoBubble");
 		//speechBubble.SetActive(true);
-
-	
+		triggerInfoBubble ("Welcome to Baloo. Show me the QR Code!", 4.0f);
 	}
 
 	// Update is called once per frame
@@ -150,6 +150,9 @@ public class DogControl : MonoBehaviour {
 		Vector3 targetPoint = new Vector3(targetPos.x, corgi.transform.position.y, targetPos.z) - corgi.transform.position;
 		Quaternion targetRotation = Quaternion.LookRotation (targetPoint, Vector3.up);
 		corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 3.0f);
+		if(targetRotation == corgi.transform.rotation) {
+			rotating = false;
+		}
 	}
 
 	void OnTriggerExit(Collider other) {
@@ -158,7 +161,7 @@ public class DogControl : MonoBehaviour {
 		if (initialFetchSequence) {
 
 			// disable colliders
-			corgiCollider = corgi.GetComponent<Collider>();
+			corgiCollider = corgi.GetComponent<Collider> ();
 			corgiCollider.enabled = false;
 
 			Gallop ();
@@ -166,16 +169,14 @@ public class DogControl : MonoBehaviour {
 			fetching = true;
 			initialFetchSequence = false;
 
-		} else {
-			Debug.Log ("HIT WALL GENERAL CASE: " + other.tag);
-			//corgi.transform.LookAt (mat.transform.position);
-			//Sit ();
+		} else if (isRandomlyWalking) {
 			rotatingTargetPos = mat.transform.position;
 			rotating = true;
-			shouldMove = true;
-			isRandomlyWalking = true;
-
-		} 
+		} else {
+			Debug.Log ("HIT WALL GENERAL CASE: " + other.tag);
+			corgi.transform.LookAt (mat.transform.position);
+			Sit ();
+		}
 	}
 		
 	public void placeDog() {
@@ -200,6 +201,8 @@ public class DogControl : MonoBehaviour {
 
 	public void StartFetchingSequence(Vector3 ballPos) {
 		Debug.Log ("sending dog to fetch");
+
+		numFetches += 1;
 
 		// mark position
 		//Debug.Log ("start fetching pos " + fetchOrigin);
@@ -346,13 +349,18 @@ public class DogControl : MonoBehaviour {
 		Debug.Log ("Barking dog !");
 		shouldMove = false;
 		animation.CrossFade ("CorgiIdleBarkingLong");
-		isBreathing = true;
+	}
+
+	public IEnumerator TimedBark(float time) {
+		Bark ();
+		yield return new WaitForSeconds(time); // waits 5 seconds
+		animation.Stop("CorgiIdleBarking");
+		Sit ();
 	}
 
 	public void Bark(){
 		shouldMove = false;
 		animation.CrossFade ("CorgiIdleBarking");
-		isBreathing = true;
 	}
 
 	public void Fetch() {
@@ -387,6 +395,11 @@ public class DogControl : MonoBehaviour {
 				corgiCollider = corgi.GetComponent<Collider>();
 				corgiCollider.enabled = true;
 
+				// is this the third fetch?
+				if (numFetches % 3 == 0) {
+					promptMeditation ();
+				}
+
 			} else {
 				Debug.Log ("turning around");
 				returnTrip = true;
@@ -408,6 +421,11 @@ public class DogControl : MonoBehaviour {
 		} else {
 			corgi.transform.position = fetchingPos;
 		}
+	}
+
+	public void promptMeditation() {
+		BarkLong ();
+		infoBubble.GetComponentInChildren<Text> ().text = "Looks like all that fetching got Baloo all excited! Why don't we meditate together to relax him?";
 	}
 
 	// Random Walking
@@ -432,7 +450,7 @@ public class DogControl : MonoBehaviour {
 		if (randVector.magnitude > 0) {
 			randVector = randVector / randVector.magnitude;
 		}
-		randVector = transform.position + randVector*transform.localScale.x;//Random position next to the dog
+		randVector = corgi.transform.position + randVector*corgi.transform.localScale.x;//Random position next to the dog
 		return randVector;
 	}
 
@@ -440,28 +458,54 @@ public class DogControl : MonoBehaviour {
 		Debug.Log ("Random Walk called");
 		Debug.Log ("Parameters Value : isBreathing: " + isBreathing + ", isRandomly walking: "+ isRandomlyWalking+ ", shouldMove: "+ shouldMove);
 		Debug.Log ("rotatingTargetPos: "+rotatingTargetPos);
-		rotating = true;
+
+		if(!isRandomlyWalking) return;
+			
 		Walk ();
+
+		randomWalkTime += 1;
+
 		fraction += Time.deltaTime * .025f;
+
 		Vector3 curPos = Vector3.Lerp (transform.position, rotatingTargetPos, fraction);
 		float distanceToRandPosition = Math.Abs (Vector3.Distance (transform.position, rotatingTargetPos));
-		if (distanceToRandPosition < .2) {
-			Debug.Log ("Baloo arrived to the random destination, ditance: "+distanceToRandPosition);
+
+		// walk towards random distance for 5 frames
+		if (randomWalkTime % 30 == 0) {
+			Debug.Log ("Baloo arrived to the random destination, ditance: " + distanceToRandPosition);
 			fraction = 0;
-			rotatingTargetPos = newRandomDirection ();
+			rotating = true;
+			if (randomWalkTime > 90) {
+				rotatingTargetPos = mat.transform.position;
+			} else {
+				rotatingTargetPos = newRandomDirection ();
+			}
 			RandomWalk ();
 		} else {
-			transform.position = curPos;
+			corgi.transform.position = curPos;
 		}
+	}
+
+	public void triggerInfoBubble(string infoMsg, float time) {
+		infoBubble.SetActive (true);
+		infoBubble.GetComponentInChildren<Text> ().text = infoMsg;
+		StartCoroutine(InfoBubbleClose(time));
+	}
+
+	public IEnumerator InfoBubbleClose(float time) {
+		yield return new WaitForSeconds(time);  
+		infoBubble.SetActive (false);
 	}
 
 	public void Breathe(){
 		LookAt ();
 		aura.transform.position = new Vector3 (corgi.transform.position.x, aura.transform.position.y, corgi.transform.position.z);
 		aura.SetActive (true);
+		isBreathing = true;
 
 		// End of the 3 cycles of breathing => re-initialize the parameters
 		if (nbBreathingCycles >= 3) {
+			triggerInfoBubble ("Baloo feels great after his meditation! How about you?", 4.0f);
 			isBreathing = false;
 			nbBreathingCycles = 0;
 			auraGrowing = false;
@@ -490,21 +534,31 @@ public class DogControl : MonoBehaviour {
 		}
 	}
 
-
 	public void InitialSequenceWrapper() {
-		StartCoroutine(InitialSequence());
+		StartCoroutine(randomWalkingSequence(2.5f));
 	}
 
 	public IEnumerator InitialSequence() {
 		Debug.Log ("Dog starting initial sequence");
+		isRandomlyWalking = false;
+		//Walk ();
 		//infoBubble.GetComponentInChildren<Text>().text = "I'm here!";
-		Walk ();
-		yield return new WaitForSeconds(1.5f); // waits 3.5 seconds
-		Sit();
-		LookAt ();
-		isRandomlyWalking = true;
-		shouldMove = true;
+		yield return new WaitForSeconds(1.0f); 
+		StartCoroutine (randomWalkingSequence (3f));
+	}
+
+	public IEnumerator randomWalkingSequence(float waitTime) {
 		rotatingTargetPos = newRandomDirection ();
+		rotating = true;
+		Walk ();
+		isRandomlyWalking = true;
+		yield return new WaitForSeconds (waitTime);
+		print ("random walking over");
+		randomWalkTime = 0;
+		isRandomlyWalking = false;
+		rotating = false;
+		LookAt();
+		StartCoroutine(TimedBark(1.0f));
 	}
 		
 	private List<ARHitTestResult> getHitTest() {
