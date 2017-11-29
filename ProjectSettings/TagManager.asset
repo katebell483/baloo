@@ -17,6 +17,9 @@ TagManager:
   - Aura
   - introPanel
   - dogNamePanel
+  - BreatheButton
+  - EatButton
+  - FetchButton
   layers:
   - Default
   - TransparentFX

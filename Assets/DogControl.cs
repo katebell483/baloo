@@ -15,7 +15,6 @@ public class DogControl : MonoBehaviour {
 	Collider corgiCollider;
 
 	// UI elements
-	public GameObject speechBubble;
 	public GameObject fetchButton;
 	public GameObject eatButton;
 	public GameObject breatheButton;
@@ -64,9 +63,6 @@ public class DogControl : MonoBehaviour {
 	private Vector3 rotatingTargetPos;
 	private int randomWalkTime = 0;
 
-	// sitting params
-	public bool speechBubbleShown = false;
-
 	// Use this for initialization
 	void Start () {
 		animation = corgi.GetComponent<Animation> ();
@@ -74,16 +70,19 @@ public class DogControl : MonoBehaviour {
 		introPanel = GameObject.FindWithTag ("introPanel");
 		dogNamePanel = GameObject.FindWithTag ("dogNamePanel");
 		dogNamePanel.SetActive(false);
-			
+
 		mat = GameObject.FindWithTag ("Mat");
 		corgi = GameObject.FindWithTag("Corgi");
 		dogFood = GameObject.FindWithTag ("dogFood");
-
-		speechBubble = GameObject.FindWithTag ("speechBubble");
-		speechBubble.SetActive(false);
 		infoBubble = GameObject.FindWithTag ("infoBubble");
-		//speechBubble.SetActive(true);
+
 		triggerInfoBubble ("Welcome to Baloo. Show me the QR Code!", 4.0f);
+
+		breatheButton = GameObject.FindWithTag ("BreatheButton");
+		fetchButton = GameObject.FindWithTag ("FetchButton");
+		eatButton = GameObject.FindWithTag ("EatButton");
+
+		aura = GameObject.FindWithTag ("Aura");
 	}
 
 	// Update is called once per frame
@@ -99,7 +98,7 @@ public class DogControl : MonoBehaviour {
 			eatButton.SetActive (false);
 			breatheButton.SetActive (false);
 		}
-
+	
 		//Daniel: Breathing phase:
 		if (isBreathing) {
 			Breathe ();
@@ -594,19 +593,6 @@ public class DogControl : MonoBehaviour {
 
 	public void hideDogNamePanel(){
 		dogNamePanel.SetActive (false);
-	}
-
-
-	public void goBackToQuestion(){
-		if (!speechBubbleShown) {
-			speechBubble.SetActive(true);
-		}
-		else {
-			speechBubble.SetActive(false);
-		}
-		speechBubbleShown = !speechBubbleShown;
-
-		//Application.LoadLevel ("questions");
 	}
 		
 	public void goBackToCamera(){
