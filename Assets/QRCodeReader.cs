@@ -47,6 +47,7 @@ public class QRCodeReader : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		
 		camPos = Camera.main.transform.position;
 		if (!done && detectQR) {
 			ARTextureHandles handles = arSession.GetARVideoTextureHandles ();
@@ -57,7 +58,7 @@ public class QRCodeReader : MonoBehaviour {
 	}
 
 	void OnReadQRCode(string arg) {
-		if (!detectQR) {
+		if (!detectQR || !corgi.GetComponent<DogControl> ().isReadyForQRDetection) {
 			return;
 		}
 		float[] bounds = GetQRCodeBounds ();
@@ -95,10 +96,9 @@ public class QRCodeReader : MonoBehaviour {
 
 				// TODO: this all seems a little out of place here
 				//corgi.transform.parent = null; // is this necessary?
-				corgi.GetComponent<DogControl> ().InitialSequenceWrapper ();
+				corgi.GetComponent<DogControl> ().dogNamePanel.SetActive(true);
 				corgi.GetComponent<DogControl> ().dogInScene = true;
 				corgi.GetComponent<DogControl>().foodPos = food.transform.position;
-				//dogNamePanel.SetActive (true);
 
 				detectQR = false; 
 

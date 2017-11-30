@@ -18,6 +18,13 @@ public class DogControl : MonoBehaviour {
 	public GameObject fetchButton;
 	public GameObject eatButton;
 	public GameObject breatheButton;
+	public GameObject infoBubble;
+
+	// panels
+	public GameObject introPanel;
+	public GameObject dogNamePanel;
+	public GameObject exitPanel;
+	public bool isReadyForQRDetection;
 
 	// Breathing objects
 	public GameObject aura;
@@ -26,9 +33,6 @@ public class DogControl : MonoBehaviour {
 	public GameObject mat;
 	public GameObject ball;
 	public GameObject dogFood;
-	public GameObject infoBubble;
-	public GameObject introPanel;
-	public GameObject dogNamePanel;
 	public GameObject propFrisbee;
 
 	// fetching params
@@ -71,11 +75,20 @@ public class DogControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		
 		animation = corgi.GetComponent<Animation> ();
 
-		introPanel = GameObject.FindWithTag ("introPanel");
-		dogNamePanel = GameObject.FindWithTag ("dogNamePanel");
+		/* panels */
+		//introPanel = GameObject.FindWithTag ("introPanel");
+		introPanel.SetActive(true);
+
+		//dogNamePanel = GameObject.FindWithTag ("dogNamePanel");
 		dogNamePanel.SetActive(false);
+
+		//exitPanel = GameObject.FindWithTag ("exitPanel");
+		exitPanel.SetActive(false);
+	
+		/*
 
 		mat = GameObject.FindWithTag ("Mat");
 		corgi = GameObject.FindWithTag("Corgi");
@@ -89,6 +102,7 @@ public class DogControl : MonoBehaviour {
 		eatButton = GameObject.FindWithTag ("EatButton");
 
 		aura = GameObject.FindWithTag ("Aura");
+		*/
 	}
 
 	// Update is called once per frame
@@ -124,7 +138,7 @@ public class DogControl : MonoBehaviour {
 			}
 				
 			else{
-				corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .05f));
+				corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .015f));
 				// we want to keep track of the corgis position before it leaves the plane
 				startFetchingPos = corgi.transform.position;
 			}
@@ -351,11 +365,11 @@ public class DogControl : MonoBehaviour {
 
 	private bool isInteractionComplete() {
 		if (numEatingEvents > 0 && numFetches > 2 && numMeditationEvents > 0) {
-			triggerInfoBubble ("Interaction All done!", 10.0f);
 			// needs to be some kind of outro activity
 			eatButton.GetComponent<Button> ().interactable = false;
 			breatheButton.GetComponent<Button> ().interactable = false;
 			fetchButton.GetComponent<Button> ().interactable = false;
+			exitPanel.SetActive (true);
 			return true;
 		} else {
 			return false;
@@ -629,12 +643,18 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void hideIntroPanel(){
-		Debug.Log ("HERE!!!");
 		introPanel.SetActive (false);
+		isReadyForQRDetection = true;
+	}
+
+	public void hideExitPanel(){
+		exitPanel.SetActive (false);
+		goBackToMenu ();
 	}
 
 	public void hideDogNamePanel(){
 		dogNamePanel.SetActive (false);
+		InitialSequenceWrapper ();
 	}
 		
 	public void goBackToCamera(){

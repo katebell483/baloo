@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
+    path: Assets/menu.unity
+    guid: 52f300c0bcce74d05bac5360e4fc6e3c
+  - enabled: 1
     path: Assets/UnityARKitPlugin/Examples/UnityARKitScene/UnityARKitScene.unity
     guid: 7d7623a4e755340f6950e5addcafd7c5
   - enabled: 1
@@ -20,9 +23,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/questions.unity
     guid: 9225db08dcbfe44c2881c3bc9fccfa69
-  - enabled: 1
-    path: Assets/menu.unity
-    guid: 52f300c0bcce74d05bac5360e4fc6e3c
   - enabled: 0
     path: Assets/UnityARKitPlugin/Examples/UnityARBallz/UnityARBallz.unity
     guid: c665ec882714345bca60c313da89cd1a

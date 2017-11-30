@@ -30,12 +30,23 @@ public class Menu_Buttons : MonoBehaviour {
 	private bool selectedEmoji;
 	private string nameUser;
 
+	static public int accessed = 0;    // this is reachable from everywhere
+
 	// Use this for initialization
 	void Start () {
-		MenuPanel.SetActive(true);
-		LevelSelectPanel.SetActive(false);
-		LoginPanel.SetActive(false);
-		SignUpPanel.SetActive(false);
+
+		if (accessed > 0) {
+			MenuPanel.SetActive (true);
+			LevelSelectPanel.SetActive (false);
+			LoginPanel.SetActive (false);
+			SignUpPanel.SetActive (false);
+		} else {
+			accessed += 1;
+			MenuPanel.SetActive(false);
+			LevelSelectPanel.SetActive(false);
+			LoginPanel.SetActive(false);
+			SignUpPanel.SetActive(true);
+		}
 
 		selectedEmoji = false;
 		//scaredSelected = Resources.Load("Assets/scaredSelected") as Sprite;

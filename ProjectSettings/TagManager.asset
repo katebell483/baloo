@@ -21,6 +21,8 @@ TagManager:
   - EatButton
   - FetchButton
   - propFrisbee
+  - exitPanel
+  - kidNamePanel
   layers:
   - Default
   - TransparentFX
