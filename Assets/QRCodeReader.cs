@@ -34,10 +34,6 @@ public class QRCodeReader : MonoBehaviour {
 	private bool detectQR = true;
 	private Vector3 camPos;
 
-	private Vector3[] m_PointCloudData;
-
-
-
 	// Use this for initialization
 	void Start () {
 		arSession = UnityARSessionNativeInterface.GetARSessionNativeInterface ();
@@ -47,13 +43,6 @@ public class QRCodeReader : MonoBehaviour {
 		corgiHouse = GameObject.FindWithTag ("CorgiHouse");
 		food = GameObject.FindWithTag ("dogFood");
 		dogNamePanel = GameObject.FindWithTag ("dogNamePanel");
-
-		UnityARSessionNativeInterface.ARFrameUpdatedEvent += ARFrameUpdated;
-
-	}
-
-	public void ARFrameUpdated(UnityARCamera camera) {
-		m_PointCloudData = camera.pointCloudData;
 	}
 
 	// Update is called once per frame
@@ -68,48 +57,72 @@ public class QRCodeReader : MonoBehaviour {
 	}
 
 	void OnReadQRCode(string arg) {
-		
 		if (!detectQR) {
 			return;
 		}
-
-		Debug.Log ("QR CODE DETECTED:");
-		Debug.Log ("SIZE PT CLOUD:" + m_PointCloudData.Length);
-
 		float[] bounds = GetQRCodeBounds ();
 
+		var topLeft     = Camera.main.ScreenToViewportPoint (new Vector3 (bounds [0], bounds [1]));
+		var topRight    = Camera.main.ScreenToViewportPoint (new Vector3 (bounds [2], bounds [3]));
+		var bottomRight = Camera.main.ScreenToViewportPoint (new Vector3 (bounds [4], bounds [5]));
 		var bottomLeft  = Camera.main.ScreenToViewportPoint (new Vector3 (bounds [6], bounds [7]));
 
-		foreach (Vector3 point in m_PointCloudData) {
-			
-			Vector3 worldP = Camera.main.WorldToViewportPoint (point);
-			float distBL = Vector3.Distance (worldP, bottomLeft);
+		HitTest (topLeft, topRight, bottomRight, bottomLeft);
+	}
 
-			Debug.Log("MATCHING: Dist BL: " + distBL);
+	private void HitTest(Vector3 topLeft, Vector3 topRight, Vector3 bottomRight, Vector3 bottomLeft) {
+		Dictionary<string, List<ARHitTestResult>> results = new Dictionary<string, List<ARHitTestResult>>();
+		HitTest (topLeft, results);
+		HitTest (topRight, results);
+		HitTest (bottomRight, results);
+		HitTest (bottomLeft, results);
 
-			if (distBL < .4) {
+		foreach (var result in results) {
+			List<ARHitTestResult> list = result.Value;
+			if (list.Count == 4) {
+				var worldTopLeft     = UnityARMatrixOps.GetPosition (list[0].worldTransform);
+				var worldBottomRight = UnityARMatrixOps.GetPosition (list[2].worldTransform);
+				var worldBottomLeft  = UnityARMatrixOps.GetPosition (list[3].worldTransform);
 
-				mat.transform.LookAt (Camera.main.transform.position);
-				mat.transform.eulerAngles = new Vector3(0, mat.transform.eulerAngles.y, 0);
+				var bottomToTop = worldTopLeft - worldBottomLeft;
+				var leftToRight = worldBottomRight - worldBottomLeft;
 
-				mat.transform.position = point;
-				matPlane.transform.localScale = new Vector3 (.075f, .075f, .075f);
+				Debug.Log ("PLACING DOG");
+				mat.transform.forward = bottomToTop;
+				mat.transform.position = worldBottomLeft + (bottomToTop + leftToRight) * 0.5f;
+				matPlane.transform.localScale = new Vector3(.05f, .05f, .05f);
+				//matPlane.transform.LookAt (Camera.main.transform);
+				Vector3 center = matPlane.GetComponent<Renderer> ().bounds.center;
 
 				// TODO: this all seems a little out of place here
 				corgi.transform.parent = null; // is this necessary?
 				corgi.GetComponent<DogControl> ().InitialSequenceWrapper ();
 				corgi.GetComponent<DogControl> ().dogInScene = true;
-				corgi.GetComponent<DogControl> ().foodPos = food.transform.position;
-
+				corgi.GetComponent<DogControl>().foodPos = food.transform.position;
+				//dogNamePanel.SetActive (true);
 
 				detectQR = false; 
+
 				break;
 			}
-	
 		}
-			
-		return;
 
+	}
+
+	private void HitTest(Vector3 point, Dictionary<string, List<ARHitTestResult>> results) {
+		List<ARHitTestResult> hitResults = arSession.HitTest (
+			new ARPoint { x = point.x, y = point.y },
+			ARHitTestResultType.ARHitTestResultTypeExistingPlaneUsingExtent);
+
+		foreach (var hitResult in hitResults) {
+			string anchorIdentifier = hitResult.anchorIdentifier;
+			List<ARHitTestResult> list;
+			if (!results.TryGetValue (anchorIdentifier, out list)) {
+				list = new List<ARHitTestResult> ();
+				results.Add (anchorIdentifier, list);
+			}
+			list.Add (hitResult);
+		}
 	}
 
 	public void OnSetAnchorClick(Text text) {
