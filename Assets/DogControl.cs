@@ -124,7 +124,7 @@ public class DogControl : MonoBehaviour {
 			}
 				
 			else{
-				corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .01f));
+				corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .05f));
 				// we want to keep track of the corgis position before it leaves the plane
 				startFetchingPos = corgi.transform.position;
 			}
@@ -160,12 +160,12 @@ public class DogControl : MonoBehaviour {
 		yield return new WaitForSeconds(2.0f); 
 		Walk ();
 		yield return new WaitForSeconds(2.0f); 
-		isRandomlyWalking = true;
-		yield return new WaitForSeconds (3.0f);
+		//isRandomlyWalking = true;
+		//yield return new WaitForSeconds (3.0f);
 		print ("random walking over");
-		randomWalkTime = 0;
-		isRandomlyWalking = false;
-		rotating = false;
+		//randomWalkTime = 0;
+		//isRandomlyWalking = false;
+		//rotating = false;
 		LookAt();
 		StartCoroutine(TimedBark(1.0f));
 	}
