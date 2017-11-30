@@ -639,6 +639,12 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void goBackToMenu(){
+		SceneController.CrossSceneInformation = "menu";
+		Application.LoadLevel ("menu");
+	}
+
+	public void goBackToEmojis(){
+		SceneController.CrossSceneInformation = "emojis";
 		Application.LoadLevel ("menu");
 	}
 
@@ -649,7 +655,7 @@ public class DogControl : MonoBehaviour {
 
 	public void hideExitPanel(){
 		exitPanel.SetActive (false);
-		goBackToMenu ();
+		goBackToEmojis ();
 	}
 
 	public void hideDogNamePanel(){

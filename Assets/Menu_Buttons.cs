@@ -35,18 +35,24 @@ public class Menu_Buttons : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		if (accessed > 0) {
-			MenuPanel.SetActive (true);
-			LevelSelectPanel.SetActive (false);
-			LoginPanel.SetActive (false);
-			SignUpPanel.SetActive (false);
-		} else {
-			accessed += 1;
-			MenuPanel.SetActive(false);
-			LevelSelectPanel.SetActive(false);
-			LoginPanel.SetActive(false);
-			SignUpPanel.SetActive(true);
+		print ("cross scene info: " + SceneController.CrossSceneInformation);
+
+		switch (SceneController.CrossSceneInformation) {
+			case "emojis":
+				MenuPanel.SetActive (false);
+				LevelSelectPanel.SetActive (false);
+				LoginPanel.SetActive (false);
+				SignUpPanel.SetActive (true);
+				break;
+			default:
+				MenuPanel.SetActive (true);
+				LevelSelectPanel.SetActive (false);
+				LoginPanel.SetActive (false);
+				SignUpPanel.SetActive (false);
+				break;
 		}
+
+		SceneController.CrossSceneInformation = "";
 
 		selectedEmoji = false;
 		//scaredSelected = Resources.Load("Assets/scaredSelected") as Sprite;
