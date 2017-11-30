@@ -91,11 +91,10 @@ public class QRCodeReader : MonoBehaviour {
 				mat.transform.forward = bottomToTop;
 				mat.transform.position = worldBottomLeft + (bottomToTop + leftToRight) * 0.5f;
 				matPlane.transform.localScale = new Vector3(.05f, .05f, .05f);
-				//matPlane.transform.LookAt (Camera.main.transform);
 				Vector3 center = matPlane.GetComponent<Renderer> ().bounds.center;
 
 				// TODO: this all seems a little out of place here
-				corgi.transform.parent = null; // is this necessary?
+				//corgi.transform.parent = null; // is this necessary?
 				corgi.GetComponent<DogControl> ().InitialSequenceWrapper ();
 				corgi.GetComponent<DogControl> ().dogInScene = true;
 				corgi.GetComponent<DogControl>().foodPos = food.transform.position;

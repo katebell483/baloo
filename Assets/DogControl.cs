@@ -10,7 +10,7 @@ public class DogControl : MonoBehaviour {
 	// basic dog params
 	public GameObject corgi;
 	private Animation animation;
-	private bool shouldMove = true;
+	private bool shouldMove = false;
 	public bool dogInScene = false;
 	Collider corgiCollider;
 
@@ -124,7 +124,7 @@ public class DogControl : MonoBehaviour {
 			}
 				
 			else{
-				corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .25f));
+				corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .01f));
 				// we want to keep track of the corgis position before it leaves the plane
 				startFetchingPos = corgi.transform.position;
 			}
@@ -152,23 +152,16 @@ public class DogControl : MonoBehaviour {
 
 
 	public void InitialSequenceWrapper() {
-		StartCoroutine(randomWalkingSequence(2.5f));
+		StartCoroutine(InitialSequence());
 	}
 
 	public IEnumerator InitialSequence() {
 		Debug.Log ("Dog starting initial sequence");
-		isRandomlyWalking = false;
-		//Walk ();
-		yield return new WaitForSeconds(1.0f); 
-		StartCoroutine (randomWalkingSequence (3f));
-	}
-
-	public IEnumerator randomWalkingSequence(float waitTime) {
-		rotatingTargetPos = newRandomDirection ();
-		rotating = true;
+		yield return new WaitForSeconds(2.0f); 
 		Walk ();
+		yield return new WaitForSeconds(2.0f); 
 		isRandomlyWalking = true;
-		yield return new WaitForSeconds (waitTime);
+		yield return new WaitForSeconds (3.0f);
 		print ("random walking over");
 		randomWalkTime = 0;
 		isRandomlyWalking = false;
