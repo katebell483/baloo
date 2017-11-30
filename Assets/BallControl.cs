@@ -48,7 +48,8 @@ public class BallControl : MonoBehaviour {
 		}
 
 		if (Input.touchCount > 0) {
-			
+
+			print ("touch happened");
 			var touch = Input.touches[0];
 
 			if (touch.phase == TouchPhase.Began) {
@@ -159,6 +160,8 @@ public class BallControl : MonoBehaviour {
 		corgi.GetComponent<DogControl> ().LookAt();
 		corgi.GetComponent<DogControl> ().Sit ();
 	
+		// hide prop
+		corgi.GetComponent<DogControl>().propFrisbee.SetActive(false);
 
 		// destroy any old balls
 		Destroy(currBall);
@@ -172,19 +175,23 @@ public class BallControl : MonoBehaviour {
 		rb.useGravity = false;
 		currBall = ballGO;
 		ballGO.tag = "Ball";
-		ballCollider = currBall.GetComponent<Collider>();
 
+		print ("CURBALL = " + currBall.tag);
+		ballCollider = currBall.GetComponent<Collider>();
+		//ballGO.transform.localScale = new Vector3(.1f, .1f, .1f);
 
 		startBallPos = currBall.transform.position;
 
+		/*
 		float r = 1.0f;
 		float g = 0.0f;
 		float b = 0.0f;
 
-		props.SetColor("_InstanceColor", new Color(r, g, b));
+		//props.SetColor("_InstanceColor", new Color(r, g, b));
 
-		MeshRenderer renderer = ballGO.GetComponent<MeshRenderer>();
-		renderer.SetPropertyBlock(props);
+		//MeshRenderer renderer = ballGO.GetComponent<MeshRenderer>();
+		//renderer.SetPropertyBlock(props);
+		*/
 
 	}
 }

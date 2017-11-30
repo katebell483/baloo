@@ -29,6 +29,7 @@ public class DogControl : MonoBehaviour {
 	public GameObject infoBubble;
 	public GameObject introPanel;
 	public GameObject dogNamePanel;
+	public GameObject propFrisbee;
 
 	// fetching params
 	private bool initialFetchSequence = false;
@@ -426,6 +427,9 @@ public class DogControl : MonoBehaviour {
 				rotating = false;
 				corgiCollider = corgi.GetComponent<Collider>();
 				corgiCollider.enabled = true;
+
+				// bring back prop
+				propFrisbee.SetActive(true);
 
 				// first check if thi means we are done
 				if (isInteractionComplete ()) {

@@ -20,6 +20,7 @@ TagManager:
   - BreatheButton
   - EatButton
   - FetchButton
+  - propFrisbee
   layers:
   - Default
   - TransparentFX
