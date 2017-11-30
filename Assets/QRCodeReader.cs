@@ -85,8 +85,6 @@ public class QRCodeReader : MonoBehaviour {
 			Vector3 worldP = Camera.main.WorldToViewportPoint (point);
 			float distBL = Vector3.Distance (worldP, bottomLeft);
 
-			Debug.Log("MATCHING: Dist BL: " + distBL);
-
 			if (distBL < .4) {
 
 				mat.transform.LookAt (Camera.main.transform.position);
@@ -95,11 +93,13 @@ public class QRCodeReader : MonoBehaviour {
 				mat.transform.position = point;
 				matPlane.transform.localScale = new Vector3 (.075f, .075f, .075f);
 
+				print ("CORGI POSITUOON: " + corgi.transform.position);
 				// TODO: this all seems a little out of place here
 				corgi.transform.parent = null; // is this necessary?
 				corgi.GetComponent<DogControl> ().InitialSequenceWrapper ();
 				corgi.GetComponent<DogControl> ().dogInScene = true;
 				corgi.GetComponent<DogControl> ().foodPos = food.transform.position;
+				print ("CORGI IN SCENE: " + corgi.GetComponent<DogControl> ().dogInScene);
 
 
 				detectQR = false; 

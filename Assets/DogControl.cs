@@ -13,6 +13,11 @@ public class DogControl : MonoBehaviour {
 	private bool shouldMove = true;
 	public bool dogInScene = false;
 	Collider corgiCollider;
+	private Animator animator;
+
+	// animator values
+	private int wagHash = Animator.StringToHash("idle_wag");
+	private int walkHash = Animator.StringToHash("walk_cycle");
 
 	// UI elements
 	public GameObject fetchButton;
@@ -70,7 +75,7 @@ public class DogControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		animation = corgi.GetComponent<Animation> ();
+		//animation = corgi.GetComponent<Animation> ();
 
 		introPanel = GameObject.FindWithTag ("introPanel");
 		dogNamePanel = GameObject.FindWithTag ("dogNamePanel");
@@ -78,6 +83,8 @@ public class DogControl : MonoBehaviour {
 
 		mat = GameObject.FindWithTag ("Mat");
 		corgi = GameObject.FindWithTag("Corgi");
+		animator = corgi.GetComponent<Animator> ();
+
 		dogFood = GameObject.FindWithTag ("dogFood");
 		infoBubble = GameObject.FindWithTag ("infoBubble");
 
@@ -123,20 +130,22 @@ public class DogControl : MonoBehaviour {
 			}
 				
 			else{
-				corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .25f));
+				corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .01f));
 				// we want to keep track of the corgis position before it leaves the plane
 				startFetchingPos = corgi.transform.position;
 			}
 		} 
-
+			
 		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down)){
 			Sit ();
 		}
 
-		// PETTING
+		/*
+		// PETTING.. missing animation
 		if (!fetching && !goingToFood) {
 			CheckForPetting();
 		}
+		*/
 			
 		// FETCHING
 		if (fetching) {
@@ -151,15 +160,25 @@ public class DogControl : MonoBehaviour {
 
 
 	public void InitialSequenceWrapper() {
-		StartCoroutine(randomWalkingSequence(2.5f));
+		print ("HERE!");
+		print ("CORGI POSITION: " + corgi.transform.position);
+		print ("mat POSITION: " + mat.transform.position);
+		corgi.transform.position = new Vector3(mat.transform.position.x, mat.transform.position.y + .1f, mat.transform.position.z) ;
+		shouldMove = false;
+		animator.SetTrigger ("wag");
+		print (animator.GetCurrentAnimatorStateInfo (0).IsName("wag"));
+		//StartCoroutine(randomWalkingSequence(2.5f));
+		StartCoroutine(InitialSequence());
 	}
 
 	public IEnumerator InitialSequence() {
 		Debug.Log ("Dog starting initial sequence");
+
 		isRandomlyWalking = false;
-		//Walk ();
+		Walk ();
 		yield return new WaitForSeconds(1.0f); 
-		StartCoroutine (randomWalkingSequence (3f));
+		Sit ();
+		//StartCoroutine (randomWalkingSequence (3f));
 	}
 
 	public IEnumerator randomWalkingSequence(float waitTime) {
@@ -173,7 +192,7 @@ public class DogControl : MonoBehaviour {
 		isRandomlyWalking = false;
 		rotating = false;
 		LookAt();
-		StartCoroutine(TimedBark(1.0f));
+		//StartCoroutine(TimedBark(1.0f));
 	}
 		
 	public void rotateDog(Vector3 targetPos) {
@@ -195,7 +214,8 @@ public class DogControl : MonoBehaviour {
 			corgiCollider = corgi.GetComponent<Collider> ();
 			corgiCollider.enabled = false;
 
-			Gallop ();
+			//Gallop ();
+			Walk();
 
 			fetching = true;
 			initialFetchSequence = false;
@@ -234,47 +254,12 @@ public class DogControl : MonoBehaviour {
 
 	public void Walk() {
 		shouldMove = true;
-		animation.CrossFade ("CorgiTrot");
+		//animation.CrossFade ("CorgiTrot");
+		animator.SetTrigger("walk");
 	}
 
-	public void Gallop() {
-		shouldMove = true;
-		animation.CrossFade ("CorgiGallop");
-	}
-
-	public void Jump() {
-		shouldMove = false;
-		animation.CrossFade ("CorgiJump");
-	}
-
-	public void Lay() {
-		shouldMove = false;
-		animation.CrossFade ("CorgiLayIdle");
-	}
-
-	public void LayDown() {
-		shouldMove = false;
-		animation.CrossFade ("CorgiSitToLay");
-	}
-
-	public void Sit() {
-		shouldMove = false;
-		animation.CrossFade ("CorgiSitIdle");
-	}
-
-	public IEnumerator WaitAndSit(float waitTime) {
-		Debug.Log ("waiting to sit");
-		waitingToSit = true;
-		yield return new WaitForSeconds (waitTime);
-		waitingToSit = false;
-		Sit ();
-	}
-
-	public IEnumerator WaitAndLay(float waitTime) {
-		Debug.Log ("waiting to lay");
-		yield return new WaitForSeconds(waitTime); 
-		Lay ();
-	}
+	/* WE DON"T HAVE ANIMATIONS FOR THESE YET */
+	/*
 
 	public void CheckForPetting() {
 		if (Input.touchCount > 0) {
@@ -302,6 +287,67 @@ public class DogControl : MonoBehaviour {
 				corgiTouched = false;
 			}
 		}
+	}
+
+	public void Gallop() {
+		shouldMove = true;
+		animation.CrossFade ("CorgiGallop");
+	}
+
+	public void Jump() {
+		shouldMove = false;
+		animation.CrossFade ("CorgiJump");
+	}
+
+	public IEnumerator WaitAndLay(float waitTime) {
+		Debug.Log ("waiting to lay");
+		yield return new WaitForSeconds(waitTime); 
+		Lay ();
+	}
+
+	public void Lay() {
+		shouldMove = false;
+		animation.CrossFade ("CorgiLayIdle");
+	}
+
+	public void LayDown() {
+		shouldMove = false;
+		animation.CrossFade ("CorgiSitToLay");
+	}
+
+	public void BarkLong() {
+		Debug.Log ("Barking dog !");
+		shouldMove = false;
+		animation.CrossFade ("CorgiIdleBarkingLong");
+	}
+
+	public IEnumerator TimedBark(float time) {
+		Bark ();
+		yield return new WaitForSeconds(time); // waits 5 seconds
+		animation.Stop("CorgiIdleBarking");
+		Sit ();
+	}
+
+	public void Bark(){
+		shouldMove = false;
+		animation.CrossFade ("CorgiIdleBarking");
+	}
+	*/
+
+	public void Sit() {
+		print ("HERE!");
+		shouldMove = false;
+		//animation.CrossFade ("CorgiSitIdle");
+		animator.SetTrigger("sit");
+		animator.SetTrigger("sit_idle");
+	}
+
+	public IEnumerator WaitAndSit(float waitTime) {
+		Debug.Log ("waiting to sit");
+		waitingToSit = true;
+		yield return new WaitForSeconds (waitTime);
+		waitingToSit = false;
+		Sit ();
 	}
 
 	public void StartEatingSequence() {
@@ -377,24 +423,6 @@ public class DogControl : MonoBehaviour {
 		auraGrowing = false;
 	}
 
-	public void BarkLong() {
-		Debug.Log ("Barking dog !");
-		shouldMove = false;
-		animation.CrossFade ("CorgiIdleBarkingLong");
-	}
-
-	public IEnumerator TimedBark(float time) {
-		Bark ();
-		yield return new WaitForSeconds(time); // waits 5 seconds
-		animation.Stop("CorgiIdleBarking");
-		Sit ();
-	}
-
-	public void Bark(){
-		shouldMove = false;
-		animation.CrossFade ("CorgiIdleBarking");
-	}
-
 	public void Fetch() {
 		
 		// move the dog forward
@@ -463,7 +491,7 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void promptMeditation() {
-		BarkLong ();
+		//BarkLong (); NO animation yet
 		breatheButton.GetComponent<Button>().Select();
 		triggerInfoBubble ("Looks like all that fetching got Baloo all excited! Why don't we meditate together to relax him?", 5.0f);
 	}
@@ -578,10 +606,12 @@ public class DogControl : MonoBehaviour {
 			isInteractionComplete ();
 		}
 
+		/* we don't have animation for this yet
 		// After 1 cycle Baloo is Barking less
 		else if (nbBreathingCycles >= 1) {
 			Bark ();
 		}
+		*/
 
 	}
 		

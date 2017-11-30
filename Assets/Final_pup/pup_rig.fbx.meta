@@ -1,0 +1,173 @@
+fileFormatVersion: 2
+guid: be1c4c93cd7e249c6a8870d4ebf87d1a
+labels:
+- Character
+timeCreated: 1511979225
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: _control
+    100002: joint1
+    100004: joint1 1
+    100006: pSphere1
+    100008: pSphere2
+    100010: pup:_control
+    100012: pup:_control 1
+    100014: pup:master
+    100016: pup:neck
+    100018: pup:pup_ankle_l
+    100020: pup:pup_ankle_r
+    100022: pup:pup_back_ankle_l
+    100024: pup:pup_back_ankle_l 1
+    100026: pup:pup_back_foot_l
+    100028: pup:pup_back_foot_l 1
+    100030: pup:pup_back_leg1_l
+    100032: pup:pup_back_leg1_l1
+    100034: pup:pup_foot_front_l
+    100036: pup:pup_foot_front_r
+    100038: pup:pup_head
+    100040: pup:pup_jaw1
+    100042: pup:pup_jaw2
+    100044: pup:pup_mesh
+    100046: pup:pup_mesh_MeshPart0
+    100048: pup:pup_mesh_MeshPart1
+    100050: pup:pup_neck
+    100052: pup:pup_nose
+    100054: pup:pup_root
+    100056: pup:pup_shoulder_l
+    100058: pup:pup_shoulder_r
+    100060: pup:pup_snout
+    100062: pup:pup_spine1
+    100064: pup:pup_spine2
+    100066: pup:pup_tail_1
+    100068: pup:pup_tail_2
+    100070: pup:root
+    100072: pup:spine
+    100074: //RootNode
+    100076: root_ctrl
+    400000: _control
+    400002: joint1
+    400004: joint1 1
+    400006: pSphere1
+    400008: pSphere2
+    400010: pup:_control
+    400012: pup:_control 1
+    400014: pup:master
+    400016: pup:neck
+    400018: pup:pup_ankle_l
+    400020: pup:pup_ankle_r
+    400022: pup:pup_back_ankle_l
+    400024: pup:pup_back_ankle_l 1
+    400026: pup:pup_back_foot_l
+    400028: pup:pup_back_foot_l 1
+    400030: pup:pup_back_leg1_l
+    400032: pup:pup_back_leg1_l1
+    400034: pup:pup_foot_front_l
+    400036: pup:pup_foot_front_r
+    400038: pup:pup_head
+    400040: pup:pup_jaw1
+    400042: pup:pup_jaw2
+    400044: pup:pup_mesh
+    400046: pup:pup_mesh_MeshPart0
+    400048: pup:pup_mesh_MeshPart1
+    400050: pup:pup_neck
+    400052: pup:pup_nose
+    400054: pup:pup_root
+    400056: pup:pup_shoulder_l
+    400058: pup:pup_shoulder_r
+    400060: pup:pup_snout
+    400062: pup:pup_spine1
+    400064: pup:pup_spine2
+    400066: pup:pup_tail_1
+    400068: pup:pup_tail_2
+    400070: pup:root
+    400072: pup:spine
+    400074: //RootNode
+    400076: root_ctrl
+    2300000: pSphere1
+    2300002: pSphere2
+    3300000: pSphere1
+    3300002: pSphere2
+    4300000: pup:pup_mesh_MeshPart0
+    4300002: pup:pup_mesh_MeshPart1
+    4300004: pSphere1
+    4300006: pSphere2
+    9500000: //RootNode
+    13700000: pup:pup_mesh_MeshPart0
+    13700002: pup:pup_mesh_MeshPart1
+  materials:
+    importMaterials: 1
+    materialName: 1
+    materialSearch: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 0
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: final_pup
+  assetBundleVariant: 
