@@ -305,10 +305,10 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void StartEatingSequence() {
-
 		Debug.Log ("GOING TO BOWL");
 		goingToFood = true;
 		rotatingTargetPos = dogFood.transform.position;
+		Debug.Log ("BOWL POS: " + rotatingTargetPos);
 		rotating = true;
 		Walk ();
 	}
@@ -324,10 +324,10 @@ public class DogControl : MonoBehaviour {
 		Debug.Log ("DISTANCE: " + distance);
 
 		// got to food so stop + eat
-		if (distance < .2) {
+		if (distance < .1) {
 			Debug.Log ("GOT TO FOOD!");
 			numEatingEvents += 1;
-			rotating = false;
+			//rotating = false;
 			fraction = 0;
 			goingToFood = false;
 			isLastEatingEvent = numEatingEvents == 2;
