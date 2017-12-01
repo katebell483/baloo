@@ -10,7 +10,6 @@ TagManager:
   - Tag
   - Ball
   - inScene
-  - CorgiHouse
   - dogFood
   - speechBubble
   - infoBubble
@@ -23,6 +22,7 @@ TagManager:
   - propFrisbee
   - exitPanel
   - kidNamePanel
+  - dogHouse
   layers:
   - Default
   - TransparentFX

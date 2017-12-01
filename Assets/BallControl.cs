@@ -49,7 +49,6 @@ public class BallControl : MonoBehaviour {
 
 		if (Input.touchCount > 0) {
 
-			print ("touch happened");
 			var touch = Input.touches[0];
 
 			if (touch.phase == TouchPhase.Began) {

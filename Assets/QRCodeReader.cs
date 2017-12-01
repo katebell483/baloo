@@ -28,7 +28,7 @@ public class QRCodeReader : MonoBehaviour {
 	private GameObject mat;
 	private GameObject matPlane;
 	private GameObject corgiHouse;
-	private GameObject food;
+	public GameObject food;
 	private GameObject dogNamePanel;
 
 	private bool detectQR = true;
@@ -40,7 +40,6 @@ public class QRCodeReader : MonoBehaviour {
 		corgi = GameObject.FindWithTag("Corgi");
 		mat = GameObject.FindWithTag("Mat");
 		matPlane = GameObject.FindWithTag ("MatPlane");
-		corgiHouse = GameObject.FindWithTag ("CorgiHouse");
 		food = GameObject.FindWithTag ("dogFood");
 		dogNamePanel = GameObject.FindWithTag ("dogNamePanel");
 	}
@@ -58,9 +57,12 @@ public class QRCodeReader : MonoBehaviour {
 	}
 
 	void OnReadQRCode(string arg) {
+		Debug.Log ("detectQR: " + detectQR);
+		Debug.Log ("READY for QR detect " + corgi.GetComponent<DogControl> ().isReadyForQRDetection);
 		if (!detectQR || !corgi.GetComponent<DogControl> ().isReadyForQRDetection) {
 			return;
 		}
+
 		float[] bounds = GetQRCodeBounds ();
 
 		var topLeft     = Camera.main.ScreenToViewportPoint (new Vector3 (bounds [0], bounds [1]));
@@ -90,15 +92,21 @@ public class QRCodeReader : MonoBehaviour {
 
 				Debug.Log ("PLACING DOG");
 				mat.transform.forward = bottomToTop;
+				Debug.Log ("PRINT 1");
 				mat.transform.position = worldBottomLeft + (bottomToTop + leftToRight) * 0.5f;
+				Debug.Log ("PRINT 2");
+
 				matPlane.transform.localScale = new Vector3(.05f, .05f, .05f);
-				Vector3 center = matPlane.GetComponent<Renderer> ().bounds.center;
+
+				Debug.Log ("PRINT 3");
+
 
 				// TODO: this all seems a little out of place here
-				//corgi.transform.parent = null; // is this necessary?
+				Debug.Log("FOOD POS1 :" + food.transform.position);
+				corgi.GetComponent<DogControl>().foodPos = food.transform.position;
+				Debug.Log ("FOOD POS :" + corgi.GetComponent<DogControl> ().foodPos);
 				corgi.GetComponent<DogControl> ().dogNamePanel.SetActive(true);
 				corgi.GetComponent<DogControl> ().dogInScene = true;
-				corgi.GetComponent<DogControl>().foodPos = food.transform.position;
 
 				detectQR = false; 
 

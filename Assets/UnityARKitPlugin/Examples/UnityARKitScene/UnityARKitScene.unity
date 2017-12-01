@@ -601,6 +601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e39d6cbc452964c7a8481ab0c376c09b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  food: {fileID: 223846525}
 --- !u!1 &182451187
 GameObject:
   m_ObjectHideFlags: 0
@@ -1163,7 +1164,7 @@ Transform:
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 1463809262}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &287790138
 MeshRenderer:
@@ -2094,7 +2095,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400074, guid: 97a08167c3d3d284da93fa9992355180, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 100076, guid: 97a08167c3d3d284da93fa9992355180, type: 3}
       propertyPath: m_TagString
@@ -2376,6 +2377,10 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 591403437}
+--- !u!1 &638550685 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 104410, guid: 0a800293c2c35da41802fc0801c2782c, type: 2}
+  m_PrefabInternal: {fileID: 1450656274}
 --- !u!1 &664965517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2699,15 +2704,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 5c0d04a1d4abcf24f989f5cb67a7a421, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.54
+      value: 4.76
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5c0d04a1d4abcf24f989f5cb67a7a421, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.74
+      value: 12.52
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5c0d04a1d4abcf24f989f5cb67a7a421, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.85
+      value: -6.67
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5c0d04a1d4abcf24f989f5cb67a7a421, type: 3}
       propertyPath: m_LocalRotation.x
@@ -3431,7 +3436,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1509934410}
+      - m_Target: {fileID: 0}
         m_MethodName: goBackToCamera
         m_Mode: 1
         m_Arguments:
@@ -3810,8 +3815,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1075248379}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.85, z: 0}
+  m_LocalRotation: {x: -0, y: 0.037359588, z: -0, w: 0.9993019}
+  m_LocalPosition: {x: 4.03, y: 0.31, z: 0.48}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1937655688}
@@ -3819,7 +3824,7 @@ Transform:
   - {fileID: 2092211589}
   m_Father: {fileID: 1463809262}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 4.282, z: 0}
 --- !u!1 &1078302813
 GameObject:
   m_ObjectHideFlags: 0
@@ -3969,6 +3974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e39d6cbc452964c7a8481ab0c376c09b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  food: {fileID: 0}
 --- !u!1 &1118375877
 GameObject:
   m_ObjectHideFlags: 0
@@ -4000,7 +4006,7 @@ Transform:
   - {fileID: 782417874}
   - {fileID: 2047857109}
   m_Father: {fileID: 1463809262}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1121666029
 GameObject:
@@ -5121,6 +5127,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: -57.468002
       objectReference: {fileID: 0}
+    - target: {fileID: 104410, guid: 0a800293c2c35da41802fc0801c2782c, type: 2}
+      propertyPath: m_TagString
+      value: dogHouse
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0a800293c2c35da41802fc0801c2782c, type: 2}
   m_IsPrefabParent: 0
@@ -5474,66 +5484,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1497411509}
---- !u!1 &1509934408
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1509934409}
-  - component: {fileID: 1509934410}
-  m_Layer: 0
-  m_Name: Corgi_Model
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1509934409
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1509934408}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.61, y: 0, z: 0.62}
-  m_LocalScale: {x: 7, y: 7, z: 7}
-  m_Children: []
-  m_Father: {fileID: 1463809262}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1509934410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1509934408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93c9ca7ed56a04cc78d21a7c2f14d6f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  corgi: {fileID: 1804384596}
-  dogInScene: 0
-  fetchButton: {fileID: 0}
-  eatButton: {fileID: 0}
-  breatheButton: {fileID: 0}
-  infoBubble: {fileID: 0}
-  introPanel: {fileID: 0}
-  dogNamePanel: {fileID: 0}
-  exitPanel: {fileID: 0}
-  isReadyForQRDetection: 0
-  aura: {fileID: 0}
-  mat: {fileID: 0}
-  ball: {fileID: 0}
-  dogFood: {fileID: 0}
-  propFrisbee: {fileID: 0}
-  fetching: 0
-  goingToFood: 0
-  foodPos: {x: 0, y: 0, z: 0}
-  isRandomlyWalking: 0
-  rotating: 0
 --- !u!1 &1525707144
 GameObject:
   m_ObjectHideFlags: 0
@@ -5617,7 +5567,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: c91a2a3af8673b74a9b9e87179f3ac9e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.369995
+      value: 3.33
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c91a2a3af8673b74a9b9e87179f3ac9e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5625,7 +5575,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c91a2a3af8673b74a9b9e87179f3ac9e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.03384324
+      value: 2.48
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c91a2a3af8673b74a9b9e87179f3ac9e, type: 3}
       propertyPath: m_LocalRotation.x
@@ -6679,6 +6629,7 @@ MonoBehaviour:
   ball: {fileID: 0}
   dogFood: {fileID: 223846525}
   propFrisbee: {fileID: 1399588605}
+  dogHouse: {fileID: 638550685}
   fetching: 0
   goingToFood: 0
   foodPos: {x: 0, y: 0, z: 0}
@@ -6718,8 +6669,14 @@ Animation:
   - {fileID: 7400000, guid: 0d7ca8d11cfec44429584b730b4b1e62, type: 3}
   - {fileID: 7400000, guid: 8a75dd516891330478a6bc9774775b29, type: 3}
   - {fileID: 7400000, guid: 2bb3a0ac6e2fd114c8871089f6aa250f, type: 3}
+  - {fileID: 7400000, guid: 3b0d133967273ba44bed422534cda316, type: 3}
+  - {fileID: 7400000, guid: 2f60ebe9cf02ae448a880327770a0b32, type: 3}
+  - {fileID: 7400000, guid: b8861e15c40ccb74b9b41b16b9ae0ce7, type: 3}
+  - {fileID: 7400000, guid: b357a695868ee67428f0587995f35d0b, type: 3}
+  - {fileID: 7400000, guid: 9bff914c24d98e546a75e8edde401ac3, type: 3}
+  - {fileID: 7400000, guid: 81ea7afb83f0ad349aa2858bf930ba0f, type: 3}
   m_WrapMode: 0
-  m_PlayAutomatically: 0
+  m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!54 &1804384601
@@ -7342,15 +7299,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: d418e950347afac459fd761870389c07, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.1100391
+      value: 5.330021
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d418e950347afac459fd761870389c07, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.62
+      value: 10.399999
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d418e950347afac459fd761870389c07, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.2
+      value: -5.020002
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d418e950347afac459fd761870389c07, type: 3}
       propertyPath: m_LocalRotation.x

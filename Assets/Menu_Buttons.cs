@@ -29,6 +29,7 @@ public class Menu_Buttons : MonoBehaviour {
 
 	private bool selectedEmoji;
 	private string nameUser;
+	private bool isExitTime = false;
 
 	static public int accessed = 0;    // this is reachable from everywhere
 
@@ -38,18 +39,19 @@ public class Menu_Buttons : MonoBehaviour {
 		print ("cross scene info: " + SceneController.CrossSceneInformation);
 
 		switch (SceneController.CrossSceneInformation) {
-			case "emojis":
-				MenuPanel.SetActive (false);
-				LevelSelectPanel.SetActive (false);
-				LoginPanel.SetActive (false);
-				SignUpPanel.SetActive (true);
-				break;
-			default:
-				MenuPanel.SetActive (true);
-				LevelSelectPanel.SetActive (false);
-				LoginPanel.SetActive (false);
-				SignUpPanel.SetActive (false);
-				break;
+		case "emojis":
+			MenuPanel.SetActive (false);
+			LevelSelectPanel.SetActive (false);
+			LoginPanel.SetActive (false);
+			SignUpPanel.SetActive (true);
+			isExitTime = true; 
+			break;
+		default:
+			MenuPanel.SetActive (true);
+			LevelSelectPanel.SetActive (false);
+			LoginPanel.SetActive (false);
+			SignUpPanel.SetActive (false);
+			break;
 		}
 
 		SceneController.CrossSceneInformation = "";
@@ -222,7 +224,11 @@ public class Menu_Buttons : MonoBehaviour {
 	public void ShowMenuFromSignUpPanel()
 	{
 		if (selectedEmoji) {
-			Application.LoadLevel ("UnityARKitScene");
+			if (isExitTime) {
+				Application.Quit ();
+			} else {
+				Application.LoadLevel ("UnityARKitScene");
+			}
 		}
 		//MenuPanel.SetActive(true);
 		//SignUpPanel.SetActive(false);
