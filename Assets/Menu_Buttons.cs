@@ -30,11 +30,20 @@ public class Menu_Buttons : MonoBehaviour {
 	private bool selectedEmoji;
 	private string nameUser;
 
+	//Used for camera 
+	private bool camAvailable;
+	private WebCamTexture frontCamTexture;
+	public RawImage frontCam;
+	public AspectRatioFitter fit;
+	public byte[] bytes;
+	public bool check;
+
+
 	static public int accessed = 0;    // this is reachable from everywhere
 
 	// Use this for initialization
 	void Start () {
-
+		check = false;
 		print ("cross scene info: " + SceneController.CrossSceneInformation);
 
 		switch (SceneController.CrossSceneInformation) {
@@ -55,13 +64,48 @@ public class Menu_Buttons : MonoBehaviour {
 		SceneController.CrossSceneInformation = "";
 
 		selectedEmoji = false;
+
+		// Camera Start
+		WebCamDevice[] devices = WebCamTexture.devices;
+
+		if (devices.Length == 0) {
+			Debug.Log ("No camera detected");
+			camAvailable = false;
+			return;
+		}
+
+		for (int i = 0; i < devices.Length; i++) {
+			if (devices [i].isFrontFacing) {
+				frontCamTexture = new WebCamTexture (devices [i].name, Screen.width, Screen.height);
+			}
+		}
+
+		if (frontCamTexture == null) {
+			Debug.Log ("Unable to find back camera");
+			return;
+		}
+		frontCamTexture.Play ();
+		frontCam.texture = frontCamTexture;
+
+		camAvailable = true;
+
 		//scaredSelected = Resources.Load("Assets/scaredSelected") as Sprite;
 		//scaredUnselected = Resources.Load("Assets/scaredUnselected") as Sprite;
 	}
 
 	// Update is called once per frame
 	void Update () {
-		
+		if (!camAvailable)
+			return;
+
+		float ratio = (float)frontCamTexture.width / (float)frontCamTexture.height;
+		fit.aspectRatio = ratio;
+
+		float scaleY = frontCamTexture.videoVerticallyMirrored ? 1f : -1f;
+		frontCam.rectTransform.localScale = new Vector3 (1f, scaleY, 1f);
+
+		int orient = -frontCamTexture.videoRotationAngle;
+		frontCam.rectTransform.localEulerAngles = new Vector3 (0, 0, orient);
 	}
 
 	public void ShowLevelPanel()
@@ -219,13 +263,179 @@ public class Menu_Buttons : MonoBehaviour {
 		selectedEmoji = true;
 	}
 
-	public void ShowMenuFromSignUpPanel()
+	public static Texture2D rotate(Texture2D t)
 	{
-		if (selectedEmoji) {
-			Application.LoadLevel ("UnityARKitScene");
+		Texture2D newTexture = new Texture2D(t.height, t.width, t.format, false);
+
+		for(int i=0; i<t.width; i++)
+		{
+			for(int j=0; j<t.height; j++)
+			{
+				newTexture.SetPixel(j, i, t.GetPixel(t.width-i, j));
+			}
 		}
-		//MenuPanel.SetActive(true);
-		//SignUpPanel.SetActive(false);
+		newTexture.Apply();
+		return newTexture;
 	}
 
+	string fixJson(string value)
+	{
+		value = "{\"Items\":" + value + "}";
+		return value;
+	}
+
+	[System.Serializable]
+	public class FaceRectangle
+	{
+		public int height;
+		public int left;
+		public int top;
+		public int width;
+	}
+
+	[System.Serializable]
+	public class Scores
+	{
+		public double anger;
+		public double contempt;
+		public double disgust;
+		public double fear;
+		public double happiness;
+		public double neutral;
+		public double sadness;
+		public double surprise;
+	}
+
+	[System.Serializable]
+	public class Face
+	{
+		public FaceRectangle faceRectangle;
+		public Scores scores;
+	}
+
+	[System.Serializable]
+	public class QuestionList
+	{
+		public List<Face> Items;
+	}
+
+	IEnumerator Upload(byte[] bytes){
+		string EMOTIONKEY = "6370fdd9f7d64a00a9b81cab6078db32";
+		string emotionURL = "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize";
+
+
+		var headers = new Dictionary<string, string>() {
+			{ "Ocp-Apim-Subscription-Key", EMOTIONKEY },
+			{ "Content-Type", "application/octet-stream" }
+		};
+
+		WWW www = new WWW(emotionURL, bytes, headers);
+
+		yield return www;
+		string responseData = www.text;
+		responseData = fixJson(responseData);
+
+		QuestionList listFaces = JsonUtility.FromJson<QuestionList> (responseData);
+
+		if (listFaces.Items.Count != 0) {
+			int anger = Mathf.RoundToInt ((float)listFaces.Items [0].scores.anger * 100);
+			int contempt = Mathf.RoundToInt ((float)listFaces.Items [0].scores.contempt * 100);
+			int disgust = Mathf.RoundToInt ((float)listFaces.Items [0].scores.disgust * 100);
+			int fear = Mathf.RoundToInt ((float)listFaces.Items [0].scores.fear * 100);
+			int happiness = Mathf.RoundToInt ((float)listFaces.Items [0].scores.happiness * 100);
+			int neutral = Mathf.RoundToInt ((float)listFaces.Items [0].scores.neutral * 100);
+			int sadness = Mathf.RoundToInt ((float)listFaces.Items [0].scores.sadness * 100);
+			int suprise = Mathf.RoundToInt ((float)listFaces.Items [0].scores.surprise * 100);
+
+			double maxValue = 0.0;
+			string maxName = "";
+
+			if (maxValue < listFaces.Items [0].scores.anger) {
+				maxValue = listFaces.Items [0].scores.anger;
+				maxName = "ANGER";
+			}
+			if (maxValue < listFaces.Items [0].scores.contempt) {
+				maxValue = listFaces.Items [0].scores.contempt;
+				maxName = "CONTEMPT";
+			}
+			if (maxValue < listFaces.Items [0].scores.disgust) {
+				maxValue = listFaces.Items [0].scores.disgust;
+				maxName = "DISGUST";
+			}
+			if (maxValue < listFaces.Items [0].scores.fear) {
+				maxValue = listFaces.Items [0].scores.fear;
+				maxName = "FEAR";
+			}
+			if (maxValue < listFaces.Items [0].scores.happiness) {
+				maxValue = listFaces.Items [0].scores.happiness;
+				maxName = "HAPPY";
+			}
+			if (maxValue < listFaces.Items [0].scores.neutral) {
+				maxValue = listFaces.Items [0].scores.neutral;
+				maxName = "NEUTRAL";
+			}
+			if (maxValue < listFaces.Items [0].scores.sadness) {
+				maxValue = listFaces.Items [0].scores.sadness;
+				maxName = "SAD";
+			}
+			if (maxValue < listFaces.Items [0].scores.surprise) {
+				maxValue = listFaces.Items [0].scores.surprise;
+				maxName = "SURPRISE";
+			}
+			Debug.Log ("=================");
+			Debug.Log (maxName);
+			Debug.Log ("=================");
+		} else {
+			Debug.Log ("=================");
+			Debug.Log ("NO FACE DETECTED");
+			Debug.Log ("=================");
+		}
+		check = true;
+	}
+
+
+
+	public void ShowMenuFromSignUpPanel()
+	{
+		//Create a Texture2D with the size of the rendered image on the screen.
+		Texture2D texture = new Texture2D(frontCam.texture.width, frontCam.texture.height, TextureFormat.ARGB32, false);
+
+
+		//Save the image to the Texture2D
+		texture.SetPixels(frontCamTexture.GetPixels());
+		texture.Apply();
+
+		//Encode it as a PNG.
+		bytes = texture.EncodeToPNG();
+
+		Texture2D tex = null;
+		tex = new Texture2D(1, 1);
+		tex.LoadImage(bytes);
+
+		Texture2D newTexture = rotate (texture);
+		bytes = newTexture.EncodeToPNG();
+
+		frontCam.rectTransform.localScale = new Vector3 (1f, -1f, 1f);
+		frontCam.texture = texture;
+
+		check = false;
+		if (selectedEmoji) {
+			frontCamTexture.Stop ();
+
+			//StartCoroutine (Upload (bytes));
+			StartCoroutine(loadARKitSceneAndFaceDetection());
+
+			//Application.LoadLevel ("UnityARKitScene");
+		} else {
+			StartCoroutine (Upload (bytes));
+		}
+	}
+
+	IEnumerator loadARKitSceneAndFaceDetection()
+	{
+		yield return StartCoroutine(Upload (bytes));
+		if(check){
+			Application.LoadLevel ("UnityARKitScene");
+		}
+	}
 }

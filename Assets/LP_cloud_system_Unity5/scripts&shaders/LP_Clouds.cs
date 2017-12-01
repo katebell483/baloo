@@ -273,7 +273,7 @@ public class LP_Clouds : MonoBehaviour {
 						float life = (Random.Range(2f*clouds_lifetime/3f,4f*clouds_lifetime/3f));
 
 						particles[p_i].startLifetime = life;
-						particles[p_i].lifetime = Mathf.Lerp(0.1f,particles[p_i].startLifetime,Random.Range(0f,1f));
+						particles[p_i].remainingLifetime = Mathf.Lerp(0.1f,particles[p_i].startLifetime,Random.Range(0f,1f));
 						particles[p_i].randomSeed=(uint)Random.Range(0,6);
 						// for some reason doesn't work in early versions of unity (works in 5.5 and late 5.4.x)
 						particles[p_i].rotation3D = new Vector3(Random.Range(-rot_RND.x,rot_RND.x),Random.Range(-rot_RND.y,rot_RND.y),Random.Range(-rot_RND.z,rot_RND.z));//Vector3.Lerp(-rot_RND,rot_RND,Random.Range(0f,1f));//new Vector3(Random.Range(-30f,30f),Random.Range(-90f,90f),Random.Range(-30f,30f));
@@ -309,15 +309,15 @@ public class LP_Clouds : MonoBehaviour {
 		for (int i=0;i<count;i++){
 			//particles[i].position+=new Vector3(0f,0f,speed_k*delta_t); // no need for manual movement, done using PS velocity
 			//if particle is dying we check if it's crossed the border already, if yes - "recreating" it on the other side, else at the same position
-			if (particles[i].lifetime<particles[i].startLifetime*.05f){
-				particles[i].lifetime=particles[i].startLifetime;
+			if (particles[i].remainingLifetime<particles[i].startLifetime*.05f){
+				particles[i].remainingLifetime=particles[i].startLifetime;
 
 
 			}
 			if(particles[i].position.z>this.transform.position.z+height*clouds_scale/2f){
 				float z_delta = particles[i].position.z - (this.transform.position.z+height*clouds_scale/2f);
 				particles[i].position = new Vector3(particles[i].position.x,particles[i].position.y,this.transform.position.z-height*clouds_scale/2f+z_delta);
-				particles[i].lifetime=particles[i].startLifetime;
+				particles[i].remainingLifetime=particles[i].startLifetime;
 			}
 
 		
