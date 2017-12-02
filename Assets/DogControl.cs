@@ -205,7 +205,7 @@ public class DogControl : MonoBehaviour {
 		Debug.Log ("ROTATING");
 		Vector3 targetPoint = new Vector3(targetPos.x, corgi.transform.position.y, targetPos.z) - corgi.transform.position;
 		Quaternion targetRotation = Quaternion.LookRotation (targetPoint, Vector3.up);
-		corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 3.0f);
+		corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 4.0f);
 		if(targetRotation == corgi.transform.rotation) {
 			rotating = false;
 		}
@@ -303,6 +303,7 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void Sit() {
+		Debug.Log ("Sitting");
 		shouldMove = false;
 		animation.CrossFade ("CorgiSitIdle");
 	}
@@ -362,24 +363,28 @@ public class DogControl : MonoBehaviour {
 		float distance = Math.Abs(Vector3.Distance(corgi.transform.position, dogHouse.transform.position));
 		Debug.Log ("DISTANCE: " + distance);
 
-		// got to food so stop + eat
-		if (distance == 0) {
-			Debug.Log("CORGI HOME");
+		if (distance < .01 && !rotating) {
+			Debug.Log ("CORGI HOME");
 			isGoingHome = false;
-			StartCoroutine(startExitSequence());
-		} else {
+			StartCoroutine (startExitSequence ());
+		} else if (distance > .01) {
 			// move dog forward
+			Debug.Log ("CORGI STILL GOING HOME");
 			fraction += Time.deltaTime * .015f;
-			Vector3 currPos  = Vector3.Lerp(corgi.transform.position, dogHouse.transform.position, fraction);
+			Vector3 currPos = Vector3.Lerp (corgi.transform.position, dogHouse.transform.position, fraction);
 			corgi.transform.position = currPos;
+		} else {
+			Debug.Log ("waiting for rotation to stop");
 		}
 
 	}
 
 	public IEnumerator startExitSequence() {
+		Debug.Log ("starting exit sequence");
 		corgi.transform.rotation = initialCorgiTransform.rotation;
-		IdleToLay();
+		LayDown();
 		yield return new WaitForSeconds (1.5f);
+		Debug.Log ("exit sequence complete");
 		exitPanel.SetActive (true);
 	}
 
@@ -428,6 +433,7 @@ public class DogControl : MonoBehaviour {
 	}
 		
 	public void GoToFoodAndEat() {
+		
 
 		//check distance
 		float distance = Math.Abs(Vector3.Distance(corgi.transform.position, foodPos));
@@ -454,27 +460,38 @@ public class DogControl : MonoBehaviour {
 	public void EatWrapper() {
 		StartCoroutine(Eat());
 	}
-
+		
 	public IEnumerator Eat() {
 		Debug.Log ("EATING");
+
+		// first eat 
 		shouldMove = false;
 		animation.CrossFade ("CorgiEat");
 		yield return new WaitForSeconds(5f); // waits 5 seconds
-		// go to center of mat
+
+		// now face the camera and walk away from food
 		LookAt();
-		if (numFetches > 0 && numEatingEvents == 1 || numMeditationEvents > 0) {
-			Debug.Log("about to dig and sit");
-			bool scratch = UnityEngine.Random.value < .5;
-			StartCoroutine(WalkAndDigAndSit (scratch));
+		Walk ();
+		yield return new WaitForSeconds (1f);
+
+		// stop waking & sit or dig
+		shouldMove = false;
+		bool dig = UnityEngine.Random.value < .33; // dig every 3ish times
+		if (dig) {
+			animation.CrossFade ("CorgiIdleDig");
 		} else {
-			StartCoroutine (WalkAndSit ());
+			SitLong ();
 		}
-		// check if interaction is done
+			
+		// check for end conditions
+		// if interaction complete then start exit sequence
+		// if max food events reached disable eat button
 		if (!isInteractionComplete () &&  isLastEatingEvent) {
 			triggerInfoBubble ("I'm full! Let's play!", 3.0f);
 			eatButton.GetComponent<Button> ().interactable = false;
 			fetchButton.GetComponent<Button> ().Select ();
 		}
+
 	}
 
 	private bool isInteractionComplete() {
@@ -518,7 +535,7 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void Fetch() {
-		
+
 		// move the dog forward
 		fraction += Time.deltaTime * speed;
 
