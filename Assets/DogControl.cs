@@ -487,7 +487,7 @@ public class DogControl : MonoBehaviour {
 		// if interaction complete then start exit sequence
 		// if max food events reached disable eat button
 		if (!isInteractionComplete () &&  isLastEatingEvent) {
-			triggerInfoBubble ("I'm full! Let's play!", 3.0f);
+			triggerInfoBubble ("I'm full!\nLet's play!", 3.0f);
 			eatButton.GetComponent<Button> ().interactable = false;
 			fetchButton.GetComponent<Button> ().Select ();
 		}
@@ -607,12 +607,12 @@ public class DogControl : MonoBehaviour {
 	public void promptMeditation() {
 		BarkLong ();
 		breatheButton.GetComponent<Button>().Select();
-		triggerInfoBubble ("Looks like all that fetching got Baloo all excited! Why don't we meditate together to relax him?", 5.0f);
+		triggerInfoBubble ("Baloo's all excited now!\nWhy don't we meditate\ntogether to relax him?", 5.0f);
 	}
 
 	public void promptFeeding() {
 		eatButton.GetComponent<Button>().Select();
-		triggerInfoBubble ("All that fetching made me hungry!", 5.0f);
+		triggerInfoBubble ("All that fetching\nmade me hungry!", 5.0f);
 	}
 
 	// Random Walking
@@ -710,7 +710,7 @@ public class DogControl : MonoBehaviour {
 
 		// End of the 3 cycles of breathing => re-initialize the parameters
 		if (nbBreathingCycles >= 3) {
-			triggerInfoBubble ("Baloo feels great after his meditation! How about you?", 4.0f);
+			triggerInfoBubble ("Baloo feels great now!\n How about you?", 4.0f);
 			numMeditationEvents += 1;
 			isBreathing = false;
 			nbBreathingCycles = 0;
