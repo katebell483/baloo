@@ -78,6 +78,11 @@ public class DogControl : MonoBehaviour {
 	private Vector3 rotatingTargetPos;
 	private int randomWalkTime = 0;
 
+	// quit app when in background
+	void OnApplicationPause(bool pauseStatus){
+		Application.Quit ();
+	}
+
 	// Use this for initialization
 	void Start () {
 		
