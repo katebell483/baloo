@@ -180,7 +180,7 @@ public class DogControl : MonoBehaviour {
 			
 		} 
 
-		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down)){
+		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down) && !waitingToSit) {
 			randomBehavior = false;
 			isRandomlyWalking = false;
 			Sit ();
@@ -366,7 +366,8 @@ public class DogControl : MonoBehaviour {
 		yield return new WaitForSeconds (waitTime);
 		waitingToSit = false;
 		if(isLaying) {
-			LayToSit();
+			//LayToSit();
+			Sit();
 		} else {
 			Sit ();
 		}
