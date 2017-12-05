@@ -215,6 +215,7 @@ public class DogControl : MonoBehaviour {
 		//rotating = false;
 		LookAt();
 		StartCoroutine(TimedBark(1.0f));
+		activateRandomWalking ();
 	}
 		
 	public void rotateDog(Vector3 targetPos) {
