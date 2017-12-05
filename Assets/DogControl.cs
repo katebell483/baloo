@@ -54,9 +54,13 @@ public class DogControl : MonoBehaviour {
 	private int numEatingEvents = 0;
 	private bool isLastEatingEvent = false;
 
-	// Random walking parameters
+	// Random Behavior parameters
+	public bool randomBehavior = false; //when the user is not playing with Baloo, it does its random stuff (divided in static actions if isRandomWalking is false, or non-static actions in the contrary)
 	public bool isRandomlyWalking = false;
-	float randX, randZ;
+	public float randX, randZ;
+	public int numberOfRandomTargetReached = 0;
+	public float randomStaticTime = 5f; // The random time of a static action between 2 random walks
+	public string randomStaticAction= "Sit";
 
 	// going home params
 	private bool isGoingHome = false;
@@ -67,7 +71,7 @@ public class DogControl : MonoBehaviour {
 	private bool waitingToSit = false;
 	private IEnumerator layingCoroutine;
 
-	//Daniel: breathing params
+	// breathing params
 	private bool isBreathing = false;
 	private bool auraGrowing = true; //true if growing, false if reducing
 	private float nbBreathingCycles = 0;
@@ -76,7 +80,6 @@ public class DogControl : MonoBehaviour {
 	// rotating params
 	public bool rotating = false;
 	private Vector3 rotatingTargetPos;
-	private int randomWalkTime = 0;
 
 	// quit app when in background
 	void OnApplicationPause(bool pauseStatus){
@@ -136,7 +139,7 @@ public class DogControl : MonoBehaviour {
 		}
 		*/
 	
-		//Daniel: Breathing phase:
+		//Breathing phase:
 		if (isBreathing) {
 			Breathe ();
 		} else {
@@ -151,21 +154,35 @@ public class DogControl : MonoBehaviour {
 		if (rotating) {
 			rotateDog (rotatingTargetPos);
 		}
-			
-		if (shouldMove && !fetching) {
 
+		//Random Behavior content
+		if (randomBehavior){
+			// Random movement
 			if (isRandomlyWalking) {
 				RandomWalk ();
-			}
-				
-			else{
-				corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .015f));
+				corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .025f));
 				// we want to keep track of the corgis position before it leaves the plane
 				startFetchingPos = corgi.transform.position;
+			} 
+			// Random static actions (diggind, sitting ...)
+			else {
+				doRandomStaticAction ();
 			}
+		
+		}
+			
+		if (shouldMove && !fetching && !randomBehavior) {
+
+			//corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .015f));
+			corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .025f));
+			// we want to keep track of the corgis position before it leaves the plane
+			startFetchingPos = corgi.transform.position;
+			
 		} 
 
 		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down)){
+			randomBehavior = false;
+			isRandomlyWalking = false;
 			Sit ();
 		}
 
@@ -199,7 +216,6 @@ public class DogControl : MonoBehaviour {
 		//isRandomlyWalking = true;
 		//yield return new WaitForSeconds (3.0f);
 		print ("random walking over");
-		//randomWalkTime = 0;
 		//isRandomlyWalking = false;
 		//rotating = false;
 		LookAt();
@@ -207,10 +223,11 @@ public class DogControl : MonoBehaviour {
 	}
 		
 	public void rotateDog(Vector3 targetPos) {
-		Debug.Log ("ROTATING");
+		//Debug.Log ("ROTATING");
 		Vector3 targetPoint = new Vector3(targetPos.x, corgi.transform.position.y, targetPos.z) - corgi.transform.position;
 		Quaternion targetRotation = Quaternion.LookRotation (targetPoint, Vector3.up);
-		corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 4.0f);
+		//corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 4.0f);
+		corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 1.5f);
 		if(targetRotation == corgi.transform.rotation) {
 			rotating = false;
 		}
@@ -231,6 +248,7 @@ public class DogControl : MonoBehaviour {
 			initialFetchSequence = false;
 
 		} else if (isRandomlyWalking) {
+			Debug.Log ("HIT WALL Randomly walking");
 			rotatingTargetPos = mat.transform.position;
 			rotating = true;
 		} else {
@@ -308,7 +326,6 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void Sit() {
-		Debug.Log ("Sitting");
 		shouldMove = false;
 		animation.CrossFade ("CorgiSitIdle");
 	}
@@ -412,6 +429,8 @@ public class DogControl : MonoBehaviour {
 			if (touch.phase == TouchPhase.Began) {
 				if (Physics.Raycast (ray, out hit) && hit.transform.gameObject.tag == "Corgi") {
 					Debug.Log ("corgi touched");
+					randomBehavior = false;
+					isRandomlyWalking = false;
 					corgiTouched = true;
 					if (waitingToSit)
 						StopCoroutine (sittingCoroutine);
@@ -429,6 +448,8 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void StartEatingSequence() {
+		randomBehavior = false;
+		isRandomlyWalking = false;
 		Debug.Log ("GOING TO BOWL");
 		goingToFood = true;
 		rotatingTargetPos = dogFood.transform.position;
@@ -484,6 +505,7 @@ public class DogControl : MonoBehaviour {
 		bool dig = UnityEngine.Random.value < .33; // dig every 3ish times
 		if (dig) {
 			animation.CrossFade ("CorgiIdleDig");
+			//Pb Here, Baloo keeps Digging
 		} else {
 			SitLong ();
 		}
@@ -620,15 +642,92 @@ public class DogControl : MonoBehaviour {
 		triggerInfoBubble ("All that fetching\nmade me hungry!", 5.0f);
 	}
 
+
+	//Random Static Action :
+	public void doRandomStaticAction(){
+		shouldMove = false;
+		rotating = false; 
+		//Random static actiona and random time
+		if (randomStaticAction == "Sit"){
+			Sit ();
+			LookAt ();
+		}else if (randomStaticAction == "Dig"){
+			Dig ();
+		}else if (randomStaticAction == "SitScratch"){
+			SitScratch ();
+		}else if (randomStaticAction == "Lay"){
+			Lay ();
+		}
+		warpRandomWalkAgain (randomStaticTime);
+	}
+
+
+	public void warpRandomWalkAgain(float time) {
+		StartCoroutine(RandomWalkAgain(time));
+	}
+
+	public IEnumerator RandomWalkAgain(float time) {
+		yield return new WaitForSeconds(time);
+		numberOfRandomTargetReached=0;
+		//Here we can add a random number of numberOfRandomTargetReached
+		//HERE
+		isRandomlyWalking = true;
+		rotating = true; 
+	}
+
+	public string getRandomStaticAction(float randomNumber){
+		if (randomNumber <= .25f) {
+			return "Sit";
+		} else if (randomNumber <= .5f) {
+			return "Dig";
+		} else if (randomNumber <= .75f) {
+			return "SitScratch";
+		} else {
+			return "Lay";
+		}
+	}
+	public float getRandomStaticTime(string randomAction){
+		if (randomAction == "Sit") {
+			return 14f;
+		} else if (randomAction == "Dig") {
+			return 10f;
+		} else if (randomAction == "SitScratch") {
+			return 6f;
+		} else if (randomAction == "Lay") {
+			return 14f;
+		} else {
+			return 7f;
+		}
+	}
+
+
+
 	// Random Walking
+	public void activateRandomWalking(){
+		//Walk ();
+		randomBehavior = true;
+		isRandomlyWalking = true;
+		numberOfRandomTargetReached = 0;
+		shouldMove = true;
+		rotating = true;
+		//fraction = 0;
+		rotatingTargetPos = newRandomDirection ();
+		Debug.Log ("rotatingTargetPos: "+rotatingTargetPos);
+		Debug.Log ("activateRandomWalking called");
+		Debug.Log ("Parameters Value : isBreathing: " + isBreathing + ", isRandomly walking: "+ isRandomlyWalking+ ", shouldMove: "+ shouldMove);
+	}
+
+
 	//// Returns a return value among {-1,0,1}
 	//// randomNumber is between 0.0 and 1.0
 	public float returnRandomInteger(float randomNumber){
-		if (randomNumber <= .25f) {
+		if (randomNumber <= .2f) {
 			return -2;
-		} else if (randomNumber <= .5f) {
+		} else if (randomNumber <= .4f) {
 			return -1;
-		} else if (randomNumber <= .75f) {
+		} else if (randomNumber <= .6f) {
+			return 0;
+		} else if (randomNumber <= .8f) {
 			return 1;
 		} else {
 			return 2;
@@ -642,42 +741,32 @@ public class DogControl : MonoBehaviour {
 		if (randVector.magnitude > 0) {
 			randVector = randVector / randVector.magnitude;
 		}
-		randVector = corgi.transform.position + randVector*corgi.transform.localScale.x;//Random position next to the dog
+		randVector = corgi.transform.position + randVector*corgi.transform.localScale.x * .025f ;//Random position next to the dog
 		return randVector;
 	}
 
 	public void RandomWalk(){
-		Debug.Log ("Random Walk called");
-		Debug.Log ("Parameters Value : isBreathing: " + isBreathing + ", isRandomly walking: "+ isRandomlyWalking+ ", shouldMove: "+ shouldMove);
-		Debug.Log ("rotatingTargetPos: "+rotatingTargetPos);
+		//Debug.Log ("Random Walk called");
+		//Debug.Log ("Parameters Value : isBreathing: " + isBreathing + ", isRandomly walking: "+ isRandomlyWalking+ ", shouldMove: "+ shouldMove);
+		//Debug.Log ("rotatingTargetPos: "+rotatingTargetPos);
 
 		if(!isRandomlyWalking) return;
-			
 		Walk ();
-
-		randomWalkTime += 1;
-
-		fraction += Time.deltaTime * .025f;
-
-		Vector3 curPos = Vector3.Lerp (transform.position, rotatingTargetPos, fraction);
-		float distanceToRandPosition = Math.Abs (Vector3.Distance (transform.position, rotatingTargetPos));
-
-		// walk towards random distance for 5 frames
-		if (randomWalkTime % 30 == 0) {
-			Debug.Log ("Baloo arrived to the random destination, ditance: " + distanceToRandPosition);
-			fraction = 0;
-			rotating = true;
-			if (randomWalkTime > 90) {
-				rotatingTargetPos = mat.transform.position;
+		float distance = Math.Abs(Vector3.Distance(corgi.transform.position, rotatingTargetPos));
+		if (distance < 0.06) {
+			Debug.Log ("Arrived at Random Destination" + distance);
+			numberOfRandomTargetReached += 1;
+			if (numberOfRandomTargetReached == 2) {
+				Debug.Log ("Stop Random Walking");
+				randomStaticAction = getRandomStaticAction (UnityEngine.Random.value);
+				randomStaticTime = getRandomStaticTime (randomStaticAction);
+				isRandomlyWalking = false;
 			} else {
 				rotatingTargetPos = newRandomDirection ();
 			}
-			RandomWalk ();
-		} else {
-			corgi.transform.position = curPos;
 		}
 	}
-
+	
 	public void triggerInfoBubble(string infoMsg, float time) {
 		infoBubble.SetActive (true);
 		infoBubble.GetComponentInChildren<Text> ().text = infoMsg;
@@ -690,7 +779,9 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void Breathe(){
-
+		
+		randomBehavior = false;
+		isRandomlyWalking = false;
 		LookAt ();
 		aura.transform.position = new Vector3 (corgi.transform.position.x, aura.transform.position.y, corgi.transform.position.z);
 		aura.SetActive (true);
@@ -721,13 +812,15 @@ public class DogControl : MonoBehaviour {
 			nbBreathingCycles = 0;
 			auraGrowing = false;
 			aura.SetActive (false);
-			Sit();
+			Sit ();
 			isInteractionComplete ();
 		}
 
 		// After 1 cycle Baloo is Barking less
 		else if (nbBreathingCycles >= 1) {
 			Bark ();
+		} else {
+			BarkLong ();
 		}
 
 	}
