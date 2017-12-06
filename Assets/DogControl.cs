@@ -215,7 +215,8 @@ public class DogControl : MonoBehaviour {
 		//rotating = false;
 		LookAt();
 		StartCoroutine(TimedBark(1.0f));
-		activateRandomWalking ();
+		//activateRandomWalking ();
+		warpRandomWalkAgain(5f);
 	}
 		
 	public void rotateDog(Vector3 targetPos) {
@@ -595,14 +596,19 @@ public class DogControl : MonoBehaviour {
 				// first check if thi means we are done
 				if (isInteractionComplete ()) {
 					return;
+				} else {
+					// is this the third fetch?
+					if (numFetches % 3 == 0 && numMeditationEvents == 0) {
+						promptMeditation ();
+					} else if (numFetches % 3 == 0 && numEatingEvents == 0) {
+						promptFeeding ();
+					} else {
+						Debug.Log ("warpRandomWalkAgain called");
+						warpRandomWalkAgain (20f);
+					}
+				
 				}
-
-				// is this the third fetch?
-				if (numFetches % 3 == 0 && numMeditationEvents == 0) {
-					promptMeditation ();
-				} else if (numFetches % 3 == 0 && numEatingEvents == 0) {
-					promptFeeding ();
-				} 
+					
 
 			} else {
 				Debug.Log ("turning around");
@@ -664,10 +670,16 @@ public class DogControl : MonoBehaviour {
 
 	public IEnumerator RandomWalkAgain(float time) {
 		yield return new WaitForSeconds(time);
+		rotatingTargetPos = newRandomDirection ();
+		Debug.Log ("rotatingTargetPos: "+rotatingTargetPos);
+		Debug.Log ("activateRandomWalking called");
+		Debug.Log ("Parameters Value : isBreathing: " + isBreathing + ", isRandomly walking: "+ isRandomlyWalking+ ", shouldMove: "+ shouldMove);
 		numberOfRandomTargetReached=0;
 		//Here we can add a random number of numberOfRandomTargetReached
 		//HERE
+		randomBehavior = true;
 		isRandomlyWalking = true;
+		shouldMove = true;
 		rotating = true; 
 	}
 
