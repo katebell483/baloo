@@ -81,6 +81,11 @@ public class DogControl : MonoBehaviour {
 	public bool rotating = false;
 	private Vector3 rotatingTargetPos;
 
+	// quit app when in background
+	void OnApplicationPause(bool pauseStatus){
+		Application.Quit ();
+	}
+
 	// Use this for initialization
 	void Start () {
 		
@@ -175,7 +180,7 @@ public class DogControl : MonoBehaviour {
 			
 		} 
 
-		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down)){
+		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down) && !waitingToSit) {
 			randomBehavior = false;
 			isRandomlyWalking = false;
 			Sit ();
@@ -362,7 +367,8 @@ public class DogControl : MonoBehaviour {
 		yield return new WaitForSeconds (waitTime);
 		waitingToSit = false;
 		if(isLaying) {
-			LayToSit();
+			//LayToSit();
+			Sit();
 		} else {
 			Sit ();
 		}
