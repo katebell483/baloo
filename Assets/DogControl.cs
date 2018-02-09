@@ -226,8 +226,8 @@ public class DogControl : MonoBehaviour {
 		//Debug.Log ("ROTATING");
 		Vector3 targetPoint = new Vector3(targetPos.x, corgi.transform.position.y, targetPos.z) - corgi.transform.position;
 		Quaternion targetRotation = Quaternion.LookRotation (targetPoint, Vector3.up);
-		//corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 4.0f);
-		corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 1.5f);
+		corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 4.0f);
+		//corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 1.5f);
 		if(targetRotation == corgi.transform.rotation) {
 			rotating = false;
 		}
@@ -603,7 +603,7 @@ public class DogControl : MonoBehaviour {
 				}
 
 				// is this the third fetch?
-				if (numFetches % 3 == 0 && numMeditationEvents == 0) {
+				if (numFetches % 2 == 0 && numMeditationEvents == 0) {
 					promptMeditation ();
 				} else if (numFetches % 3 == 0 && numEatingEvents == 0) {
 					promptFeeding ();
