@@ -158,7 +158,8 @@ public class BallControl : MonoBehaviour {
 		corgi.GetComponent<DogControl> ().randomBehavior = false; 
 		corgi.GetComponent<DogControl> ().rotating = false;                                                                                                                                                                                                                                                                                                                                                                                                      
 		corgi.GetComponent<DogControl> ().LookAt();
-		corgi.GetComponent<DogControl> ().Sit ();
+		//corgi.GetComponent<DogControl> ().Sit ();
+		corgi.GetComponent<DogControl> ().Idle ();
 	
 		// hide prop
 		corgi.GetComponent<DogControl>().propFrisbee.SetActive(false);

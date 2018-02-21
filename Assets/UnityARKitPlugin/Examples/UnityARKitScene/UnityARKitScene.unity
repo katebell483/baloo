@@ -1218,7 +1218,7 @@ Transform:
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 1463809262}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &287790138
 MeshRenderer:
@@ -1585,7 +1585,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &354170973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2196,7 +2196,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400074, guid: 97a08167c3d3d284da93fa9992355180, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 100076, guid: 97a08167c3d3d284da93fa9992355180, type: 3}
       propertyPath: m_TagString
@@ -2225,6 +2225,10 @@ Prefab:
     - target: {fileID: 400076, guid: 97a08167c3d3d284da93fa9992355180, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.289
+      objectReference: {fileID: 0}
+    - target: {fileID: 100076, guid: 97a08167c3d3d284da93fa9992355180, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11100000, guid: 97a08167c3d3d284da93fa9992355180, type: 3}
@@ -2556,6 +2560,75 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 664965517}
+--- !u!1 &691683868 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100056, guid: 14005ab550b48441e9842dfbeb29d35c, type: 3}
+  m_PrefabInternal: {fileID: 1632046471}
+--- !u!114 &691683870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 691683868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93c9ca7ed56a04cc78d21a7c2f14d6f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  corgi: {fileID: 691683868}
+  dogInScene: 0
+  fetchButton: {fileID: 808952112}
+  eatButton: {fileID: 1491582931}
+  breatheButton: {fileID: 2097138892}
+  infoBubble: {fileID: 1755790925}
+  introPanel: {fileID: 1314380537}
+  dogNamePanel: {fileID: 1707069824}
+  exitPanel: {fileID: 1329671683}
+  isReadyForQRDetection: 0
+  aura: {fileID: 287790136}
+  mat: {fileID: 1463809261}
+  ball: {fileID: 0}
+  dogFood: {fileID: 223846525}
+  propFrisbee: {fileID: 1399588605}
+  dogHouse: {fileID: 638550685}
+  fetching: 0
+  goingToFood: 0
+  foodPos: {x: 0, y: 0, z: 0}
+  randomBehavior: 0
+  isRandomlyWalking: 0
+  randX: 0
+  randZ: 0
+  numberOfRandomTargetReached: 0
+  randomStaticTime: 5
+  randomStaticAction: Sit
+  rotating: 0
+--- !u!65 &691683871
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 691683868}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1, y: 0.2, z: 0.1}
+  m_Center: {x: 0, y: 0.1, z: 0}
+--- !u!54 &691683872
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 691683868}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &693467143
 GameObject:
   m_ObjectHideFlags: 0
@@ -4293,7 +4366,7 @@ Transform:
   - {fileID: 782417874}
   - {fileID: 2047857109}
   m_Father: {fileID: 1463809262}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1121666029
 GameObject:
@@ -6389,15 +6462,15 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1463809262}
     m_Modifications:
     - target: {fileID: 400056, guid: 14005ab550b48441e9842dfbeb29d35c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1200.5825
       objectReference: {fileID: 0}
     - target: {fileID: 400056, guid: 14005ab550b48441e9842dfbeb29d35c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -113.26256
       objectReference: {fileID: 0}
     - target: {fileID: 400056, guid: 14005ab550b48441e9842dfbeb29d35c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6421,12 +6494,20 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400056, guid: 14005ab550b48441e9842dfbeb29d35c, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 14005ab550b48441e9842dfbeb29d35c, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 93bd228729ee14a4aa2e277d5a64149e, type: 2}
+    - target: {fileID: 100056, guid: 14005ab550b48441e9842dfbeb29d35c, type: 3}
+      propertyPath: m_Name
+      value: New_Pup
+      objectReference: {fileID: 0}
+    - target: {fileID: 100056, guid: 14005ab550b48441e9842dfbeb29d35c, type: 3}
+      propertyPath: m_TagString
+      value: Corgi
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 14005ab550b48441e9842dfbeb29d35c, type: 3}
   m_IsPrefabParent: 0
@@ -7420,7 +7501,7 @@ Transform:
   - {fileID: 1116935681}
   - {fileID: 2132781893}
   m_Father: {fileID: 1463809262}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1836657546
 GameObject:
