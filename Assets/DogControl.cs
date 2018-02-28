@@ -37,6 +37,9 @@ public class DogControl : MonoBehaviour {
 	public GameObject propFrisbee;
 	public GameObject dogHouse;
 
+	// walking params
+	private float walkSpeed = .25f;
+
 	// fetching params
 	private bool initialFetchSequence = false;
 	public bool fetching = false;
@@ -156,9 +159,8 @@ public class DogControl : MonoBehaviour {
 		*/
 			
 		if (shouldMove && !fetching && !randomBehavior) {
-
-			//corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .015f));
-			corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .025f));
+			Debug.Log ("HERE!");
+			corgi.transform.Translate (Vector3.forward * Time.deltaTime * walkSpeed);
 			// we want to keep track of the corgis position before it leaves the plane
 			startFetchingPos = corgi.transform.position;
 			
@@ -195,12 +197,10 @@ public class DogControl : MonoBehaviour {
 
 	public IEnumerator InitialSequence() {
 		Debug.Log ("Dog starting initial sequence");
-		yield return new WaitForSeconds(1.0f); 
+		LookAt();
 		Walk ();
 		yield return new WaitForSeconds(2.0f); 
-		print ("random walking over");
-		LookAt();
-		//StartCoroutine(TimedBark(1.0f));
+		Idle ();
 	}
 		
 	public void rotateDog(Vector3 targetPos) {
@@ -215,14 +215,15 @@ public class DogControl : MonoBehaviour {
 
 	void OnTriggerExit(Collider other) {
 		Debug.Log (other.tag);
-
+		/*
 		if (initialFetchSequence) {
+			Debug.Log ("HIT WALLs starting to run");
 
 			// disable colliders
 			corgiCollider = corgi.GetComponent<Collider> ();
 			corgiCollider.enabled = false;
 
-			//Gallop (); TODO: walk faster
+			Run (); 
 
 			fetching = true;
 			initialFetchSequence = false;
@@ -235,8 +236,8 @@ public class DogControl : MonoBehaviour {
 			Debug.Log ("HIT WALL GENERAL CASE: " + other.tag);
 			corgi.transform.LookAt (mat.transform.position);
 			//Sit ();
-			Idle();
-		}
+			WalkToIdle();
+		}*/
 	}
 
 	public void StartFetchingSequence(Vector3 ballPos) {
@@ -250,15 +251,24 @@ public class DogControl : MonoBehaviour {
 		rotatingTargetPos = endFetchingPos;
 
 		// walk to the edge
-		Walk ();
+		//Walk ();
 
 		// then turn and walk towards edge of platform
-		initialFetchSequence = true;
+		//initialFetchSequence = true;
+
+		// disable colliders
+		corgiCollider = corgi.GetComponent<Collider> ();
+		corgiCollider.enabled = false;
+
+		Run (); 
+
+		fetching = true;
 	}
 
 	public void Walk() {
 		shouldMove = true;
-		animator.SetTrigger ("IdleToWalk");
+		//animator.SetTrigger ("IdleToWalk");
+		animator.Play ("Walk");
 	}
 
 	public void WalkInPlace() {
@@ -266,12 +276,40 @@ public class DogControl : MonoBehaviour {
 		shouldMove = false;
 	}
 
-	public void Idle() {
+	public void Eat() {
 		shouldMove = false;
-		animator.SetTrigger ("IdleToWalk");
+		animator.Play ("Eat");
 	}
 
+	public void Run() {
+		shouldMove = true;
+		animator.Play ("Run");
+	}
+
+	public void Idle() {
+		shouldMove = false;
+		animator.Play ("Idle");
+	}
+
+
 	/*
+
+	public void WalkToIdle() {
+		shouldMove = false;
+		//animator.SetTrigger ("WalkToIdle");
+	}
+
+	public void EatToIdle() {
+		shouldMove = false;
+		//animator.SetTrigger ("EatToIdle");
+	}
+
+	public void WalkToEat() {
+		shouldMove = false;
+		animator.SetTrigger ("WalkToEat");
+		//animator.Play ("Eat");
+	}
+	
 	public void Dig() {
 		shouldMove = false;
 		animation.CrossFade ("CorgiIdleDig");
@@ -455,8 +493,11 @@ public class DogControl : MonoBehaviour {
 		float distance = Math.Abs(Vector3.Distance(corgi.transform.position, foodPos));
 		Debug.Log ("DISTANCE: " + distance);
 
+		// get size of corgi
+		float xscale = corgi.transform.localScale.x;
+
 		// got to food so stop + eat
-		if (distance < .1 && rotating) {
+		if (distance < xscale/10 && rotating) {
 			Debug.Log ("GOT TO FOOD!");
 			WalkInPlace ();
 		} else if (distance < .1 && !rotating) {
@@ -474,15 +515,15 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void EatWrapper() {
-		StartCoroutine(Eat());
+		StartCoroutine(StartEat());
 	}
 		
-	public IEnumerator Eat() {
+	public IEnumerator StartEat() {
 		Debug.Log ("EATING");
 
 		// first eat 
 		shouldMove = false;
-		animator.SetTrigger ("WalkToEat");
+		Eat ();
 		yield return new WaitForSeconds(5f); // waits 5 seconds
 
 		// now face the camera and walk away from food
@@ -491,7 +532,6 @@ public class DogControl : MonoBehaviour {
 		yield return new WaitForSeconds (1f);
 
 		// stop waking & sit or dig
-		shouldMove = false;
 		Idle ();
 
 		/*
@@ -563,6 +603,9 @@ public class DogControl : MonoBehaviour {
 
 		// originally start from the last point that the dog was on the plane
 		Vector3 fetchingPos = Vector3.Lerp (startFetchingPos, endFetchingPos, fraction);
+
+		Debug.Log ("fetchingPos: " + fetchingPos);
+		Debug.Log ("goalPos: " + endFetchingPos);
 
 		// if dog reaches its destination that means it either has to turn around of fetching done
 		if (fetchingPos == endFetchingPos) {
@@ -890,6 +933,7 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void hideDogNamePanel(){
+		Debug.Log ("HERE!!!!!!!!!!!!!!");
 		dogNamePanel.SetActive (false);
 		InitialSequenceWrapper ();
 	}
