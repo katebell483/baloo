@@ -836,16 +836,16 @@ public class DogControl : MonoBehaviour {
 		infoBubble.SetActive (true);
 
 		// Transformation of the sphere
-		if (auraGrowing && aura.transform.localScale.x < 15) {
+		if (auraGrowing && aura.transform.localScale.x < 22) {
 			Debug.Log ("aura growing");
 			infoBubble.GetComponentInChildren<Text> ().text = "Breathe in to calm Baloo";
-			aura.transform.localScale += new Vector3 (0.2F, 0.2F, 0.2F);
-		} else if (auraGrowing && aura.transform.localScale.x >= 15) {
+			aura.transform.localScale += new Vector3 (0.04F, 0.04F, 0.04F);
+		} else if (auraGrowing && aura.transform.localScale.x >= 22) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
 			AuraWarper ();
 		} else if (!auraGrowing && aura.transform.localScale.x > 10) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Breathe out slowly";
-			aura.transform.localScale -= new Vector3 (0.02F, 0.02F, 0.02F);
+			aura.transform.localScale -= new Vector3 (0.04F, 0.04F, 0.04F);
 		} else if (aura.transform.localScale.x <= 10) {
 			auraGrowing = true;
 			nbBreathingCycles += 1;
