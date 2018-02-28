@@ -119,7 +119,6 @@ public class DogControl : MonoBehaviour {
 		}
 
 		// even rotating but no more distance walk in place
-		/*
 		if (rotating && !shouldMove) {
 			WalkInPlace ();
 		}
@@ -130,7 +129,6 @@ public class DogControl : MonoBehaviour {
 		} else {
 			aura.SetActive (false);
 		}
-		*/
 
 		if (isGoingHome) {
 			GoHome ();
@@ -162,8 +160,7 @@ public class DogControl : MonoBehaviour {
 			Debug.Log ("HERE!");
 			corgi.transform.Translate (Vector3.forward * Time.deltaTime * walkSpeed);
 			// we want to keep track of the corgis position before it leaves the plane
-			startFetchingPos = corgi.transform.position;
-			
+			startFetchingPos = corgi.transform.position;	
 		} 
 
 		/*
@@ -257,8 +254,8 @@ public class DogControl : MonoBehaviour {
 		//initialFetchSequence = true;
 
 		// disable colliders
-		corgiCollider = corgi.GetComponent<Collider> ();
-		corgiCollider.enabled = false;
+		//corgiCollider = corgi.GetComponent<Collider> ();
+		//corgiCollider.enabled = false;
 
 		Run (); 
 
@@ -266,6 +263,7 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void Walk() {
+		Debug.Log ("walking!");
 		shouldMove = true;
 		//animator.SetTrigger ("IdleToWalk");
 		animator.Play ("Walk");
@@ -277,21 +275,23 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void Eat() {
+		Debug.Log ("Eating!");
 		shouldMove = false;
 		animator.Play ("Eat");
 	}
 
 	public void Run() {
+		Debug.Log ("RUNNING");
 		shouldMove = true;
 		animator.Play ("Run");
 	}
 
 	public void Idle() {
+		Debug.Log ("IDLE");
 		shouldMove = false;
 		animator.Play ("Idle");
 	}
-
-
+		
 	/*
 
 	public void WalkToIdle() {
@@ -604,7 +604,7 @@ public class DogControl : MonoBehaviour {
 		// originally start from the last point that the dog was on the plane
 		Vector3 fetchingPos = Vector3.Lerp (startFetchingPos, endFetchingPos, fraction);
 
-		Debug.Log ("fetchingPos: " + fetchingPos);
+		Debug.Log ("fetchingPos: " + startFetchingPos);
 		Debug.Log ("goalPos: " + endFetchingPos);
 
 		// if dog reaches its destination that means it either has to turn around of fetching done
@@ -619,6 +619,7 @@ public class DogControl : MonoBehaviour {
 
 				Debug.Log ("dropping ball!");
 				LookAt ();
+				startFetchingPos = endFetchingPos;
 				//Sit ();
 				Idle();
 
@@ -629,8 +630,8 @@ public class DogControl : MonoBehaviour {
 
 				// restore corgi settings
 				rotating = false;
-				corgiCollider = corgi.GetComponent<Collider>();
-				corgiCollider.enabled = true;
+				//corgiCollider = corgi.GetComponent<Collider>();
+				//corgiCollider.enabled = true;
 
 				// bring back prop
 				propFrisbee.SetActive(true);
@@ -821,12 +822,13 @@ public class DogControl : MonoBehaviour {
 		infoBubble.SetActive (false);
 	}
 
-	/*
+
 	public void Breathe(){
 		
 		randomBehavior = false;
 		isRandomlyWalking = false;
 		LookAt ();
+		Idle ();
 		aura.transform.position = new Vector3 (corgi.transform.position.x, aura.transform.position.y, corgi.transform.position.z);
 		aura.SetActive (true);
 		isBreathing = true;
@@ -834,41 +836,43 @@ public class DogControl : MonoBehaviour {
 		infoBubble.SetActive (true);
 
 		// Transformation of the sphere
-		if (auraGrowing && aura.transform.localScale.x < 9) {
+		if (auraGrowing && aura.transform.localScale.x < 15) {
+			Debug.Log ("aura growing");
 			infoBubble.GetComponentInChildren<Text> ().text = "Breathe in to calm Baloo";
-			aura.transform.localScale += new Vector3 (0.02F, 0.02F, 0.02F);
-		} else if (auraGrowing && aura.transform.localScale.x >= 9) {
+			aura.transform.localScale += new Vector3 (0.2F, 0.2F, 0.2F);
+		} else if (auraGrowing && aura.transform.localScale.x >= 15) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
 			AuraWarper ();
-		} else if (!auraGrowing && aura.transform.localScale.x > 4) {
+		} else if (!auraGrowing && aura.transform.localScale.x > 10) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Breathe out slowly";
 			aura.transform.localScale -= new Vector3 (0.02F, 0.02F, 0.02F);
-		} else if (aura.transform.localScale.x <= 4) {
+		} else if (aura.transform.localScale.x <= 10) {
 			auraGrowing = true;
 			nbBreathingCycles += 1;
 		}
 
 		// End of the 3 cycles of breathing => re-initialize the parameters
 		if (nbBreathingCycles >= 3) {
-			triggerInfoBubble ("Baloo feels great now!\n How about you?", 4.0f);
+			triggerInfoBubble ("Baloo feels great now!\n How about you?", 14.0f);
 			numMeditationEvents += 1;
 			isBreathing = false;
 			nbBreathingCycles = 0;
 			auraGrowing = false;
 			aura.SetActive (false);
-			Sit ();
+			//Sit ();
 			isInteractionComplete ();
 		}
 
+		/*
 		// After 1 cycle Baloo is Barking less
 		else if (nbBreathingCycles >= 1) {
 			Bark ();
 		} else {
 			BarkLong ();
-		}
+		}*/
 
 	}
-	*/
+
 		
 	private List<ARHitTestResult> getHitTest() {
 
