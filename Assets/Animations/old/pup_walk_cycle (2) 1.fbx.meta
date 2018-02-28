@@ -1,0 +1,174 @@
+fileFormatVersion: 2
+guid: b79767f41d61244f3ba1e7ff9251a975
+timeCreated: 1518211728
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: joint1
+    100002: joint1 1
+    100004: pup:pup_ankle_l
+    100006: pup:pup_ankle_r
+    100008: pup:pup_back_ankle_l
+    100010: pup:pup_back_ankle_l 1
+    100012: pup:pup_back_foot_l
+    100014: pup:pup_back_foot_l 1
+    100016: pup:pup_back_leg1_l
+    100018: pup:pup_back_leg1_l1
+    100020: pup:pup_foot_front_l
+    100022: pup:pup_foot_front_r
+    100024: pup:pup_head
+    100026: pup:pup_jaw1
+    100028: pup:pup_jaw2
+    100030: pup:pup_mesh
+    100032: pup:pup_mesh_MeshPart0
+    100034: pup:pup_mesh_MeshPart1
+    100036: pup:pup_neck
+    100038: pup:pup_nose
+    100040: pup:pup_root
+    100042: pup:pup_shoulder_l
+    100044: pup:pup_shoulder_r
+    100046: pup:pup_snout
+    100048: pup:pup_spine1
+    100050: pup:pup_spine2
+    100052: pup:pup_tail_1
+    100054: pup:pup_tail_2
+    100056: //RootNode
+    400000: joint1
+    400002: joint1 1
+    400004: pup:pup_ankle_l
+    400006: pup:pup_ankle_r
+    400008: pup:pup_back_ankle_l
+    400010: pup:pup_back_ankle_l 1
+    400012: pup:pup_back_foot_l
+    400014: pup:pup_back_foot_l 1
+    400016: pup:pup_back_leg1_l
+    400018: pup:pup_back_leg1_l1
+    400020: pup:pup_foot_front_l
+    400022: pup:pup_foot_front_r
+    400024: pup:pup_head
+    400026: pup:pup_jaw1
+    400028: pup:pup_jaw2
+    400030: pup:pup_mesh
+    400032: pup:pup_mesh_MeshPart0
+    400034: pup:pup_mesh_MeshPart1
+    400036: pup:pup_neck
+    400038: pup:pup_nose
+    400040: pup:pup_root
+    400042: pup:pup_shoulder_l
+    400044: pup:pup_shoulder_r
+    400046: pup:pup_snout
+    400048: pup:pup_spine1
+    400050: pup:pup_spine2
+    400052: pup:pup_tail_1
+    400054: pup:pup_tail_2
+    400056: //RootNode
+    4300000: pup:pup_mesh_MeshPart0
+    4300002: pup:pup_mesh_MeshPart1
+    7400000: pup_eat
+    9500000: //RootNode
+    13700000: pup:pup_mesh_MeshPart0
+    13700002: pup:pup_mesh_MeshPart1
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: pup_eat
+      takeName: Take 001
+      firstFrame: 24
+      lastFrame: 108
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

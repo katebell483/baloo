@@ -1,0 +1,275 @@
+fileFormatVersion: 2
+guid: 010545666aaaf48ac9d1eb56000d9841
+timeCreated: 1519790495
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: joint1
+    100002: joint1 1
+    100004: polySurface3
+    100006: //RootNode
+    100008: pup_animations_to_work_on:group1
+    100010: pup_animations_to_work_on:joint1
+    100012: pup_animations_to_work_on:joint1 1
+    100014: pup_animations_to_work_on:master_control
+    100016: pup_animations_to_work_on:pup:master
+    100018: pup_animations_to_work_on:pup:pup_ankle_l
+    100020: pup_animations_to_work_on:pup:pup_ankle_r
+    100022: pup_animations_to_work_on:pup:pup_back_ankle_l
+    100024: pup_animations_to_work_on:pup:pup_back_ankle_r
+    100026: pup_animations_to_work_on:pup:pup_back_foot_l
+    100028: pup_animations_to_work_on:pup:pup_back_foot_r
+    100030: pup_animations_to_work_on:pup:pup_back_leg1_l2
+    100032: pup_animations_to_work_on:pup:pup_back_leg_r
+    100034: pup_animations_to_work_on:pup:pup_foot_front_l
+    100036: pup_animations_to_work_on:pup:pup_foot_front_r
+    100038: pup_animations_to_work_on:pup:pup_head
+    100040: pup_animations_to_work_on:pup:pup_jaw1
+    100042: pup_animations_to_work_on:pup:pup_jaw2
+    100044: pup_animations_to_work_on:pup:pup_neck
+    100046: pup_animations_to_work_on:pup:pup_nose
+    100048: pup_animations_to_work_on:pup:pup_root
+    100050: pup_animations_to_work_on:pup:pup_shoulder_l
+    100052: pup_animations_to_work_on:pup:pup_shoulder_r
+    100054: pup_animations_to_work_on:pup:pup_snout
+    100056: pup_animations_to_work_on:pup:pup_spine1
+    100058: pup_animations_to_work_on:pup:pup_spine2
+    100060: pup_animations_to_work_on:pup:pup_tail_1
+    100062: pup_animations_to_work_on:pup:pup_tail_2
+    100064: pup_animations_to_work_on:pup:root
+    100066: pup_animations_to_work_on:root_ctrl
+    100068: pup_eye_l
+    100070: pup_eye_r
+    100072: pup_mesh
+    400000: joint1
+    400002: joint1 1
+    400004: polySurface3
+    400006: //RootNode
+    400008: pup_animations_to_work_on:group1
+    400010: pup_animations_to_work_on:joint1
+    400012: pup_animations_to_work_on:joint1 1
+    400014: pup_animations_to_work_on:master_control
+    400016: pup_animations_to_work_on:pup:master
+    400018: pup_animations_to_work_on:pup:pup_ankle_l
+    400020: pup_animations_to_work_on:pup:pup_ankle_r
+    400022: pup_animations_to_work_on:pup:pup_back_ankle_l
+    400024: pup_animations_to_work_on:pup:pup_back_ankle_r
+    400026: pup_animations_to_work_on:pup:pup_back_foot_l
+    400028: pup_animations_to_work_on:pup:pup_back_foot_r
+    400030: pup_animations_to_work_on:pup:pup_back_leg1_l2
+    400032: pup_animations_to_work_on:pup:pup_back_leg_r
+    400034: pup_animations_to_work_on:pup:pup_foot_front_l
+    400036: pup_animations_to_work_on:pup:pup_foot_front_r
+    400038: pup_animations_to_work_on:pup:pup_head
+    400040: pup_animations_to_work_on:pup:pup_jaw1
+    400042: pup_animations_to_work_on:pup:pup_jaw2
+    400044: pup_animations_to_work_on:pup:pup_neck
+    400046: pup_animations_to_work_on:pup:pup_nose
+    400048: pup_animations_to_work_on:pup:pup_root
+    400050: pup_animations_to_work_on:pup:pup_shoulder_l
+    400052: pup_animations_to_work_on:pup:pup_shoulder_r
+    400054: pup_animations_to_work_on:pup:pup_snout
+    400056: pup_animations_to_work_on:pup:pup_spine1
+    400058: pup_animations_to_work_on:pup:pup_spine2
+    400060: pup_animations_to_work_on:pup:pup_tail_1
+    400062: pup_animations_to_work_on:pup:pup_tail_2
+    400064: pup_animations_to_work_on:pup:root
+    400066: pup_animations_to_work_on:root_ctrl
+    400068: pup_eye_l
+    400070: pup_eye_r
+    400072: pup_mesh
+    4300000: polySurface3
+    7400000: Walk
+    7400002: Idle
+    7400004: Run
+    7400006: Eat
+    9500000: //RootNode
+    13700000: polySurface3
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Walk
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 24
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 105
+      lastFrame: 135
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Run
+      takeName: Take 001
+      firstFrame: 150
+      lastFrame: 169
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Eat
+      takeName: Take 001
+      firstFrame: 25
+      lastFrame: 105
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
