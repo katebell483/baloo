@@ -95,18 +95,17 @@ public class QRCodeReader : MonoBehaviour {
 				Debug.Log ("PRINT 1");
 				mat.transform.position = worldBottomLeft + (bottomToTop + leftToRight) * 0.5f;
 				Debug.Log ("PRINT 2");
-
 				matPlane.transform.localScale = new Vector3(.05f, .05f, .05f);
-
 				Debug.Log ("PRINT 3");
 
 
 				// TODO: this all seems a little out of place here
-				Debug.Log("FOOD POS1 :" + food.transform.position);
-				corgi.GetComponent<DogControl>().foodPos = food.transform.position;
-				Debug.Log ("FOOD POS :" + corgi.GetComponent<DogControl> ().foodPos);
+				//Debug.Log("FOOD POS1 :" + food.transform.position);
+				//corgi.GetComponent<DogControl>().foodPos = food.transform.position;
+				//Debug.Log ("FOOD POS :" + corgi.GetComponent<DogControl> ().foodPos);
 				corgi.GetComponent<DogControl> ().dogNamePanel.SetActive(true);
-				corgi.GetComponent<DogControl> ().dogInScene = true;
+
+				//corgi.GetComponent<DogControl> ().dogInScene = true;
 
 				detectQR = false; 
 

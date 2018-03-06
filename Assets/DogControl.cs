@@ -17,9 +17,12 @@ public class DogControl : MonoBehaviour {
 
 	// UI elements
 	public GameObject fetchButton;
+	public GameObject syringeButton;
 	public GameObject eatButton;
 	public GameObject breatheButton;
 	public GameObject infoBubble;
+	public GameObject breatheInstructionButton1;
+	public GameObject breatheInstructionButton2;
 
 	// panels
 	public GameObject introPanel;
@@ -39,6 +42,9 @@ public class DogControl : MonoBehaviour {
 
 	// walking params
 	private float walkSpeed = .25f;
+
+	// injection params
+	private bool injectionDone = false;
 
 	// fetching params
 	private bool initialFetchSequence = false;
@@ -76,6 +82,7 @@ public class DogControl : MonoBehaviour {
 
 	// breathing params
 	private bool isBreathing = false;
+	private bool isBreathingTest = false;
 	private bool auraGrowing = true; //true if growing, false if reducing
 	private float nbBreathingCycles = 0;
 	private int numMeditationEvents = 0;
@@ -96,11 +103,7 @@ public class DogControl : MonoBehaviour {
 
 		/* panels */
 		introPanel.SetActive(true);
-
-		//dogNamePanel = GameObject.FindWithTag ("dogNamePanel");
 		dogNamePanel.SetActive(false);
-
-		//exitPanel = GameObject.FindWithTag ("exitPanel");
 		exitPanel.SetActive(false);
 	}
 
@@ -109,23 +112,27 @@ public class DogControl : MonoBehaviour {
 
 		// turn off buttons until dog in scene
 		if (dogInScene) {
-			fetchButton.SetActive (true);
+			fetchButton.SetActive (false); // this will need to be abstracted out
+			syringeButton.SetActive (true);
 			eatButton.SetActive (true);
 			breatheButton.SetActive (true);
 		} else {
 			fetchButton.SetActive (false);
+			syringeButton.SetActive (false);
 			eatButton.SetActive (false);
 			breatheButton.SetActive (false);
 		}
 
 		// even rotating but no more distance walk in place
 		if (rotating && !shouldMove) {
-			WalkInPlace ();
+			//WalkInPlace ();
 		}
 	
 		//Breathing phase:
 		if (isBreathing) {
 			Breathe ();
+		} else if (isBreathingTest) {
+			BreatheTest (); 
 		} else {
 			aura.SetActive (false);
 		}
@@ -138,37 +145,18 @@ public class DogControl : MonoBehaviour {
 		if (rotating) {
 			rotateDog (rotatingTargetPos);
 		}
-
-		/*
-		//Random Behavior content
-		if (randomBehavior){
-			// Random movement
-			if (isRandomlyWalking) {
-				RandomWalk ();
-				corgi.transform.Translate (Vector3.forward * Time.deltaTime * (corgi.transform.localScale.x * .025f));
-				// we want to keep track of the corgis position before it leaves the plane
-				startFetchingPos = corgi.transform.position;
-			} 
-			// Random static actions (diggind, sitting ...)
-			else {
-				doRandomStaticAction ();
-			}
-		}
-		*/
 			
 		if (shouldMove && !fetching && !randomBehavior) {
-			Debug.Log ("HERE!");
 			corgi.transform.Translate (Vector3.forward * Time.deltaTime * walkSpeed);
 			// we want to keep track of the corgis position before it leaves the plane
 			startFetchingPos = corgi.transform.position;	
 		} 
-
-		/*
+			
 		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down) && !waitingToSit) {
-			randomBehavior = false;
-			isRandomlyWalking = false;
 			Sit ();
 		}
+
+		/*
 
 		// PETTING
 		if (!fetching && !goingToFood) {
@@ -194,17 +182,17 @@ public class DogControl : MonoBehaviour {
 
 	public IEnumerator InitialSequence() {
 		Debug.Log ("Dog starting initial sequence");
-		LookAt();
-		Walk ();
-		yield return new WaitForSeconds(2.0f); 
-		Idle ();
+		yield return new WaitForSeconds(1.0f); 
+		PlaceDog();
+		BarkOnce ();
+		Sit ();
 	}
 		
 	public void rotateDog(Vector3 targetPos) {
 		//Debug.Log ("ROTATING");
 		Vector3 targetPoint = new Vector3(targetPos.x, corgi.transform.position.y, targetPos.z) - corgi.transform.position;
 		Quaternion targetRotation = Quaternion.LookRotation (targetPoint, Vector3.up);
-		corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 4.0f);
+		corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 10.0f);
 		if(targetRotation == corgi.transform.rotation) {
 			rotating = false;
 		}
@@ -265,7 +253,6 @@ public class DogControl : MonoBehaviour {
 	public void Walk() {
 		Debug.Log ("walking!");
 		shouldMove = true;
-		//animator.SetTrigger ("IdleToWalk");
 		animator.Play ("Walk");
 	}
 
@@ -277,7 +264,13 @@ public class DogControl : MonoBehaviour {
 	public void Eat() {
 		Debug.Log ("Eating!");
 		shouldMove = false;
-		animator.Play ("Eat");
+		animator.Play ("StartEating");
+	}
+
+	public void StopEat() {
+		Debug.Log ("Eating Done!");
+		shouldMove = false;
+		animator.Play ("StopEating");
 	}
 
 	public void Run() {
@@ -286,101 +279,34 @@ public class DogControl : MonoBehaviour {
 		animator.Play ("Run");
 	}
 
+	public void Sit() {
+		Debug.Log ("SIT DOWN");
+		shouldMove = false;
+		animator.Play ("SitDown");
+	}
+
+	public void Bark() {
+		Debug.Log ("Barking");
+		shouldMove = false;
+		animator.Play ("Bark");
+	}
+
+	public void BarkOnce() {
+		Debug.Log ("Bark Once");
+		shouldMove = false;
+		animator.Play ("BarkOnce");
+	}
+
 	public void Idle() {
 		Debug.Log ("IDLE");
 		shouldMove = false;
 		animator.Play ("Idle");
 	}
 		
-	/*
-
-	public void WalkToIdle() {
-		shouldMove = false;
-		//animator.SetTrigger ("WalkToIdle");
-	}
-
-	public void EatToIdle() {
-		shouldMove = false;
-		//animator.SetTrigger ("EatToIdle");
-	}
-
-	public void WalkToEat() {
-		shouldMove = false;
-		animator.SetTrigger ("WalkToEat");
-		//animator.Play ("Eat");
-	}
-	
-	public void Dig() {
-		shouldMove = false;
-		animation.CrossFade ("CorgiIdleDig");
-	}
-
-	public void Gallop() {
-		shouldMove = true;
-		animation.CrossFade ("CorgiGallop");
-	}
-
-	public void Jump() {
-		shouldMove = false;
-		animation.CrossFade ("CorgiJump");
-	}
-
-	public void Lay() {
-		shouldMove = false;
-		animation.CrossFade ("CorgiLayIdleLong");
-	}
-
-	public void LayDown() {
-		shouldMove = false;
-		animation.CrossFade ("CorgiSitToLay");
-	}
-
-	public void IdleToLay() {
-		shouldMove = false;
-		animation.CrossFade ("CorgiIdleToLay");
-	}
-
-	public void LayToSit() {
-		shouldMove = false;
-		animation.CrossFade ("CorgiLaytoSit");
-	}
-
-	public void Sit() {
-		shouldMove = false;
-		animation.CrossFade ("CorgiSitIdle");
-	}
-
-	public void SitScratch() {
-		shouldMove = false;
-		animation.CrossFade ("CorgiSitScratch");
-	}
-
-	public void SitLong() {
-		shouldMove = false;
-		animation.CrossFade ("CorgiSitIdleLong");
-	}
-	*/
-
-	/*
-	public IEnumerator WalkAndDigAndSit(bool shouldScratch) {
-		Debug.Log ("digging");
-		Walk ();
-		yield return new WaitForSeconds (1f);
-		Dig ();
-		yield return new WaitForSeconds (2.5f);
-		Debug.Log ("digging stopped ");
-		if (shouldScratch) {
-			SitScratch ();
-		} else {
-			Sit ();
-		}
-	}*/
-		
 	public IEnumerator WalkAndSit() {
 		Walk ();
 		yield return new WaitForSeconds (1f);
-		Idle ();
-		//SitLong ();
+		Sit();
 	}
 
 	public IEnumerator WaitAndSit(float waitTime, bool isLaying) {
@@ -388,14 +314,8 @@ public class DogControl : MonoBehaviour {
 		waitingToSit = true;
 		yield return new WaitForSeconds (waitTime);
 		waitingToSit = false;
-		if(isLaying) {
-			//LayToSit();
-			//Sit();
-			Idle();
-		} else {
-			Idle ();
-			//Sit ();
-		}
+		Sit();
+
 	}
 
 	public void StartGoingHome() {
@@ -436,15 +356,8 @@ public class DogControl : MonoBehaviour {
 		Debug.Log ("exit sequence complete");
 		exitPanel.SetActive (true);
 	}
-
+		
 	/*
-	public IEnumerator WaitAndLay(float waitTime) {
-		Debug.Log ("waiting to lay");
-		yield return new WaitForSeconds(waitTime); 
-		LayDown ();
-		Lay ();
-	}
-
 	public void CheckForPetting() {
 		if (Input.touchCount > 0) {
 
@@ -476,19 +389,31 @@ public class DogControl : MonoBehaviour {
 	}*/
 
 	public void StartEatingSequence() {
-		randomBehavior = false;
-		isRandomlyWalking = false;
-		Debug.Log ("GOING TO BOWL");
-		goingToFood = true;
+		
+		// check for planes
+		var screenPosition = Camera.main.ScreenToViewportPoint (new Vector2 (Screen.width / 4f, Screen.height / 4f));
+		List<ARHitTestResult> hitResults = getHitTest(screenPosition);
+
+		// if plane exists, place the dog
+		if (hitResults.Count == 0)
+			return;
+
+		ARHitTestResult result = hitResults[0];
+		Debug.Log ("placing bowl");
+
+		// set the dog on the platform
+		Vector3 planePos = UnityARMatrixOps.GetPosition (result.worldTransform);
+		dogFood.transform.position = new Vector3 (planePos.x, planePos.y - 0.1f, planePos.z);
+		foodPos = dogFood.transform.position;
+		dogFood.SetActive (true);
 		rotatingTargetPos = dogFood.transform.position;
-		Debug.Log ("BOWL POS: " + rotatingTargetPos);
+		goingToFood = true;
 		rotating = true;
 		Walk ();
 	}
-		
+
 	public void GoToFoodAndEat() {
 		
-
 		//check distance
 		float distance = Math.Abs(Vector3.Distance(corgi.transform.position, foodPos));
 		Debug.Log ("DISTANCE: " + distance);
@@ -497,15 +422,13 @@ public class DogControl : MonoBehaviour {
 		float xscale = corgi.transform.localScale.x;
 
 		// got to food so stop + eat
-		if (distance < xscale/10 && rotating) {
-			Debug.Log ("GOT TO FOOD!");
-			WalkInPlace ();
-		} else if (distance < .1 && !rotating) {
+		if (distance < xscale/4) {
+			Debug.Log ("reached food going to start eating");
 			numEatingEvents += 1;
 			fraction = 0;
 			goingToFood = false;
 			isLastEatingEvent = numEatingEvents == 2;
-			EatWrapper ();
+			StartCoroutine(StartEat());
 		} else {
 			// move dog forward
 			fraction += Time.deltaTime * .015f;
@@ -514,42 +437,31 @@ public class DogControl : MonoBehaviour {
 		}
 	}
 
+	/*
 	public void EatWrapper() {
 		StartCoroutine(StartEat());
-	}
+	}*/
 		
 	public IEnumerator StartEat() {
 		Debug.Log ("EATING");
 
 		// first eat 
-		shouldMove = false;
 		Eat ();
+
 		yield return new WaitForSeconds(5f); // waits 5 seconds
 
 		// now face the camera and walk away from food
+		StopEat ();
 		LookAt();
-		Walk ();
-		yield return new WaitForSeconds (1f);
+		Sit ();
 
-		// stop waking & sit or dig
-		Idle ();
-
-		/*
-		bool dig = UnityEngine.Random.value < .33; // dig every 3ish times
-		if (dig) {
-			animation.CrossFade ("CorgiIdleDig");
-			//Pb Here, Baloo keeps Digging
-		} else {
-			SitLong ();
-		}*/
-			
 		// check for end conditions
 		// if interaction complete then start exit sequence
 		// if max food events reached disable eat button
 		if (!isInteractionComplete () &&  isLastEatingEvent) {
-			triggerInfoBubble ("I'm full!\nLet's play!", 3.0f);
+			triggerInfoBubble ("I'm totally stuffed now!\n Yum!", 3.0f);
 			eatButton.GetComponent<Button> ().interactable = false;
-			fetchButton.GetComponent<Button> ().Select ();
+			//fetchButton.GetComponent<Button> ().Select ();
 		}
 
 	}
@@ -575,26 +487,12 @@ public class DogControl : MonoBehaviour {
 		yield return new WaitForSeconds(3f); // waits 3 seconds
 		auraGrowing = false;
 	}
-
-	/*
-	public void BarkLong() {
-		Debug.Log ("Barking dog !");
-		shouldMove = false;
-		animation.CrossFade ("CorgiIdleBarkingLong");
-	}
-
+		
 	public IEnumerator TimedBark(float time) {
 		Bark ();
 		yield return new WaitForSeconds(time); // waits 5 seconds
-		animation.Stop("CorgiIdleBarking");
-		SitLong ();
+		Sit ();
 	}
-
-	public void Bark(){
-		shouldMove = false;
-		animation.CrossFade ("CorgiIdleBarking");
-	}
-	*/
 
 	public void Fetch() {
 
@@ -643,8 +541,7 @@ public class DogControl : MonoBehaviour {
 
 				// is this the third fetch?
 				if (numFetches % 2 == 0 && numMeditationEvents == 0) {
-					Debug.Log ("would be prompting meditation but not yet supported");
-					//promptMeditation ();
+					promptMeditation ();
 				} else if (numFetches % 3 == 0 && numEatingEvents == 0) {
 					promptFeeding ();
 				} 
@@ -671,14 +568,12 @@ public class DogControl : MonoBehaviour {
 			corgi.transform.position = fetchingPos;
 		}
 	}
-
-	/*
+		
 	public void promptMeditation() {
-		BarkLong ();
+		Bark ();
 		breatheButton.GetComponent<Button>().Select();
-		triggerInfoBubble ("Baloo's all excited now!\nWhy don't we meditate\ntogether to relax him?", 5.0f);
+		triggerInfoBubble ("When I get anxious, it helps to\n do some deep breathing", 5.0f);
 	}
-	*/
 
 	public void promptFeeding() {
 		eatButton.GetComponent<Button>().Select();
@@ -822,29 +717,76 @@ public class DogControl : MonoBehaviour {
 		infoBubble.SetActive (false);
 	}
 
-
-	public void Breathe(){
-		
-		randomBehavior = false;
-		isRandomlyWalking = false;
+	public void StartBreathingSequence() {
 		LookAt ();
-		Idle ();
+		Sit ();
+		if (!injectionDone) {
+			StartCoroutine (startnBreathing ("Sometimes I get anxious when\n I know I have to get an\n injection. It helps to do\n deep breathing"));
+		} else {
+			StartCoroutine (startnBreathing (""));
+		}
+	}
+
+	public IEnumerator startnBreathing(String msg) {
+		triggerInfoBubble(msg, 3.0f);
+		yield return new WaitForSeconds(3.0f);  
+		infoBubble.SetActive (true);
+		infoBubble.GetComponentInChildren<Text> ().text = "First, we start by getting as\n comfy as possible, and\n relaxing our bodies";
+		breatheInstructionButton1.SetActive(true);
+	}
+
+	public void breathingStepOneClose() {
+		infoBubble.GetComponentInChildren<Text> ().text = "Next, we’ll breathe in through\n our nose for 4 seconds, then\n breathe out from our mouths\n for 4 seconds. You can\n watch me first!";
+		breatheInstructionButton1.SetActive(false);
+		breatheInstructionButton2.SetActive(true);
+	}
+
+	public void breathingStepTwoClose() {
 		aura.transform.position = new Vector3 (corgi.transform.position.x, aura.transform.position.y, corgi.transform.position.z);
 		aura.SetActive (true);
-		isBreathing = true;
+		isBreathingTest = true;
+		breatheInstructionButton2.SetActive(false);
+		BreatheTest ();
+	}
 
-		infoBubble.SetActive (true);
+	public void BreatheTest(){
 
 		// Transformation of the sphere
 		if (auraGrowing && aura.transform.localScale.x < 22) {
 			Debug.Log ("aura growing");
-			infoBubble.GetComponentInChildren<Text> ().text = "Breathe in to calm Baloo";
+			infoBubble.GetComponentInChildren<Text> ().text = "In through the nose for 4...";
 			aura.transform.localScale += new Vector3 (0.04F, 0.04F, 0.04F);
 		} else if (auraGrowing && aura.transform.localScale.x >= 22) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
 			AuraWarper ();
 		} else if (!auraGrowing && aura.transform.localScale.x > 10) {
-			infoBubble.GetComponentInChildren<Text> ().text = "Breathe out slowly";
+			infoBubble.GetComponentInChildren<Text> ().text = "Out through the mouth for 4...";
+			aura.transform.localScale -= new Vector3 (0.04F, 0.04F, 0.04F);
+		} else if (aura.transform.localScale.x <= 10) {
+			StartCoroutine (waitAndBreathe ());
+		}
+	}
+
+	public IEnumerator waitAndBreathe() {
+		infoBubble.GetComponentInChildren<Text> ().text = "Now let's do it together!";
+		yield return new WaitForSeconds(2.5f);  
+		Breathe ();
+		isBreathing = true;
+		isBreathingTest = false;
+	}
+
+	public void Breathe(){
+
+		// Transformation of the sphere
+		if (auraGrowing && aura.transform.localScale.x < 22) {
+			Debug.Log ("aura growing");
+			infoBubble.GetComponentInChildren<Text> ().text = "In through the nose for 4...";
+			aura.transform.localScale += new Vector3 (0.04F, 0.04F, 0.04F);
+		} else if (auraGrowing && aura.transform.localScale.x >= 22) {
+			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
+			AuraWarper ();
+		} else if (!auraGrowing && aura.transform.localScale.x > 10) {
+			infoBubble.GetComponentInChildren<Text> ().text = "Out through the mouth for 4...";
 			aura.transform.localScale -= new Vector3 (0.04F, 0.04F, 0.04F);
 		} else if (aura.transform.localScale.x <= 10) {
 			auraGrowing = true;
@@ -852,32 +794,21 @@ public class DogControl : MonoBehaviour {
 		}
 
 		// End of the 3 cycles of breathing => re-initialize the parameters
-		if (nbBreathingCycles >= 3) {
-			triggerInfoBubble ("Baloo feels great now!\n How about you?", 14.0f);
+		if (nbBreathingCycles >= 4) {
+			triggerInfoBubble ("Great job! Thanks\n for doing that with me. ", 14.0f);
 			numMeditationEvents += 1;
 			isBreathing = false;
 			nbBreathingCycles = 0;
 			auraGrowing = false;
 			aura.SetActive (false);
-			//Sit ();
 			isInteractionComplete ();
 		}
-
-		/*
-		// After 1 cycle Baloo is Barking less
-		else if (nbBreathingCycles >= 1) {
-			Bark ();
-		} else {
-			BarkLong ();
-		}*/
-
 	}
 
 		
-	private List<ARHitTestResult> getHitTest() {
+	private List<ARHitTestResult> getHitTest(Vector2 screenPosition) {
 
 		// Project from the middle of the screen to look for a hit point on the detected surfaces.
-		var screenPosition = Camera.main.ScreenToViewportPoint (new Vector2 (Screen.width / 2f, Screen.height / 2f));
 		ARPoint pt = new ARPoint {
 			x = screenPosition.x,
 			y = screenPosition.y
@@ -891,10 +822,11 @@ public class DogControl : MonoBehaviour {
 		return results;
 	}
 
-	public void placeDog() {
+	public void PlaceDog() {
 
 		// check for planes
-		List<ARHitTestResult> hitResults = getHitTest();
+		var screenPosition = Camera.main.ScreenToViewportPoint (new Vector2 (Screen.width / 2f, Screen.height / 2f));
+		List<ARHitTestResult> hitResults = getHitTest(screenPosition);
 
 		// if plane exists, place the dog
 		if (hitResults.Count == 0)
@@ -907,7 +839,6 @@ public class DogControl : MonoBehaviour {
 		corgi.transform.position = UnityARMatrixOps.GetPosition (result.worldTransform);
 
 		LookAt ();
-
 		dogInScene = true;
 	}
 
@@ -937,7 +868,6 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void hideDogNamePanel(){
-		Debug.Log ("HERE!!!!!!!!!!!!!!");
 		dogNamePanel.SetActive (false);
 		InitialSequenceWrapper ();
 	}
