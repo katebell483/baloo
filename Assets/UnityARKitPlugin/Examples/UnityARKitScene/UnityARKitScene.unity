@@ -5364,7 +5364,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: I'm Comfy!
+  m_Text: OK
 --- !u!222 &1294774827
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5768,7 +5768,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: OK
+  m_Text: I'm Comfy!
 --- !u!222 &1425259407
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6868,8 +6868,8 @@ MonoBehaviour:
   eatButton: {fileID: 1491582931}
   breatheButton: {fileID: 2097138892}
   infoBubble: {fileID: 1755790925}
-  breatheInstructionButton1: {fileID: 0}
-  breatheInstructionButton2: {fileID: 0}
+  breatheInstructionButton1: {fileID: 1343407463}
+  breatheInstructionButton2: {fileID: 772031698}
   introPanel: {fileID: 1314380537}
   dogNamePanel: {fileID: 1707069824}
   exitPanel: {fileID: 1329671683}
@@ -6907,7 +6907,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1707069825
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7423,7 +7423,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 6fbe2f96dd4634f7f8c21794579caaa1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e092f081c70d849b2bcffea9b5553d4b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
