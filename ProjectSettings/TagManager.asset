@@ -23,6 +23,8 @@ TagManager:
   - exitPanel
   - kidNamePanel
   - dogHouse
+  - syringe
+  - Syringe
   layers:
   - Default
   - TransparentFX
@@ -32,7 +34,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - draggable
   - 
   - 
   - 

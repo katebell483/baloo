@@ -39,6 +39,8 @@ public class DogControl : MonoBehaviour {
 	public GameObject dogFood;
 	public GameObject propFrisbee;
 	public GameObject dogHouse;
+	public GameObject syringe;
+	public GameObject cubeOfSyringe;
 
 	// walking params
 	private float walkSpeed = .25f;
@@ -91,6 +93,25 @@ public class DogControl : MonoBehaviour {
 	public bool rotating = false;
 	private Vector3 rotatingTargetPos;
 
+
+	//Syringe Daniel
+	GameObject gObj;
+	Plane objPlane;
+	Vector3 m0;
+	public bool syringeActive = false;
+	Vector3 corgiSyringe;
+
+	Ray GenerateMouseRay(Vector3 touchPos){
+		Vector3 mousePosFar = new Vector3 (touchPos.x, touchPos.y, Camera.main.farClipPlane);
+		Vector3 mousePosNear = new Vector3 (touchPos.x, touchPos.y, Camera.main.nearClipPlane);
+		Vector3 mousePosF = Camera.main.ScreenToWorldPoint (mousePosFar);
+		Vector3 mousePosN = Camera.main.ScreenToWorldPoint (mousePosNear);
+		Ray mr = new Ray (mousePosN, mousePosF - mousePosN);
+		return mr;
+	}
+
+
+
 	// quit app when in background
 	void OnApplicationPause(bool pauseStatus){
 		Application.Quit ();
@@ -105,10 +126,72 @@ public class DogControl : MonoBehaviour {
 		introPanel.SetActive(true);
 		dogNamePanel.SetActive(false);
 		exitPanel.SetActive(false);
+
+		//Daniel
+		syringe = GameObject.FindWithTag ("syringe");
+		syringe.SetActive (false);
+		//syringe = GameObject.FindWithTag ("Syringe");
 	}
 
 	// Update is called once per frame
 	void Update () {
+
+
+		//Daniel
+		/* // Return the number of fingers on the screen
+		int fingerCount = 0;
+		foreach (Touch touch in Input.touches) {
+			if (touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Canceled)
+				fingerCount++;
+		}
+		if (fingerCount > 0)
+			Debug.Log("User has " + fingerCount + " finger(s) touching the screen");
+		*/
+		if (syringeActive) {
+			syringe.transform.LookAt (corgi.transform.position);
+			syringe.transform.Rotate (0, 90, 0);
+
+			corgiSyringe = corgi.transform.position - syringe.transform.position;
+			Debug.Log ("syringe distance: "+corgiSyringe.sqrMagnitude);
+			if (corgiSyringe.sqrMagnitude < 0.05) {
+				cubeOfSyringe = syringe.transform.GetChild (0).gameObject;
+				if (cubeOfSyringe.transform.localPosition.x > -65) {
+					cubeOfSyringe.transform.position -= cubeOfSyringe.transform.right*0.0005f;
+					Debug.Log ("local position: "+ cubeOfSyringe.transform.localPosition);
+				}
+
+			}
+
+			if (Input.touchCount > 0) {
+				if (Input.GetTouch (0).phase == TouchPhase.Began) {
+					Ray mouseRay = GenerateMouseRay (Input.GetTouch (0).position);
+					RaycastHit hit;
+
+					if (Physics.Raycast (mouseRay.origin, mouseRay.direction, out hit)) {
+						//gObj = hit.collider.transform.gameObject;
+						//gObj = hit.transform.gameObject;
+						gObj = syringe;
+						Debug.Log ("tag gObj: " + gObj.tag);
+						Debug.Log ("tag collider: " + hit.collider.transform.tag);
+						objPlane = new Plane (Camera.main.transform.forward * -1, gObj.transform.position);
+						// calc touch offset
+						Ray mRay = Camera.main.ScreenPointToRay (Input.GetTouch (0).position);
+						float rayDistance;
+						objPlane.Raycast (mRay, out rayDistance);
+						m0 = gObj.transform.position - mRay.GetPoint (rayDistance);
+					}
+				} else if (Input.GetTouch (0).phase == TouchPhase.Moved && gObj) {
+					Ray mRay = Camera.main.ScreenPointToRay (Input.GetTouch (0).position);
+					float rayDistance;
+					if (objPlane.Raycast (mRay, out rayDistance))
+						gObj.transform.position = mRay.GetPoint (rayDistance) + m0 - syringe.transform.right*0.0005f;
+				} else if (Input.GetTouch (0).phase == TouchPhase.Ended && gObj) {
+					gObj = null;
+				}
+			}
+		}
+		
+
 
 		// turn off buttons until dog in scene
 		if (dogInScene) {
@@ -387,6 +470,38 @@ public class DogControl : MonoBehaviour {
 			}
 		}
 	}*/
+
+
+	public void StartSyringeSequence(){
+		Debug.Log ("StartSyringeSequence called");
+		syringe.SetActive (true);
+		syringeActive = true;
+		syringe.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 0.5f;
+
+		/*
+		Debug.Log("start syringe sequence");
+		syringe.transform.position = Camera.main.transform.position;
+		syringe.SetActive (false);
+		*/
+
+		/*
+		// check for planes
+		var screenPosition = Camera.main.ScreenToViewportPoint (new Vector2 (Screen.width / 4f, Screen.height / 4f));
+		List<ARHitTestResult> hitResults = getHitTest(screenPosition);
+
+		// if plane exists, place the dog
+		if (hitResults.Count == 0)
+			return;
+
+		ARHitTestResult result = hitResults[0];
+		Debug.Log ("placing syringe");
+
+		// set the dog on the platform
+		Vector3 planePos = UnityARMatrixOps.GetPosition (result.worldTransform);
+		syringe.transform.position = new Vector3 (planePos.x, planePos.y - 0.1f, planePos.z);
+		*/
+	}
+
 
 	public void StartEatingSequence() {
 		
