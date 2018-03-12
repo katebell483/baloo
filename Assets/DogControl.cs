@@ -41,12 +41,15 @@ public class DogControl : MonoBehaviour {
 	public GameObject dogHouse;
 	public GameObject syringe;
 	public GameObject cubeOfSyringe;
+	public GameObject gObj; //used for syringe interaction
 
 	// walking params
 	private float walkSpeed = .25f;
 
 	// injection params
 	private bool injectionDone = false;
+	public bool syringeActive = false; //if the syringe is setActive = true
+	public bool syringeDraggable = false;
 
 	// fetching params
 	private bool initialFetchSequence = false;
@@ -88,17 +91,16 @@ public class DogControl : MonoBehaviour {
 	private bool auraGrowing = true; //true if growing, false if reducing
 	private float nbBreathingCycles = 0;
 	private int numMeditationEvents = 0;
+	public bool hasBreathed = false; // true if the breathing feature has been done already
 
 	// rotating params
 	public bool rotating = false;
 	private Vector3 rotatingTargetPos;
 
 
-	//Syringe Daniel
-	GameObject gObj;
+	//Syringe auxiliary objects
 	Plane objPlane;
 	Vector3 m0;
-	public bool syringeActive = false;
 	Vector3 corgiSyringe;
 
 	Ray GenerateMouseRay(Vector3 touchPos){
@@ -130,7 +132,6 @@ public class DogControl : MonoBehaviour {
 		//Daniel
 		syringe = GameObject.FindWithTag ("syringe");
 		syringe.SetActive (false);
-		//syringe = GameObject.FindWithTag ("Syringe");
 	}
 
 	// Update is called once per frame
@@ -147,48 +148,10 @@ public class DogControl : MonoBehaviour {
 		if (fingerCount > 0)
 			Debug.Log("User has " + fingerCount + " finger(s) touching the screen");
 		*/
+
+		// Syringe feature
 		if (syringeActive) {
-			syringe.transform.LookAt (corgi.transform.position);
-			syringe.transform.Rotate (0, 90, 0);
-
-			corgiSyringe = corgi.transform.position - syringe.transform.position;
-			Debug.Log ("syringe distance: "+corgiSyringe.sqrMagnitude);
-			if (corgiSyringe.sqrMagnitude < 0.05) {
-				cubeOfSyringe = syringe.transform.GetChild (0).gameObject;
-				if (cubeOfSyringe.transform.localPosition.x > -65) {
-					cubeOfSyringe.transform.position -= cubeOfSyringe.transform.right*0.0005f;
-					Debug.Log ("local position: "+ cubeOfSyringe.transform.localPosition);
-				}
-
-			}
-
-			if (Input.touchCount > 0) {
-				if (Input.GetTouch (0).phase == TouchPhase.Began) {
-					Ray mouseRay = GenerateMouseRay (Input.GetTouch (0).position);
-					RaycastHit hit;
-
-					if (Physics.Raycast (mouseRay.origin, mouseRay.direction, out hit)) {
-						//gObj = hit.collider.transform.gameObject;
-						//gObj = hit.transform.gameObject;
-						gObj = syringe;
-						Debug.Log ("tag gObj: " + gObj.tag);
-						Debug.Log ("tag collider: " + hit.collider.transform.tag);
-						objPlane = new Plane (Camera.main.transform.forward * -1, gObj.transform.position);
-						// calc touch offset
-						Ray mRay = Camera.main.ScreenPointToRay (Input.GetTouch (0).position);
-						float rayDistance;
-						objPlane.Raycast (mRay, out rayDistance);
-						m0 = gObj.transform.position - mRay.GetPoint (rayDistance);
-					}
-				} else if (Input.GetTouch (0).phase == TouchPhase.Moved && gObj) {
-					Ray mRay = Camera.main.ScreenPointToRay (Input.GetTouch (0).position);
-					float rayDistance;
-					if (objPlane.Raycast (mRay, out rayDistance))
-						gObj.transform.position = mRay.GetPoint (rayDistance) + m0 - syringe.transform.right*0.0005f;
-				} else if (Input.GetTouch (0).phase == TouchPhase.Ended && gObj) {
-					gObj = null;
-				}
-			}
+			syringeAnimate ();
 		}
 		
 
@@ -474,32 +437,81 @@ public class DogControl : MonoBehaviour {
 
 	public void StartSyringeSequence(){
 		Debug.Log ("StartSyringeSequence called");
-		syringe.SetActive (true);
-		syringeActive = true;
-		syringe.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 0.5f;
+		if (!injectionDone) {
+			syringe.SetActive (true);
+			syringeActive = true; //the syringe appears
+			syringeDraggable = true; // we can move it
+			syringe.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 0.5f;
+			syringeAnimate ();
+		}
+	}
 
-		/*
-		Debug.Log("start syringe sequence");
-		syringe.transform.position = Camera.main.transform.position;
-		syringe.SetActive (false);
-		*/
+	public void syringeAnimate(){
+		syringe.transform.LookAt (corgi.transform.position);
+		syringe.transform.Rotate (0, 90, 0);
 
-		/*
-		// check for planes
-		var screenPosition = Camera.main.ScreenToViewportPoint (new Vector2 (Screen.width / 4f, Screen.height / 4f));
-		List<ARHitTestResult> hitResults = getHitTest(screenPosition);
+		corgiSyringe = corgi.transform.position - syringe.transform.position;
+		Debug.Log ("syringe distance: "+corgiSyringe.sqrMagnitude);
+		if (corgiSyringe.sqrMagnitude < 0.045) {
+			syringeDraggable = false;
+		}
 
-		// if plane exists, place the dog
-		if (hitResults.Count == 0)
-			return;
+		if (!syringeDraggable) {
+			// if we are close enough from the dog, we stop moving it and the animation starts
+			cubeOfSyringe = syringe.transform.GetChild (0).gameObject;
+			if (cubeOfSyringe.transform.localPosition.x > -65) {
+				cubeOfSyringe.transform.position -= cubeOfSyringe.transform.right * 0.0005f;
+				//Debug.Log ("local position: "+ cubeOfSyringe.transform.localPosition);
+			} else {
+				syringe.SetActive (false);
+				syringeActive = false;
+				syringeDraggable = false;
+				injectionDone = true;
 
-		ARHitTestResult result = hitResults[0];
-		Debug.Log ("placing syringe");
+				StartCoroutine (postInjectionMsg ("Not my favorite,\n but I know it helps me get well"));
+			}
+		} else {
+			if (Input.touchCount > 0) {
+				if (Input.GetTouch (0).phase == TouchPhase.Began) {
+					Ray mouseRay = GenerateMouseRay (Input.GetTouch (0).position);
+					RaycastHit hit;
 
-		// set the dog on the platform
-		Vector3 planePos = UnityARMatrixOps.GetPosition (result.worldTransform);
-		syringe.transform.position = new Vector3 (planePos.x, planePos.y - 0.1f, planePos.z);
-		*/
+					if (Physics.Raycast (mouseRay.origin, mouseRay.direction, out hit)) {
+						//gObj = hit.collider.transform.gameObject;
+						//gObj = hit.transform.gameObject;
+						gObj = syringe;
+						Debug.Log ("tag gObj: " + gObj.tag);
+						Debug.Log ("tag collider: " + hit.collider.transform.tag);
+						objPlane = new Plane (Camera.main.transform.forward * -1, gObj.transform.position);
+						// calc touch offset
+						Ray mRay = Camera.main.ScreenPointToRay (Input.GetTouch (0).position);
+						float rayDistance;
+						objPlane.Raycast (mRay, out rayDistance);
+						m0 = gObj.transform.position - mRay.GetPoint (rayDistance);
+					}
+				} else if (Input.GetTouch (0).phase == TouchPhase.Moved && gObj) {
+					Ray mRay = Camera.main.ScreenPointToRay (Input.GetTouch (0).position);
+					float rayDistance;
+					if (objPlane.Raycast (mRay, out rayDistance))
+						gObj.transform.position = mRay.GetPoint (rayDistance) + m0 - syringe.transform.right*0.0005f;
+				} else if (Input.GetTouch (0).phase == TouchPhase.Ended && gObj) {
+					gObj = null;
+				}
+			}
+		}
+	}
+
+
+	public IEnumerator postInjectionMsg(String msg) {
+		triggerInfoBubble(msg, 3.0f); 
+		if (!hasBreathed) {
+			yield return new WaitForSeconds(3.0f); 
+			infoBubble.SetActive (true);
+			infoBubble.GetComponentInChildren<Text> ().text = "When I get anxious, it helps to do some deep breathing";
+			StartCoroutine(InfoBubbleClose (3.0f));
+		} else {
+			StartCoroutine(InfoBubbleClose (3.0f));
+		}
 	}
 
 
@@ -916,6 +928,7 @@ public class DogControl : MonoBehaviour {
 			nbBreathingCycles = 0;
 			auraGrowing = false;
 			aura.SetActive (false);
+			hasBreathed = true;
 			isInteractionComplete ();
 		}
 	}

@@ -711,7 +711,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 834313af87f384be888ac598e6a44cad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 344
+      value: 358
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 834313af87f384be888ac598e6a44cad, type: 3}
@@ -7350,6 +7350,7 @@ MonoBehaviour:
   propFrisbee: {fileID: 1399588605}
   dogHouse: {fileID: 638550685}
   syringe: {fileID: 0}
+  cubeOfSyringe: {fileID: 0}
   fetching: 0
   goingToFood: 0
   foodPos: {x: 0, y: 0, z: 0}
@@ -7951,6 +7952,7 @@ MonoBehaviour:
   propFrisbee: {fileID: 1399588605}
   dogHouse: {fileID: 638550685}
   syringe: {fileID: 0}
+  cubeOfSyringe: {fileID: 0}
   fetching: 0
   goingToFood: 0
   foodPos: {x: 0, y: 0, z: 0}
