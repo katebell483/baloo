@@ -93,6 +93,14 @@ public class DogControl : MonoBehaviour {
 	private int numMeditationEvents = 0;
 	public bool hasBreathed = false; // true if the breathing feature has been done already
 
+	// blinking params
+	public float blinkRate = 1.0F;
+	private float nextBlinkCheck = 0.0F;
+	private float blinkVal = 0.0F;
+	private bool isBlinking = false;
+	private bool blinkOpen = false;
+	private bool blinkClose = false;
+
 	// rotating params
 	public bool rotating = false;
 	private Vector3 rotatingTargetPos;
@@ -156,8 +164,13 @@ public class DogControl : MonoBehaviour {
 		if (syringeActive) {
 			syringeAnimate ();
 		}
-		
 
+		// blinking
+		if (isBlinking) {
+			Blink ();
+		} else {
+			BlinkCycle ();
+		}
 
 		// turn off buttons until dog in scene
 		if (dogInScene) {
@@ -223,6 +236,53 @@ public class DogControl : MonoBehaviour {
 		}
 	}
 
+	public void BlinkCycle() {
+
+		Debug.Log ("Blink time: " + Time.time);
+		Debug.Log ("Blink nextBlinkCheck " + nextBlinkCheck);
+
+		// get current time and subtract old time
+		if(Time.time < nextBlinkCheck) 
+			return;
+
+		Debug.Log("blink Cycle HERE!");
+
+		nextBlinkCheck = Time.time + blinkRate;
+		int idx = UnityEngine.Random.Range (1, 4);
+		Debug.Log("blink cycle idx " + idx);
+
+
+		// if its modulo 3 blink (aka have dog blink every 3 seconds)
+		if (idx % 3 == 0) {
+			isBlinking = true;
+			blinkClose = true;
+			Blink ();
+		}
+	}
+
+	public void Blink() {
+		Debug.Log ("blinking!! with blink val: " + blinkVal); 
+
+		SkinnedMeshRenderer corgi_mesh = GameObject.FindWithTag ("pup_blend_mesh").GetComponent<SkinnedMeshRenderer> ();
+
+		if (blinkClose && blinkVal > 95) {
+			blinkOpen = true;
+			blinkClose = false;
+		}
+
+		// do the animation either open or closed
+		if (blinkClose) {
+			blinkVal = blinkVal + 5f;
+		} else if (blinkOpen) {
+			blinkVal = blinkVal - 5f;
+		}
+			
+		if (blinkOpen && blinkVal < 10) {
+			isBlinking = false;
+		}
+
+		corgi_mesh.SetBlendShapeWeight (0, blinkVal);
+	}
 
 	public void InitialSequenceWrapper() {
 		initialCorgiTransform = corgi.transform;
@@ -861,18 +921,22 @@ public class DogControl : MonoBehaviour {
 		LookAt ();
 		Sit ();
 		if (!injectionDone) {
-			StartCoroutine (startnBreathing ("Sometimes I get anxious when\n I know I have to get an\n injection. It helps to do\n deep breathing"));
+			StartCoroutine (startBreathing ("Sometimes I get anxious when\n I know I have to get an\n injection. It helps to do\n deep breathing"));
 		} else {
-			StartCoroutine (startnBreathing (""));
+			StartCoroutine (startBreathing ("When I get anxious, \n it helps to do some deep breathing"));
 		}
 	}
 
-	public IEnumerator startnBreathing(String msg) {
+	public IEnumerator startBreathing(String msg) {
 		triggerInfoBubble(msg, 3.0f);
-		yield return new WaitForSeconds(3.0f);  
-		infoBubble.SetActive (true);
-		infoBubble.GetComponentInChildren<Text> ().text = "First, we start by getting as\n comfy as possible, and\n relaxing our bodies";
-		breatheInstructionButton1.SetActive(true);
+		yield return new WaitForSeconds(3.0f); 
+		if (numMeditationEvents > 0) {
+			Breathe ();
+		} else {
+			infoBubble.SetActive (true);
+			infoBubble.GetComponentInChildren<Text> ().text = "First, we start by getting as\n comfy as possible, and\n relaxing our bodies";
+			breatheInstructionButton1.SetActive (true);
+		}
 	}
 
 	public void breathingStepOneClose() {
@@ -918,17 +982,17 @@ public class DogControl : MonoBehaviour {
 	public void Breathe(){
 
 		// Transformation of the sphere
-		if (auraGrowing && aura.transform.localScale.x < 22) {
+		if (auraGrowing && aura.transform.localScale.x < 16) {
 			Debug.Log ("aura growing");
 			infoBubble.GetComponentInChildren<Text> ().text = "In through the nose for 4...";
 			aura.transform.localScale += new Vector3 (0.04F, 0.04F, 0.04F);
 		} else if (auraGrowing && aura.transform.localScale.x >= 22) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
 			AuraWarper ();
-		} else if (!auraGrowing && aura.transform.localScale.x > 10) {
+		} else if (!auraGrowing && aura.transform.localScale.x > 8) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Out through the mouth for 4...";
 			aura.transform.localScale -= new Vector3 (0.04F, 0.04F, 0.04F);
-		} else if (aura.transform.localScale.x <= 10) {
+		} else if (aura.transform.localScale.x <= 8) {
 			auraGrowing = true;
 			nbBreathingCycles += 1;
 		}

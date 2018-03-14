@@ -25,6 +25,7 @@ TagManager:
   - dogHouse
   - syringe
   - Syringe
+  - pup_blend_mesh
   layers:
   - Default
   - TransparentFX
