@@ -97,6 +97,9 @@ public class DogControl : MonoBehaviour {
 	public bool rotating = false;
 	private Vector3 rotatingTargetPos;
 
+	// sitting params
+	public bool isSitting = false;
+
 
 	//Syringe auxiliary objects
 	Plane objPlane;
@@ -298,6 +301,7 @@ public class DogControl : MonoBehaviour {
 
 	public void Walk() {
 		Debug.Log ("walking!");
+		isSitting = false;
 		shouldMove = true;
 		animator.Play ("Walk");
 	}
@@ -309,6 +313,7 @@ public class DogControl : MonoBehaviour {
 
 	public void Eat() {
 		Debug.Log ("Eating!");
+		isSitting = false;
 		shouldMove = false;
 		animator.Play ("StartEating");
 	}
@@ -321,30 +326,37 @@ public class DogControl : MonoBehaviour {
 
 	public void Run() {
 		Debug.Log ("RUNNING");
+		isSitting = false;
 		shouldMove = true;
 		animator.Play ("Run");
 	}
 
 	public void Sit() {
 		Debug.Log ("SIT DOWN");
+		if (isSitting)
+			return;
 		shouldMove = false;
+		isSitting = true;
 		animator.Play ("SitDown");
 	}
 
 	public void Bark() {
 		Debug.Log ("Barking");
+		isSitting = false;
 		shouldMove = false;
 		animator.Play ("Bark");
 	}
 
 	public void BarkOnce() {
 		Debug.Log ("Bark Once");
+		isSitting = false;
 		shouldMove = false;
 		animator.Play ("BarkOnce");
 	}
 
 	public void Idle() {
 		Debug.Log ("IDLE");
+		isSitting = false;
 		shouldMove = false;
 		animator.Play ("Idle");
 	}
@@ -441,7 +453,8 @@ public class DogControl : MonoBehaviour {
 			syringe.SetActive (true);
 			syringeActive = true; //the syringe appears
 			syringeDraggable = true; // we can move it
-			syringe.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 0.5f;
+			Vector3 syringePos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y - .1f, Camera.main.transform.position.z);
+			syringe.transform.position = syringePos + Camera.main.transform.forward * 0.5f;
 			syringeAnimate ();
 		}
 	}
@@ -452,7 +465,7 @@ public class DogControl : MonoBehaviour {
 
 		corgiSyringe = corgi.transform.position - syringe.transform.position;
 		Debug.Log ("syringe distance: "+corgiSyringe.sqrMagnitude);
-		if (corgiSyringe.sqrMagnitude < 0.045) {
+		if (corgiSyringe.sqrMagnitude < 0.03) {
 			syringeDraggable = false;
 		}
 
@@ -549,7 +562,7 @@ public class DogControl : MonoBehaviour {
 		float xscale = corgi.transform.localScale.x;
 
 		// got to food so stop + eat
-		if (distance < xscale/4) {
+		if (distance < .24) {
 			Debug.Log ("reached food going to start eating");
 			numEatingEvents += 1;
 			fraction = 0;
