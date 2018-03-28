@@ -237,20 +237,12 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void BlinkCycle() {
-
-		Debug.Log ("Blink time: " + Time.time);
-		Debug.Log ("Blink nextBlinkCheck " + nextBlinkCheck);
-
 		// get current time and subtract old time
 		if(Time.time < nextBlinkCheck) 
 			return;
 
-		Debug.Log("blink Cycle HERE!");
-
 		nextBlinkCheck = Time.time + blinkRate;
 		int idx = UnityEngine.Random.Range (1, 4);
-		Debug.Log("blink cycle idx " + idx);
-
 
 		// if its modulo 3 blink (aka have dog blink every 3 seconds)
 		if (idx % 3 == 0) {
@@ -261,8 +253,6 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void Blink() {
-		Debug.Log ("blinking!! with blink val: " + blinkVal); 
-
 		SkinnedMeshRenderer corgi_mesh = GameObject.FindWithTag ("pup_blend_mesh").GetComponent<SkinnedMeshRenderer> ();
 
 		if (blinkClose && blinkVal > 95) {
@@ -514,7 +504,7 @@ public class DogControl : MonoBehaviour {
 			syringeActive = true; //the syringe appears
 			syringeDraggable = true; // we can move it
 			Vector3 syringePos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y - .1f, Camera.main.transform.position.z);
-			syringe.transform.position = syringePos + Camera.main.transform.forward * 0.5f;
+			syringe.transform.position = syringePos + Camera.main.transform.forward * 0.25f;
 			syringeAnimate ();
 		}
 	}
@@ -525,7 +515,7 @@ public class DogControl : MonoBehaviour {
 
 		corgiSyringe = corgi.transform.position - syringe.transform.position;
 		Debug.Log ("syringe distance: "+corgiSyringe.sqrMagnitude);
-		if (corgiSyringe.sqrMagnitude < 0.03) {
+		if (corgiSyringe.sqrMagnitude < 0.015) {
 			syringeDraggable = false;
 		}
 
