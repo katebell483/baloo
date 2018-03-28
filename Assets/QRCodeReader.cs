@@ -34,6 +34,8 @@ public class QRCodeReader : MonoBehaviour {
 	private bool detectQR = true;
 	private Vector3 camPos;
 
+	private bool checkingForPlane = true;
+
 	// Use this for initialization
 	void Start () {
 		arSession = UnityARSessionNativeInterface.GetARSessionNativeInterface ();
@@ -46,16 +48,57 @@ public class QRCodeReader : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		
+
+		/*
 		camPos = Camera.main.transform.position;
 		if (!done && detectQR) {
 			ARTextureHandles handles = arSession.GetARVideoTextureHandles ();
 			if (handles.textureY != System.IntPtr.Zero) {
 				ReadQRCode (handles.textureY.ToInt64 ());
 			}
+		}*/
+
+		if (checkingForPlane) {
+			checkForPlane ();
+		}
+
+	}
+
+	void checkForPlane() {
+		// check for planes
+		var screenPosition = Camera.main.ScreenToViewportPoint (new Vector2 (Screen.width / 2f, Screen.height / 2f));
+		List<ARHitTestResult> hitResults = getHitTest(screenPosition);
+		Debug.Log ("CHECKING FOR PLANE");
+
+		// if plane exists, place the dog
+		if (hitResults.Count > 0 && corgi.GetComponent<DogControl> ().isReadyForQRDetection) {
+			Debug.Log ("PLANE DETECTED AND READY FOR DOG");
+			ARHitTestResult result = hitResults[0];
+			checkingForPlane = false;
+			corgi.GetComponent<DogControl> ().dogNamePanel.SetActive (true);
+			mat.transform.forward = Camera.main.transform.forward;
+			mat.transform.position = UnityARMatrixOps.GetPosition (result.worldTransform);
+			matPlane.transform.localScale = new Vector3(.05f, .05f, .05f);
 		}
 	}
 
+	private List<ARHitTestResult> getHitTest(Vector2 screenPosition) {
+
+		// Project from the middle of the screen to look for a hit point on the detected surfaces.
+		ARPoint pt = new ARPoint {
+			x = screenPosition.x,
+			y = screenPosition.y
+		};
+
+		// Try to hit within the bounds of an existing AR plane.
+		List<ARHitTestResult> results = UnityARSessionNativeInterface.GetARSessionNativeInterface ().HitTest (
+			pt, 
+			ARHitTestResultType.ARHitTestResultTypeExistingPlaneUsingExtent);
+
+		return results;
+	}
+
+	/*
 	void OnReadQRCode(string arg) {
 		Debug.Log ("detectQR: " + detectQR);
 		Debug.Log ("READY for QR detect " + corgi.GetComponent<DogControl> ().isReadyForQRDetection);
@@ -140,4 +183,5 @@ public class QRCodeReader : MonoBehaviour {
 			text.text = "Retry Anchor";
 		}
 	}
+	*/
 }
