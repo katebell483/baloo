@@ -124,6 +124,8 @@ public class DogControl : MonoBehaviour {
 	}
 
 
+	// level settings
+	//void level
 
 	// quit app when in background
 	void OnApplicationPause(bool pauseStatus){
@@ -139,6 +141,7 @@ public class DogControl : MonoBehaviour {
 		introPanel.SetActive(true);
 		dogNamePanel.SetActive(false);
 		exitPanel.SetActive(false);
+		Debug.Log ("HERE!!!!!!!!!!!");
 
 		//Daniel
 		syringe = GameObject.FindWithTag ("syringe");
@@ -515,7 +518,7 @@ public class DogControl : MonoBehaviour {
 
 		corgiSyringe = corgi.transform.position - syringe.transform.position;
 		Debug.Log ("syringe distance: "+corgiSyringe.sqrMagnitude);
-		if (corgiSyringe.sqrMagnitude < 0.015) {
+		if (corgiSyringe.sqrMagnitude < 0.02) {
 			syringeDraggable = false;
 		}
 
@@ -735,6 +738,7 @@ public class DogControl : MonoBehaviour {
 
 				// is this the third fetch?
 				if (numFetches % 2 == 0 && numMeditationEvents == 0) {
+					Debug.Log ("prompt HERE!!!!!!");
 					promptMeditation ();
 				} else if (numFetches % 3 == 0 && numEatingEvents == 0) {
 					promptFeeding ();
@@ -764,6 +768,7 @@ public class DogControl : MonoBehaviour {
 	}
 		
 	public void promptMeditation() {
+		Debug.Log ("prompt MEDIATAIPODJSF");
 		Bark ();
 		breatheButton.GetComponent<Button>().Select();
 		triggerInfoBubble ("When I get anxious, it helps to\n do some deep breathing", 5.0f);
@@ -1035,7 +1040,8 @@ public class DogControl : MonoBehaviour {
 
 		// set the dog on the platform
 		corgi.transform.rotation = Quaternion.Euler (Vector3.zero);
-		corgi.transform.position = UnityARMatrixOps.GetPosition (result.worldTransform);
+		Vector3 pos = UnityARMatrixOps.GetPosition (result.worldTransform);
+		corgi.transform.position = new Vector3 (pos.x, pos.y + .075f, pos.z);
 
 		LookAt ();
 		corgi.SetActive (true);
