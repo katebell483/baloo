@@ -593,7 +593,8 @@ public class DogControl : MonoBehaviour {
 
 		// set the dog on the platform
 		Vector3 planePos = UnityARMatrixOps.GetPosition (result.worldTransform);
-		dogFood.transform.position = new Vector3 (planePos.x, planePos.y - 0.1f, planePos.z);
+		dogFood.transform.position = new Vector3 (planePos.x, planePos.y, planePos.z);
+		dogFood.transform.rotation = Quaternion.Euler (Vector3.zero);
 		foodPos = dogFood.transform.position;
 		dogFood.SetActive (true);
 		rotatingTargetPos = dogFood.transform.position;
@@ -644,6 +645,9 @@ public class DogControl : MonoBehaviour {
 		StopEat ();
 		LookAt();
 		Sit ();
+
+		// remove bowl
+		dogFood.SetActive (false);
 
 		// check for end conditions
 		// if interaction complete then start exit sequence
@@ -918,7 +922,7 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public IEnumerator startBreathing(String msg) {
-		triggerInfoBubble(msg, 3.0f);
+		triggerInfoBubble(msg, 2.0f);
 		yield return new WaitForSeconds(3.0f); 
 		if (numMeditationEvents > 0) {
 			Breathe ();
@@ -946,17 +950,17 @@ public class DogControl : MonoBehaviour {
 	public void BreatheTest(){
 
 		// Transformation of the sphere
-		if (auraGrowing && aura.transform.localScale.x < 22) {
+		if (auraGrowing && aura.transform.localScale.x < 14) {
 			Debug.Log ("aura growing");
 			infoBubble.GetComponentInChildren<Text> ().text = "In through the nose for 4...";
 			aura.transform.localScale += new Vector3 (0.04F, 0.04F, 0.04F);
-		} else if (auraGrowing && aura.transform.localScale.x >= 22) {
+		} else if (auraGrowing && aura.transform.localScale.x >= 14) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
 			AuraWarper ();
-		} else if (!auraGrowing && aura.transform.localScale.x > 10) {
+		} else if (!auraGrowing && aura.transform.localScale.x > 5) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Out through the mouth for 4...";
 			aura.transform.localScale -= new Vector3 (0.04F, 0.04F, 0.04F);
-		} else if (aura.transform.localScale.x <= 10) {
+		} else if (aura.transform.localScale.x <= 5) {
 			StartCoroutine (waitAndBreathe ());
 		}
 	}
@@ -972,17 +976,17 @@ public class DogControl : MonoBehaviour {
 	public void Breathe(){
 
 		// Transformation of the sphere
-		if (auraGrowing && aura.transform.localScale.x < 16) {
+		if (auraGrowing && aura.transform.localScale.x < 14) {
 			Debug.Log ("aura growing");
 			infoBubble.GetComponentInChildren<Text> ().text = "In through the nose for 4...";
 			aura.transform.localScale += new Vector3 (0.04F, 0.04F, 0.04F);
-		} else if (auraGrowing && aura.transform.localScale.x >= 22) {
+		} else if (auraGrowing && aura.transform.localScale.x >= 14) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
 			AuraWarper ();
-		} else if (!auraGrowing && aura.transform.localScale.x > 8) {
+		} else if (!auraGrowing && aura.transform.localScale.x > 5) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Out through the mouth for 4...";
 			aura.transform.localScale -= new Vector3 (0.04F, 0.04F, 0.04F);
-		} else if (aura.transform.localScale.x <= 8) {
+		} else if (aura.transform.localScale.x <= 5) {
 			auraGrowing = true;
 			nbBreathingCycles += 1;
 		}
@@ -1034,6 +1038,7 @@ public class DogControl : MonoBehaviour {
 		corgi.transform.position = UnityARMatrixOps.GetPosition (result.worldTransform);
 
 		LookAt ();
+		corgi.SetActive (true);
 		dogInScene = true;
 	}
 
