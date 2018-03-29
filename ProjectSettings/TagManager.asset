@@ -26,6 +26,9 @@ TagManager:
   - syringe
   - Syringe
   - pup_blend_mesh
+  - levelPanel
+  - pillButton
+  - bandaidButton
   layers:
   - Default
   - TransparentFX

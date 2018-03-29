@@ -14,12 +14,15 @@ public class DogControl : MonoBehaviour {
 	Collider corgiCollider;
 	private Transform initialCorgiTransform;
 	private Animator animator;
+	public int level = 1;
 
 	// UI elements
 	public GameObject fetchButton;
 	public GameObject syringeButton;
 	public GameObject eatButton;
 	public GameObject breatheButton;
+	public GameObject pillButton;
+	public GameObject bandaidButton;
 	public GameObject infoBubble;
 	public GameObject breatheInstructionButton1;
 	public GameObject breatheInstructionButton2;
@@ -28,6 +31,7 @@ public class DogControl : MonoBehaviour {
 	public GameObject introPanel;
 	public GameObject dogNamePanel;
 	public GameObject exitPanel;
+	public GameObject levelPanel;
 	public bool isReadyForQRDetection;
 
 	// Breathing objects
@@ -138,10 +142,10 @@ public class DogControl : MonoBehaviour {
 		animator = corgi.GetComponent<Animator> ();
 
 		/* panels */
-		introPanel.SetActive(true);
+		levelPanel.SetActive (true);
+		introPanel.SetActive(false);
 		dogNamePanel.SetActive(false);
 		exitPanel.SetActive(false);
-		Debug.Log ("HERE!!!!!!!!!!!");
 
 		//Daniel
 		syringe = GameObject.FindWithTag ("syringe");
@@ -177,15 +181,9 @@ public class DogControl : MonoBehaviour {
 
 		// turn off buttons until dog in scene
 		if (dogInScene) {
-			fetchButton.SetActive (false); // this will need to be abstracted out
-			syringeButton.SetActive (true);
-			eatButton.SetActive (true);
-			breatheButton.SetActive (true);
+			showButtons ();
 		} else {
-			fetchButton.SetActive (false);
-			syringeButton.SetActive (false);
-			eatButton.SetActive (false);
-			breatheButton.SetActive (false);
+			hideButtons ();
 		}
 
 		// even rotating but no more distance walk in place
@@ -237,6 +235,49 @@ public class DogControl : MonoBehaviour {
 		if (goingToFood) {
 			GoToFoodAndEat();
 		}
+	}
+
+	private void showButtons() {
+		eatButton.SetActive (true);
+		breatheButton.SetActive (true);
+		float width = Screen.width / 3f;
+		float width2 = Screen.width / 4f;
+
+		switch(level) {
+		case 1:
+			syringeButton.SetActive (true);
+			SetTransformX (syringeButton, 5 * width/2f);
+			SetTransformX (eatButton, width/2f);
+			SetTransformX (breatheButton, 3 * width/2f);
+			break;
+		case 2: 
+			fetchButton.SetActive (true); 
+			pillButton.SetActive (true);
+			SetTransformX (pillButton, 7 * width2/2);
+			SetTransformX (eatButton, width2/2);
+			SetTransformX (breatheButton, 3 * width2/2);
+			SetTransformX (fetchButton, 5 * width2/2);
+			break;
+		case 3:
+			fetchButton.SetActive (true); 
+			bandaidButton.SetActive (true);
+			SetTransformX (pillButton, 7 * width2/2);
+			SetTransformX (eatButton, width2/2);
+			SetTransformX (breatheButton, 3 * width2/2);
+			SetTransformX (fetchButton, 5 * width2/2);
+			break;
+		}
+	}
+
+	private void SetTransformX (GameObject g, float n) {
+		g.transform.position = new Vector3(n, g.transform.position.y, g.transform.position.z);
+	}
+
+	private void hideButtons() {
+		fetchButton.SetActive (false);
+		syringeButton.SetActive (false);
+		eatButton.SetActive (false);
+		breatheButton.SetActive (false);
 	}
 
 	public void BlinkCycle() {
@@ -1051,6 +1092,24 @@ public class DogControl : MonoBehaviour {
 	public void LookAt() {
 		corgi.transform.LookAt (Camera.main.transform.position);
 		corgi.transform.eulerAngles = new Vector3(0, corgi.transform.eulerAngles.y, 0);
+	}
+
+	public void setLevelOne() {
+		introPanel.SetActive (true);
+		levelPanel.SetActive (false);
+		level = 1;
+	}
+
+	public void setLevelTwo() {
+		introPanel.SetActive (true);
+		levelPanel.SetActive (false);
+		level = 2;
+	}
+
+	public void setLevelThree() {
+		introPanel.SetActive (true);
+		levelPanel.SetActive (false);
+		level = 3;
 	}
 
 	public void goBackToMenu(){
