@@ -29,6 +29,8 @@ TagManager:
   - levelPanel
   - pillButton
   - bandaidButton
+  - pill
+  - bandaid
   layers:
   - Default
   - TransparentFX

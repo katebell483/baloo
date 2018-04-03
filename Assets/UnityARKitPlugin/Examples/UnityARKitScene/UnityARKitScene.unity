@@ -747,7 +747,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 834313af87f384be888ac598e6a44cad, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 834313af87f384be888ac598e6a44cad, type: 3}
       propertyPath: m_LocalScale.x
@@ -2244,7 +2244,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1180945783}
-        m_MethodName: 
+        m_MethodName: StartDragObjectSequence
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2900,7 +2900,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 406a35574c16c41858c3a124df4cc2c7, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 406a35574c16c41858c3a124df4cc2c7, type: 3}
       propertyPath: m_TagString
@@ -3111,6 +3111,76 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &586324795
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1118375878}
+    m_Modifications:
+    - target: {fileID: 400000, guid: 0d232965102e74f47a85bd9d8fac1dfc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0d232965102e74f47a85bd9d8fac1dfc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.453
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0d232965102e74f47a85bd9d8fac1dfc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6.382918
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0d232965102e74f47a85bd9d8fac1dfc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0d232965102e74f47a85bd9d8fac1dfc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0d232965102e74f47a85bd9d8fac1dfc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0d232965102e74f47a85bd9d8fac1dfc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0d232965102e74f47a85bd9d8fac1dfc, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 0d232965102e74f47a85bd9d8fac1dfc, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 485a5e7d610d34fb793cc8543ca39908, type: 2}
+    - target: {fileID: 400000, guid: 0d232965102e74f47a85bd9d8fac1dfc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0025
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0d232965102e74f47a85bd9d8fac1dfc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0025
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 0d232965102e74f47a85bd9d8fac1dfc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.0025
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0d232965102e74f47a85bd9d8fac1dfc, type: 3}
+      propertyPath: m_TagString
+      value: pill
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0d232965102e74f47a85bd9d8fac1dfc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 0d232965102e74f47a85bd9d8fac1dfc, type: 3}
+  m_IsPrefabParent: 0
+--- !u!4 &586324796 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 400000, guid: 0d232965102e74f47a85bd9d8fac1dfc, type: 3}
+  m_PrefabInternal: {fileID: 586324795}
 --- !u!1 &591403437
 GameObject:
   m_ObjectHideFlags: 0
@@ -4753,7 +4823,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1180945783}
-        m_MethodName: StartSyringeSequence
+        m_MethodName: StartDragObjectSequence
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5388,6 +5458,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1552162011}
+  - {fileID: 586324796}
   - {fileID: 1705131754}
   - {fileID: 1189960482}
   - {fileID: 868146843}
@@ -5701,10 +5773,13 @@ MonoBehaviour:
   propFrisbee: {fileID: 1399588605}
   dogHouse: {fileID: 0}
   syringe: {fileID: 258528443}
-  cubeOfSyringe: {fileID: 0}
+  pill: {fileID: 0}
+  bandaid: {fileID: 0}
+  dragObject: {fileID: 0}
+  dragObjectCube: {fileID: 0}
   gObj: {fileID: 0}
-  syringeActive: 0
-  syringeDraggable: 0
+  dragObjectActive: 0
+  dragObjectDraggable: 0
   fetching: 0
   goingToFood: 0
   foodPos: {x: 0, y: 0, z: 0}
@@ -5878,7 +5953,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 419212, guid: c8f6b601d8fc43f44b2c1d24822c04b8, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 419212, guid: c8f6b601d8fc43f44b2c1d24822c04b8, type: 2}
       propertyPath: m_LocalScale.x
@@ -7364,6 +7439,84 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1535479197}
+--- !u!1001 &1552162010
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1118375878}
+    m_Modifications:
+    - target: {fileID: 400000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1001.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.048378877
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.20003821
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.29208815
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.52845263
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7716263
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+      propertyPath: m_TagString
+      value: bandaid
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -68.811005
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -41.467003
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2935d1b4eaba147dd89ab60198f7348b, type: 2}
+    - target: {fileID: 100000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+  m_IsPrefabParent: 0
+--- !u!4 &1552162011 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 400000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
+  m_PrefabInternal: {fileID: 1552162010}
 --- !u!1 &1553989635
 GameObject:
   m_ObjectHideFlags: 0
@@ -8566,10 +8719,13 @@ MonoBehaviour:
   propFrisbee: {fileID: 1399588605}
   dogHouse: {fileID: 638550685}
   syringe: {fileID: 0}
-  cubeOfSyringe: {fileID: 0}
+  pill: {fileID: 0}
+  bandaid: {fileID: 0}
+  dragObject: {fileID: 0}
+  dragObjectCube: {fileID: 0}
   gObj: {fileID: 0}
-  syringeActive: 0
-  syringeDraggable: 0
+  dragObjectActive: 0
+  dragObjectDraggable: 0
   fetching: 0
   goingToFood: 0
   foodPos: {x: 0, y: 0, z: 0}
@@ -9716,7 +9872,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1180945783}
-        m_MethodName: 
+        m_MethodName: StartDragObjectSequence
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10721,7 +10877,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 476092, guid: 4b6d15ce823a28845a5bde43e643812e, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 147024, guid: 4b6d15ce823a28845a5bde43e643812e, type: 2}
       propertyPath: m_TagString
