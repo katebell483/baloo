@@ -49,6 +49,7 @@ public class DogControl : MonoBehaviour {
 	public GameObject dragObject;
 	public GameObject dragObjectCube;
 	public GameObject gObj; //used for drag object interaction
+	private int numDraggableEvents = 0;
 
 	// walking params
 	private float walkSpeed = .25f;
@@ -85,7 +86,7 @@ public class DogControl : MonoBehaviour {
 	public string randomStaticAction= "Sit";
 
 	// going home params
-	private bool isGoingHome = false;
+	private bool isFinishingInteraction = false;
 
 	// petting params
 	private bool corgiTouched = false;
@@ -200,8 +201,8 @@ public class DogControl : MonoBehaviour {
 			aura.SetActive (false);
 		}
 
-		if (isGoingHome) {
-			GoHome ();
+		if (isFinishingInteraction) {
+			Finish ();
 		}
 			
 		// is the dog rotating?
@@ -427,6 +428,13 @@ public class DogControl : MonoBehaviour {
 		shouldMove = false;
 	}
 
+	public void LayDown() {
+		Debug.Log ("Laying Down!");
+		isSitting = false;
+		shouldMove = false;
+		animator.Play ("LayDown");
+	}
+
 	public void Eat() {
 		Debug.Log ("Eating!");
 		isSitting = false;
@@ -492,39 +500,37 @@ public class DogControl : MonoBehaviour {
 
 	}
 
-	public void StartGoingHome() {
+	public void FinishInteraction() {
 		// rotate towards home
-		isGoingHome = true;
+		isFinishingInteraction = true;
 		rotating = true;
-		rotatingTargetPos = dogHouse.transform.position;
+		rotatingTargetPos = mat.transform.position;
 		Walk ();
 	}
 
-	public void GoHome() {
+	public void Finish() {
 		//check distance
-		float distance = Math.Abs(Vector3.Distance(corgi.transform.position, dogHouse.transform.position));
+		float distance = Math.Abs(Vector3.Distance(corgi.transform.position, mat.transform.position));
 		Debug.Log ("DISTANCE: " + distance);
 
-		if (distance < .01 && !rotating) {
-			Debug.Log ("CORGI HOME");
-			isGoingHome = false;
+		if (distance < .02) {
+			Debug.Log ("CORGI IN FINAL SPOT");
+			isFinishingInteraction = false;
+			LookAt ();
 			StartCoroutine (startExitSequence ());
-		} else if (distance > .01) {
-			// move dog forward
-			Debug.Log ("CORGI STILL GOING HOME");
-			fraction += Time.deltaTime * .015f;
-			Vector3 currPos = Vector3.Lerp (corgi.transform.position, dogHouse.transform.position, fraction);
-			corgi.transform.position = currPos;
 		} else {
-			Debug.Log ("waiting for rotation to stop");
-		}
-
+			// move dog forward
+			Debug.Log ("CORGI STILL GOING TO FINAL SPOT");
+			fraction += Time.deltaTime * .015f;
+			Vector3 currPos = Vector3.Lerp (corgi.transform.position, mat.transform.position, fraction);
+			corgi.transform.position = currPos;
+		} 
 	}
 
 	public IEnumerator startExitSequence() {
 		Debug.Log ("starting exit sequence");
-		corgi.transform.rotation = initialCorgiTransform.rotation;
-		//LayDown();
+		//corgi.transform.rotation = initialCorgiTransform.rotation;
+		LayDown();
 		shouldMove = false;
 		yield return new WaitForSeconds (1.5f);
 		Debug.Log ("exit sequence complete");
@@ -595,6 +601,7 @@ public class DogControl : MonoBehaviour {
 				dragObjectActive = false;
 				dragObjectDraggable = false;
 				injectionDone = true;
+				numDraggableEvents += 1;
 				StartCoroutine (postInjectionMsg ("Not my favorite,\n but I know it helps me get well"));
 			}
 		} else {
@@ -628,17 +635,10 @@ public class DogControl : MonoBehaviour {
 		}
 	}
 
-
 	public IEnumerator postInjectionMsg(String msg) {
 		triggerInfoBubble(msg, 3.0f); 
-		if (!hasBreathed) {
-			yield return new WaitForSeconds(3.0f); 
-			infoBubble.SetActive (true);
-			infoBubble.GetComponentInChildren<Text> ().text = "When I get anxious, it helps to do some deep breathing";
-			StartCoroutine(InfoBubbleClose (3.0f));
-		} else {
-			StartCoroutine(InfoBubbleClose (3.0f));
-		}
+		yield return new WaitForSeconds(3.0f); 
+		getNextInteraction ();
 	}
 
 
@@ -713,6 +713,9 @@ public class DogControl : MonoBehaviour {
 		// remove bowl
 		dogFood.SetActive (false);
 
+		getNextInteraction ();
+
+		/*
 		// check for end conditions
 		// if interaction complete then start exit sequence
 		// if max food events reached disable eat button
@@ -721,20 +724,58 @@ public class DogControl : MonoBehaviour {
 			eatButton.GetComponent<Button> ().interactable = false;
 			//fetchButton.GetComponent<Button> ().Select ();
 		}
-
+		*/
 	}
 
-	private bool isInteractionComplete() {
-		if (numEatingEvents > 0 && numFetches > 2 && numMeditationEvents > 0) {
+	private void getNextInteraction() {
+		switch (level) {
+		case 1:
+			getNextLevelOneInteraction ();
+			break;
+		case 2:
+			getNextLevelTwoInteraction ();
+			break;
+		case 3:
+			getNextLevelThreeInteraction ();
+			break;
+		}
+	}
+
+	private void getNextLevelOneInteraction() {
+		// all three actions done so exit
+		if (numEatingEvents > 0 && numMeditationEvents > 0 && numDraggableEvents > 0) {
 			// needs to be some kind of outro activity
 			eatButton.GetComponent<Button> ().interactable = false;
 			breatheButton.GetComponent<Button> ().interactable = false;
-			fetchButton.GetComponent<Button> ().interactable = false;
-			StartGoingHome ();
-			return true;
+			syringeButton.GetComponent<Button> ().interactable = false;
+			// TODO: should be prompt petting
+			FinishInteraction ();
+		} else if (numEatingEvents > 1) {
+			// prompt max feeding
+			triggerInfoBubble ("I'm totally stuffed now!\n Yum!", 3.0f);
+			eatButton.GetComponent<Button> ().interactable = false;
+		} else if (numDraggableEvents > 0 && numMeditationEvents == 0) {
+			// prompt post-injection breathing prompt
+			promptMeditation ();
+			syringeButton.GetComponent<Button> ().interactable = false;
+		} else if (numDraggableEvents == 0 && numMeditationEvents > 0 || numDraggableEvents == 0 && numEatingEvents > 0) {
+			// prompt syringe
+			promptInjection();
+			// prompt post-injection breathing prompt
+		} else if (numDraggableEvents > 0 && numMeditationEvents > 0) {
+			promptFeeding ();
+			breatheButton.GetComponent<Button> ().interactable = false;
+			syringeButton.GetComponent<Button> ().interactable = false;
 		} else {
-			return false;
+			Debug.Log ("none of the interaction scenarios met");
 		}
+	}
+
+	private void getNextLevelTwoInteraction() {
+
+	}
+	private void getNextLevelThreeInteraction() {
+
 	}
 
 	//Breathing action
@@ -792,6 +833,9 @@ public class DogControl : MonoBehaviour {
 				// bring back prop
 				//propFrisbee.SetActive(true);
 
+				getNextInteraction ();
+
+				/*
 				// first check if thi means we are done
 				if (isInteractionComplete ()) {
 					return;
@@ -803,7 +847,7 @@ public class DogControl : MonoBehaviour {
 					promptMeditation ();
 				} else if (numFetches % 3 == 0 && numEatingEvents == 0) {
 					promptFeeding ();
-				} 
+				} */
 
 			} else {
 				Debug.Log ("turning around");
@@ -835,12 +879,18 @@ public class DogControl : MonoBehaviour {
 		Debug.Log ("prompt MEDIATAIPODJSF");
 		Bark ();
 		breatheButton.GetComponent<Button>().Select();
-		triggerInfoBubble ("When I get anxious, it helps to\n do some deep breathing", 5.0f);
+		StartBreathingSequence();
+		//triggerInfoBubble ("When I get anxious, it helps to\n do some deep breathing", 5.0f);
 	}
 
 	public void promptFeeding() {
 		eatButton.GetComponent<Button>().Select();
-		triggerInfoBubble ("All that fetching\nmade me hungry!", 5.0f);
+		triggerInfoBubble ("I'm hungry! \n Will you feed me?", 5.0f);
+	}
+
+	public void promptInjection() {
+		syringeButton.GetComponent<Button>().Select();
+		triggerInfoBubble ("I'm not feeling great.\n Will you give me my shot?", 5.0f);
 	}
 
 	/*
@@ -1069,7 +1119,7 @@ public class DogControl : MonoBehaviour {
 			auraGrowing = false;
 			aura.SetActive (false);
 			hasBreathed = true;
-			isInteractionComplete ();
+			getNextInteraction ();
 		}
 	}
 
