@@ -581,7 +581,7 @@ public class DogControl : MonoBehaviour {
 
 		dragObjectPos = corgi.transform.position - dragObject.transform.position;
 		Debug.Log ("drag object distance: "+ dragObjectPos.sqrMagnitude);
-		if (dragObjectPos.sqrMagnitude < 0.02) {
+		if (dragObjectPos.sqrMagnitude < 0.04) { // was .02
 			dragObjectDraggable = false;
 		}
 
