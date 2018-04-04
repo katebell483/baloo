@@ -68,6 +68,7 @@ public class DogControl : MonoBehaviour {
 	private float speed = .3f;
 	private float fraction = 0; 
 	private int numFetches = 0;
+	private Transform oldParent;
 
 	// eating params
 	public bool goingToFood = false;
@@ -775,13 +776,13 @@ public class DogControl : MonoBehaviour {
 				Debug.Log ("dropping ball!");
 				LookAt ();
 				startFetchingPos = endFetchingPos;
-				//Sit ();
-				Idle();
+				Sit ();
+				//Idle();
 
 				// destroy current fetch ball
 				// TODO: do something more clever here
-				ball.transform.parent = null;
-				Destroy (ball);
+				ball.transform.parent = oldParent;
+				ball.SetActive(false);
 
 				// restore corgi settings
 				rotating = false;
@@ -789,7 +790,7 @@ public class DogControl : MonoBehaviour {
 				//corgiCollider.enabled = true;
 
 				// bring back prop
-				propFrisbee.SetActive(true);
+				//propFrisbee.SetActive(true);
 
 				// first check if thi means we are done
 				if (isInteractionComplete ()) {
@@ -819,8 +820,11 @@ public class DogControl : MonoBehaviour {
 
 				// grab the ball by parenting it to the dog
 				Debug.Log ("grabbing ball");
-				ball = GameObject.FindWithTag ("Ball");
+				ball = GameObject.FindWithTag ("propFrisbee");
+				oldParent = ball.transform.parent;
 				ball.transform.parent = corgi.transform;
+				ball.transform.position = corgi.transform.position + Camera.main.transform.forward * 0.25f;
+
 			}
 		} else {
 			corgi.transform.position = fetchingPos;

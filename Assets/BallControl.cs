@@ -9,7 +9,7 @@ public class BallControl : MonoBehaviour {
 	public GameObject currBall;
 	private MaterialPropertyBlock props;
 
-	private GameObject corgi;
+	public GameObject corgi;
 
 	Vector3 touchPosWorld;
 
@@ -35,7 +35,7 @@ public class BallControl : MonoBehaviour {
 	void Start () {
 		props = new MaterialPropertyBlock ();
 		corgi = GameObject.FindWithTag("Corgi");
-		currBall = GameObject.FindWithTag("Ball");
+		currBall = GameObject.FindWithTag("propFrisbee");
 	}
 
 
@@ -59,7 +59,8 @@ public class BallControl : MonoBehaviour {
 
 				RaycastHit hit;
 				Ray ray = Camera.main.ScreenPointToRay (touchStart); 
-				if (Physics.Raycast (ray, out hit) && hit.transform.gameObject.tag == "Ball") {
+				if (Physics.Raycast (ray, out hit) && hit.transform.tag == "propFrisbee") {
+					Debug.Log ("other tag" + hit.transform.tag);
 					Debug.Log ("HIT BALL");
 					fetchEnabled = true;
 				}
@@ -79,6 +80,7 @@ public class BallControl : MonoBehaviour {
 					ballCollider.enabled = false;
 					inAir = true;
 					rb.AddForce (new Vector3 ((worldAngle.x * ballSpeed), (worldAngle.y * ballSpeed), (worldAngle.z * ballSpeed)));
+
 				}
 			}
 
@@ -152,47 +154,33 @@ public class BallControl : MonoBehaviour {
 	public void CreateBall() {
 
 		Debug.Log ("creating ball");
+		Debug.Log ("HERE1");
 
 		// have dog sit and look at camera
+		corgi = GameObject.FindWithTag("Corgi");
 		corgi.GetComponent<DogControl> ().isRandomlyWalking = false;     
+
 		corgi.GetComponent<DogControl> ().randomBehavior = false; 
 		corgi.GetComponent<DogControl> ().rotating = false;                                                                                                                                                                                                                                                                                                                                                                                                      
 		corgi.GetComponent<DogControl> ().LookAt();
 		//corgi.GetComponent<DogControl> ().Sit ();
 		corgi.GetComponent<DogControl> ().Idle ();
+		Debug.Log ("HERE2");
+
+		currBall.SetActive (true);
 	
-		// hide prop
-		corgi.GetComponent<DogControl>().propFrisbee.SetActive(false);
+		Debug.Log ("HERE3");
 
-		// destroy any old balls
-		Destroy(currBall);
+		Vector3 pos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y - .1f, Camera.main.transform.position.z);
+		currBall.transform.position = pos + Camera.main.transform.forward * 0.25f;
 
-		Vector3 position = Camera.main.transform.position + Camera.main.transform.forward * .2f;
-		position.y = position.y - .1f;
-
-		GameObject ballGO = Instantiate (ballPrefab, position, Quaternion.identity);
-
-		Rigidbody rb = ballGO.GetComponent<Rigidbody> ();
+		Rigidbody rb = currBall.GetComponent<Rigidbody> ();
 		rb.useGravity = false;
-		currBall = ballGO;
-		ballGO.tag = "Ball";
-
-		print ("CURBALL = " + currBall.tag);
+	
 		ballCollider = currBall.GetComponent<Collider>();
-		//ballGO.transform.localScale = new Vector3(.1f, .1f, .1f);
+		ballCollider.enabled = true;
 
 		startBallPos = currBall.transform.position;
-
-		/*
-		float r = 1.0f;
-		float g = 0.0f;
-		float b = 0.0f;
-
-		//props.SetColor("_InstanceColor", new Color(r, g, b));
-
-		//MeshRenderer renderer = ballGO.GetComponent<MeshRenderer>();
-		//renderer.SetPropertyBlock(props);
-		*/
-
+		Debug.Log ("HERE6");
 	}
 }
