@@ -638,7 +638,7 @@ public class DogControl : MonoBehaviour {
 	public IEnumerator postInjectionMsg(String msg) {
 		triggerInfoBubble(msg, 3.0f); 
 		yield return new WaitForSeconds(3.0f); 
-		getNextInteraction ();
+		getNextInteraction ("draggable");
 	}
 
 
@@ -713,7 +713,7 @@ public class DogControl : MonoBehaviour {
 		// remove bowl
 		dogFood.SetActive (false);
 
-		getNextInteraction ();
+		getNextInteraction ("eating");
 
 		/*
 		// check for end conditions
@@ -727,16 +727,17 @@ public class DogControl : MonoBehaviour {
 		*/
 	}
 
-	private void getNextInteraction() {
+	private void getNextInteraction(String lastEvent) {
+		
 		switch (level) {
 		case 1:
 			getNextLevelOneInteraction ();
 			break;
 		case 2:
-			getNextLevelTwoInteraction ();
+			getNextLevelTwoInteraction (lastEvent);
 			break;
 		case 3:
-			getNextLevelThreeInteraction ();
+			getNextLevelThreeInteraction (lastEvent);
 			break;
 		}
 	}
@@ -771,11 +772,64 @@ public class DogControl : MonoBehaviour {
 		}
 	}
 
-	private void getNextLevelTwoInteraction() {
-
+	private void getNextLevelTwoInteraction(String lastEvent) {
+		Debug.Log ("Getting next level 2 interaction");
+		// case 1: all interactions done at least once
+		if (numEatingEvents > 0 && numMeditationEvents > 0 && numDraggableEvents > 0 && numFetches > 0) {
+			// needs to be some kind of outro activity
+			eatButton.GetComponent<Button> ().interactable = false;
+			breatheButton.GetComponent<Button> ().interactable = false;
+			fetchButton.GetComponent<Button> ().interactable = false;
+			pillButton.GetComponent<Button> ().interactable = false;
+			// TODO: should be prompt petting
+			FinishInteraction ();
+		} else if (numFetches > 4 && lastEvent == "fetching") {
+			// prompt max fetch
+			promptMaxFetches();
+		} else if (numEatingEvents > 1 && lastEvent == "eating") {
+			// prompt max food
+			promptMaxEating();
+		} else if (numDraggableEvents > 0 && numMeditationEvents == 0 && lastEvent == "draggable") {
+			// prompt post-injection breathing prompt
+			promptMeditation ();
+			pillButton.GetComponent<Button> ().interactable = false;
+		} else if (numDraggableEvents == 0 && numMeditationEvents > 0 || numDraggableEvents == 0 && numEatingEvents > 0) {
+			// prompt syringe
+			promptPill();
+		} else if (numDraggableEvents > 0 && numMeditationEvents > 0) {
+			promptFetch ();
+			breatheButton.GetComponent<Button> ().interactable = false;
+			syringeButton.GetComponent<Button> ().interactable = false;
+		} 
 	}
-	private void getNextLevelThreeInteraction() {
-
+	private void getNextLevelThreeInteraction(String lastEvent) {
+		// case 1: all interactions done at least once
+		if (numEatingEvents > 0 && numMeditationEvents > 0 && numDraggableEvents > 0 && numFetches > 0) {
+			// needs to be some kind of outro activity
+			eatButton.GetComponent<Button> ().interactable = false;
+			breatheButton.GetComponent<Button> ().interactable = false;
+			fetchButton.GetComponent<Button> ().interactable = false;
+			pillButton.GetComponent<Button> ().interactable = false;
+			// TODO: should be prompt petting
+			FinishInteraction ();
+		} else if (numFetches > 4 && lastEvent == "fetching") {
+			// prompt max fetch
+			promptMaxFetches();
+		} else if (numEatingEvents > 1 && lastEvent == "eating") {
+			// prompt max food
+			promptMaxEating();
+		} else if (numDraggableEvents > 0 && numMeditationEvents == 0 && lastEvent == "draggable") {
+			// prompt post-injection breathing prompt
+			promptMeditation ();
+			bandaidButton.GetComponent<Button> ().interactable = false;
+		} else if (numDraggableEvents == 0 && numMeditationEvents > 0 || numDraggableEvents == 0 && numEatingEvents > 0) {
+			// prompt syringe
+			promptBandaid();
+		} else if (numDraggableEvents > 0 && numMeditationEvents > 0) {
+			promptFetch ();
+			breatheButton.GetComponent<Button> ().interactable = false;
+			syringeButton.GetComponent<Button> ().interactable = false;
+		} 
 	}
 
 	//Breathing action
@@ -833,7 +887,7 @@ public class DogControl : MonoBehaviour {
 				// bring back prop
 				//propFrisbee.SetActive(true);
 
-				getNextInteraction ();
+				getNextInteraction ("fetching");
 
 				/*
 				// first check if thi means we are done
@@ -891,6 +945,42 @@ public class DogControl : MonoBehaviour {
 	public void promptInjection() {
 		syringeButton.GetComponent<Button>().Select();
 		triggerInfoBubble ("I'm not feeling great.\n Will you give me my shot?", 5.0f);
+	}
+
+	public void promptPill() {
+		pillButton.GetComponent<Button>().Select();
+		triggerInfoBubble ("It's time for my medicine.\n Will you give me my pill?", 5.0f);
+	}
+
+	public void promptBandaid() {
+		bandaidButton.GetComponent<Button>().Select();
+		triggerInfoBubble ("I think I need a bandaid!\n Will you give me one?", 5.0f);
+	}
+
+	public void promptFetch
+	() {
+		fetchButton.GetComponent<Button>().Select();
+		triggerInfoBubble ("I feel great! \n Let's play fetch!", 5.0f);
+	}
+
+	public void promptMaxFetches() {
+		if (numEatingEvents > 1) {
+			pillButton.GetComponent<Button>().Select();
+			triggerInfoBubble ("I'm tired! \n It's time for my medicine.\n Will you give me my pill?", 5.0f);
+		} else {
+			eatButton.GetComponent<Button>().Select();
+			triggerInfoBubble ("All that fetching made me hungry! \n Will you feed me?", 5.0f);
+		}
+	}
+
+	public void promptMaxEating() {
+		if (numFetches > 4) {
+			pillButton.GetComponent<Button>().Select();
+			triggerInfoBubble ("I'm full! \n It's time for my medicine.\n Will you give me my pill?", 5.0f);
+		} else {
+			fetchButton.GetComponent<Button>().Select();
+			triggerInfoBubble ("I'm stuffed! \n Let's play fetch!", 5.0f);
+		}
 	}
 
 	/*
@@ -1119,7 +1209,7 @@ public class DogControl : MonoBehaviour {
 			auraGrowing = false;
 			aura.SetActive (false);
 			hasBreathed = true;
-			getNextInteraction ();
+			getNextInteraction ("breathing");
 		}
 	}
 
