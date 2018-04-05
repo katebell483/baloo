@@ -15,6 +15,7 @@ public class DogControl : MonoBehaviour {
 	private Transform initialCorgiTransform;
 	private Animator animator;
 	public int level;
+	SkinnedMeshRenderer corgiMesh;
 
 	// UI elements
 	public GameObject fetchButton;
@@ -100,15 +101,28 @@ public class DogControl : MonoBehaviour {
 	private bool auraGrowing = true; //true if growing, false if reducing
 	private float nbBreathingCycles = 0;
 	private int numMeditationEvents = 0;
+	private float chestVal = 0.0F;
 	public bool hasBreathed = false; // true if the breathing feature has been done already
 
 	// blinking params
 	public float blinkRate = 1.0F;
 	private float nextBlinkCheck = 0.0F;
 	private float blinkVal = 0.0F;
+	private float initBlinkVal = 0.0F;
 	private bool isBlinking = false;
 	private bool blinkOpen = false;
 	private bool blinkClose = false;
+
+	// emotion params
+	private float curTiredVal;
+	private float nextTiredVal;
+	private bool isDecreasingTiredness = false;
+	private bool isIncreasingTiredness = false;
+
+	private float curSmileVal;
+	private float nextSmileVal;
+	private bool isDecreasingSmile = false;
+	private bool isIncreasingSmile = false;
 
 	// rotating params
 	public bool rotating = false;
@@ -151,6 +165,9 @@ public class DogControl : MonoBehaviour {
 		introPanel.SetActive(false);
 		dogNamePanel.SetActive(false);
 		exitPanel.SetActive(false);
+
+		/* for blend shapes */
+		corgiMesh = GameObject.FindWithTag ("pup_blend_mesh").GetComponent<SkinnedMeshRenderer> ();
 	}
 
 	// Update is called once per frame
@@ -236,6 +253,23 @@ public class DogControl : MonoBehaviour {
 		if (goingToFood) {
 			GoToFoodAndEat();
 		}
+
+		// EMOTIONS
+		if (isDecreasingTiredness) {
+			decreaseTiredness ();
+		}
+
+		if (isIncreasingTiredness) {
+			increaseTiredness ();
+		}
+
+		if (isDecreasingSmile) {
+			decreaseSmile ();
+		}
+
+		if (isIncreasingSmile) {
+			increaseSmile ();
+		}
 	}
 
 	private void setDragObject() {
@@ -320,8 +354,6 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void Blink() {
-		SkinnedMeshRenderer corgi_mesh = GameObject.FindWithTag ("pup_blend_mesh").GetComponent<SkinnedMeshRenderer> ();
-
 		if (blinkClose && blinkVal > 95) {
 			blinkOpen = true;
 			blinkClose = false;
@@ -329,16 +361,16 @@ public class DogControl : MonoBehaviour {
 
 		// do the animation either open or closed
 		if (blinkClose) {
-			blinkVal = blinkVal + 5f;
+			blinkVal = blinkVal + 10f;
 		} else if (blinkOpen) {
-			blinkVal = blinkVal - 5f;
+			blinkVal = blinkVal - 10f;
 		}
 			
-		if (blinkOpen && blinkVal < 10) {
+		if (blinkOpen && blinkVal < initBlinkVal) {
 			isBlinking = false;
 		}
 
-		corgi_mesh.SetBlendShapeWeight (0, blinkVal);
+		corgiMesh.SetBlendShapeWeight (0, blinkVal);
 	}
 
 	public void InitialSequenceWrapper() {
@@ -743,6 +775,8 @@ public class DogControl : MonoBehaviour {
 	}
 
 	private void getNextLevelOneInteraction() {
+		Debug.Log ("Getting next level 1 interaction");
+
 		// all three actions done so exit
 		if (numEatingEvents > 0 && numMeditationEvents > 0 && numDraggableEvents > 0) {
 			// needs to be some kind of outro activity
@@ -757,7 +791,7 @@ public class DogControl : MonoBehaviour {
 			eatButton.GetComponent<Button> ().interactable = false;
 		} else if (numDraggableEvents > 0 && numMeditationEvents == 0) {
 			// prompt post-injection breathing prompt
-			promptMeditation ();
+			promptMeditation ("When I get anxious, it helps to\n do some deep breathing");
 			syringeButton.GetComponent<Button> ().interactable = false;
 		} else if (numDraggableEvents == 0 && numMeditationEvents > 0 || numDraggableEvents == 0 && numEatingEvents > 0) {
 			// prompt syringe
@@ -770,6 +804,10 @@ public class DogControl : MonoBehaviour {
 		} else {
 			Debug.Log ("none of the interaction scenarios met");
 		}
+
+		// get less tired with each interaction
+		nextTiredVal = curTiredVal - 20;
+		isDecreasingTiredness = true;
 	}
 
 	private void getNextLevelTwoInteraction(String lastEvent) {
@@ -791,7 +829,7 @@ public class DogControl : MonoBehaviour {
 			promptMaxEating();
 		} else if (numDraggableEvents > 0 && numMeditationEvents == 0 && lastEvent == "draggable") {
 			// prompt post-injection breathing prompt
-			promptMeditation ();
+			promptMeditation ("When I get anxious, it helps to\n do some deep breathing");
 			pillButton.GetComponent<Button> ().interactable = false;
 		} else if (numDraggableEvents == 0 && numMeditationEvents > 0 || numDraggableEvents == 0 && numEatingEvents > 0) {
 			// prompt syringe
@@ -801,8 +839,14 @@ public class DogControl : MonoBehaviour {
 			breatheButton.GetComponent<Button> ().interactable = false;
 			syringeButton.GetComponent<Button> ().interactable = false;
 		} 
+
+		// get happier with each interaction
+		nextSmileVal = nextSmileVal + 10;
+		isIncreasingSmile = true;
 	}
 	private void getNextLevelThreeInteraction(String lastEvent) {
+		Debug.Log ("Getting next level 3 interaction");
+
 		// case 1: all interactions done at least once
 		if (numEatingEvents > 0 && numMeditationEvents > 0 && numDraggableEvents > 0 && numFetches > 0) {
 			// needs to be some kind of outro activity
@@ -820,7 +864,7 @@ public class DogControl : MonoBehaviour {
 			promptMaxEating();
 		} else if (numDraggableEvents > 0 && numMeditationEvents == 0 && lastEvent == "draggable") {
 			// prompt post-injection breathing prompt
-			promptMeditation ();
+			promptMeditation ("When I get anxious, it helps to\n do some deep breathing");
 			bandaidButton.GetComponent<Button> ().interactable = false;
 		} else if (numDraggableEvents == 0 && numMeditationEvents > 0 || numDraggableEvents == 0 && numEatingEvents > 0) {
 			// prompt syringe
@@ -829,7 +873,11 @@ public class DogControl : MonoBehaviour {
 			promptFetch ();
 			breatheButton.GetComponent<Button> ().interactable = false;
 			syringeButton.GetComponent<Button> ().interactable = false;
-		} 
+		}
+
+		// get happier with each interaction
+		nextSmileVal = nextSmileVal + 20;
+		isIncreasingSmile = true;
 	}
 
 	//Breathing action
@@ -929,12 +977,12 @@ public class DogControl : MonoBehaviour {
 		}
 	}
 		
-	public void promptMeditation() {
+	public void promptMeditation(String msg) {
 		Debug.Log ("prompt MEDIATAIPODJSF");
 		Bark ();
 		breatheButton.GetComponent<Button>().Select();
-		StartBreathingSequence();
-		//triggerInfoBubble ("When I get anxious, it helps to\n do some deep breathing", 5.0f);
+		//StartBreathingSequence();
+		triggerInfoBubble (msg, 5.0f);
 	}
 
 	public void promptFeeding() {
@@ -1123,19 +1171,30 @@ public class DogControl : MonoBehaviour {
 	public void StartBreathingSequence() {
 		LookAt ();
 		Sit ();
-		if (!injectionDone) {
-			StartCoroutine (startBreathing ("Sometimes I get anxious when\n I know I have to get an\n injection. It helps to do\n deep breathing"));
-		} else {
-			StartCoroutine (startBreathing ("When I get anxious, \n it helps to do some deep breathing"));
-		}
+		StartCoroutine (startBreathing ());
 	}
 
-	public IEnumerator startBreathing(String msg) {
-		triggerInfoBubble(msg, 2.0f);
-		yield return new WaitForSeconds(3.0f); 
+	public IEnumerator startBreathing() {
 		if (numMeditationEvents > 0) {
 			Breathe ();
 		} else {
+			String activity = "get a shot";
+			if (numDraggableEvents == 0) {
+				switch(level) {
+					case 1:
+						activity = "get a shot";
+						break;
+					case 2:
+						activity = "take a pill";
+						break;
+					case 3:	
+						activity = "get a bandage";
+						break;
+				}
+				string msg = "Sometimes I get anxious \n when I know I have to " + activity + ".\n It helps to do deep breathing.";
+				triggerInfoBubble(msg, 2.0f);
+				yield return new WaitForSeconds(2.5f); 
+			}
 			infoBubble.SetActive (true);
 			infoBubble.GetComponentInChildren<Text> ().text = "First, we start by getting as\n comfy as possible, and\n relaxing our bodies";
 			breatheInstructionButton1.SetActive (true);
@@ -1157,21 +1216,24 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void BreatheTest(){
-
 		// Transformation of the sphere
 		if (auraGrowing && aura.transform.localScale.x < 14) {
 			Debug.Log ("aura growing");
 			infoBubble.GetComponentInChildren<Text> ().text = "In through the nose for 4...";
 			aura.transform.localScale += new Vector3 (0.04F, 0.04F, 0.04F);
+			chestVal = chestVal + 1f;
 		} else if (auraGrowing && aura.transform.localScale.x >= 14) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
 			AuraWarper ();
 		} else if (!auraGrowing && aura.transform.localScale.x > 5) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Out through the mouth for 4...";
 			aura.transform.localScale -= new Vector3 (0.04F, 0.04F, 0.04F);
+			chestVal = chestVal - 1f;
 		} else if (aura.transform.localScale.x <= 5) {
 			StartCoroutine (waitAndBreathe ());
 		}
+
+		corgiMesh.SetBlendShapeWeight (3, chestVal);
 	}
 
 	public IEnumerator waitAndBreathe() {
@@ -1183,22 +1245,26 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void Breathe(){
-
 		// Transformation of the sphere
 		if (auraGrowing && aura.transform.localScale.x < 14) {
 			Debug.Log ("aura growing");
 			infoBubble.GetComponentInChildren<Text> ().text = "In through the nose for 4...";
 			aura.transform.localScale += new Vector3 (0.04F, 0.04F, 0.04F);
+			chestVal = chestVal + 1f;
 		} else if (auraGrowing && aura.transform.localScale.x >= 14) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
 			AuraWarper ();
 		} else if (!auraGrowing && aura.transform.localScale.x > 5) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Out through the mouth for 4...";
 			aura.transform.localScale -= new Vector3 (0.04F, 0.04F, 0.04F);
+			chestVal = chestVal - 1f;
 		} else if (aura.transform.localScale.x <= 5) {
 			auraGrowing = true;
 			nbBreathingCycles += 1;
 		}
+
+		corgiMesh.SetBlendShapeWeight (3, chestVal);
+
 
 		// End of the 3 cycles of breathing => re-initialize the parameters
 		if (nbBreathingCycles >= 4) {
@@ -1257,11 +1323,19 @@ public class DogControl : MonoBehaviour {
 		corgi.transform.eulerAngles = new Vector3(0, corgi.transform.eulerAngles.y, 0);
 	}
 
+	// TODO: set initial blend shapes
 	public void setLevelOne() {
 		Debug.Log ("level 1");
 		introPanel.SetActive (true);
 		levelPanel.SetActive (false);
 		level = 1;
+		initBlinkVal = 15;
+		// set tired to 80
+		corgiMesh.SetBlendShapeWeight (2, 80);
+		// set eyes to 20
+		corgiMesh.SetBlendShapeWeight (0, initBlinkVal);
+		// set smile to 0
+		corgiMesh.SetBlendShapeWeight (1, 0);
 		setDragObject ();
 	}
 
@@ -1270,6 +1344,13 @@ public class DogControl : MonoBehaviour {
 		introPanel.SetActive (true);
 		levelPanel.SetActive (false);
 		level = 2;
+		initBlinkVal = 5;
+		// set tired to 20
+		corgiMesh.SetBlendShapeWeight (2, 20);
+		// set eyes to 5
+		corgiMesh.SetBlendShapeWeight (0, initBlinkVal);
+		// set smile to 0
+		corgiMesh.SetBlendShapeWeight (1, 0);
 		setDragObject ();
 	}
 
@@ -1278,7 +1359,50 @@ public class DogControl : MonoBehaviour {
 		introPanel.SetActive (true);
 		levelPanel.SetActive (false);
 		level = 3;
+		initBlinkVal = 5;
+		// set tired to 0
+		corgiMesh.SetBlendShapeWeight (2, 0);
+		// set eyes to 5
+		corgiMesh.SetBlendShapeWeight (0, initBlinkVal);
+		// set smile to 40
+		corgiMesh.SetBlendShapeWeight (1, 40);
 		setDragObject ();
+	}
+
+	public void decreaseTiredness() {
+		if (curTiredVal > nextTiredVal) {
+			curTiredVal -= 5;
+			corgiMesh.SetBlendShapeWeight (2, curTiredVal);
+		} else {
+			isDecreasingTiredness = false;
+		}
+	}
+
+	public void increaseTiredness() {
+		if (curTiredVal < nextTiredVal) {
+			curTiredVal += 5;
+			corgiMesh.SetBlendShapeWeight (2, curTiredVal);
+		} else {
+			isIncreasingTiredness = false;
+		}
+	}
+
+	public void decreaseSmile() {
+		if (curSmileVal > nextSmileVal) {
+			curSmileVal -= 5;
+			corgiMesh.SetBlendShapeWeight (1, curSmileVal);
+		} else {
+			isDecreasingTiredness = false;
+		}
+	}
+
+	public void increaseSmile() {
+		if (curSmileVal < nextSmileVal) {
+			curSmileVal += 5;
+			corgiMesh.SetBlendShapeWeight (1, curSmileVal);
+		} else {
+			isIncreasingTiredness = false;
+		}
 	}
 
 	public void goBackToMenu(){
