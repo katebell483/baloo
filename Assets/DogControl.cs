@@ -49,6 +49,7 @@ public class DogControl : MonoBehaviour {
 	public GameObject bandaid;
 	public GameObject dragObject;
 	public GameObject dragObjectCube;
+	private bool dragObjectCollided = false;
 	public GameObject gObj; //used for drag object interaction
 	private int numDraggableEvents = 0;
 
@@ -67,7 +68,7 @@ public class DogControl : MonoBehaviour {
 	private Vector3 endFetchingPos;
 	private Vector3 startFetchingPos;
 	private Vector3 fetchOrigin;
-	private float speed = .3f;
+	private float speed = .2f;
 	private float fraction = 0; 
 	private int numFetches = 0;
 	private Transform oldParent;
@@ -131,6 +132,8 @@ public class DogControl : MonoBehaviour {
 	// sitting params
 	public bool isSitting = false;
 
+	// laying params
+	private bool isLaying = false;
 
 	// drag object auxiliary objects
 	Plane objPlane;
@@ -233,8 +236,9 @@ public class DogControl : MonoBehaviour {
 			startFetchingPos = corgi.transform.position;	
 		} 
 			
+		// laydown on swipe
 		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down) && !waitingToSit) {
-			Sit ();
+			LayDown ();
 		}
 
 		/*
@@ -343,10 +347,10 @@ public class DogControl : MonoBehaviour {
 			return;
 
 		nextBlinkCheck = Time.time + blinkRate;
-		int idx = UnityEngine.Random.Range (1, 4);
+		int idx = UnityEngine.Random.Range (1, 2);
 
 		// if its modulo 3 blink (aka have dog blink every 3 seconds)
-		if (idx % 3 == 0) {
+		if (idx % 2 == 0) {
 			isBlinking = true;
 			blinkClose = true;
 			Blink ();
@@ -423,15 +427,32 @@ public class DogControl : MonoBehaviour {
 		}*/
 	}
 
+	void OnCollisionEnter(Collision other) {
+		Debug.Log ("COLLISION TAG:  " + other.gameObject.tag); 
+		if (other.gameObject.tag == "syringe" ||
+			other.gameObject.tag == "pill" ||
+			other.gameObject.tag == "bandaid") {
+			Debug.Log ("COLLISION SO DRAG DONE"); 
+
+			dragObjectCollided = true;
+		}
+	}
+
 	public void StartFetchingSequence(Vector3 ballPos) {
 		Debug.Log ("sending dog to fetch");
 		numFetches += 1;
+
+		startFetchingPos = corgi.transform.position;
+		Debug.Log ("START FETCHIN POS 1: " + startFetchingPos);
 
 		//fetchOrigin = corgi.transform.position;
 		endFetchingPos = ballPos;
 
 		rotating = true;
 		rotatingTargetPos = endFetchingPos;
+
+		//ball = GameObject.FindWithTag ("propFrisbee");
+		//LookAtObj(ball);
 
 		// walk to the edge
 		//Walk ();
@@ -443,7 +464,11 @@ public class DogControl : MonoBehaviour {
 		//corgiCollider = corgi.GetComponent<Collider> ();
 		//corgiCollider.enabled = false;
 
-		Run (); 
+		if (level == 2) {
+			RunSlow ();
+		} else {
+			RunFast ();
+		}
 
 		fetching = true;
 	}
@@ -451,6 +476,7 @@ public class DogControl : MonoBehaviour {
 	public void Walk() {
 		Debug.Log ("walking!");
 		isSitting = false;
+		isLaying = false;
 		shouldMove = true;
 		animator.Play ("Walk");
 	}
@@ -464,12 +490,16 @@ public class DogControl : MonoBehaviour {
 		Debug.Log ("Laying Down!");
 		isSitting = false;
 		shouldMove = false;
+		if (isLaying)
+			return;
+		isLaying = true;
 		animator.Play ("LayDown");
 	}
 
 	public void Eat() {
 		Debug.Log ("Eating!");
 		isSitting = false;
+		isLaying = false;
 		shouldMove = false;
 		animator.Play ("StartEating");
 	}
@@ -480,11 +510,19 @@ public class DogControl : MonoBehaviour {
 		animator.Play ("StopEating");
 	}
 
-	public void Run() {
-		Debug.Log ("RUNNING");
+	public void RunSlow() {
+		Debug.Log ("RUNNING SLOW");
 		isSitting = false;
 		shouldMove = true;
-		animator.Play ("Run");
+		animator.Play ("RunSlow");
+	}
+
+	public void RunFast() {
+		Debug.Log ("RUNNING FAST");
+		isSitting = false;
+		isLaying = false;
+		shouldMove = true;
+		animator.Play ("RunFast");
 	}
 
 	public void Sit() {
@@ -506,6 +544,7 @@ public class DogControl : MonoBehaviour {
 	public void BarkOnce() {
 		Debug.Log ("Bark Once");
 		isSitting = false;
+		isLaying = false;
 		shouldMove = false;
 		animator.Play ("BarkOnce");
 	}
@@ -513,6 +552,7 @@ public class DogControl : MonoBehaviour {
 	public void Idle() {
 		Debug.Log ("IDLE");
 		isSitting = false;
+		isLaying = false;
 		shouldMove = false;
 		animator.Play ("Idle");
 	}
@@ -607,7 +647,7 @@ public class DogControl : MonoBehaviour {
 			dragObject.SetActive (true);
 			dragObjectActive = true; // drag object appears
 			dragObjectDraggable = true; // we can move it
-			Vector3 dragObjectInitPos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y - .1f, Camera.main.transform.position.z);
+			Vector3 dragObjectInitPos = new Vector3(Camera.main.transform.position.x + .1f, Camera.main.transform.position.y - .1f, Camera.main.transform.position.z);
 			dragObject.transform.position = dragObjectInitPos + Camera.main.transform.forward * 0.25f;
 			dragObjectAnimate ();
 		}
@@ -619,9 +659,20 @@ public class DogControl : MonoBehaviour {
 
 		dragObjectPos = corgi.transform.position - dragObject.transform.position;
 		Debug.Log ("drag object distance: "+ dragObjectPos.sqrMagnitude);
-		if (dragObjectPos.sqrMagnitude < 0.04) { // was .02
+
+		float minDist = .04f;
+		if (level == 1) {
+			minDist = .03f; // the syringe should go more in
+		}
+			
+		if (dragObjectPos.sqrMagnitude < minDist) { // was .02
 			dragObjectDraggable = false;
 		}
+
+		/*
+		if (dragObjectCollided) {
+			dragObjectDraggable = false;
+		}*/
 
 		if (!dragObjectDraggable) {
 			// if we are close enough from the dog, we stop moving it and the animation starts
@@ -687,9 +738,9 @@ public class DogControl : MonoBehaviour {
 		ARHitTestResult result = hitResults[0];
 		Debug.Log ("placing bowl");
 
-		// set the dog on the platform
+		// set the food on the platform
 		Vector3 planePos = UnityARMatrixOps.GetPosition (result.worldTransform);
-		dogFood.transform.position = new Vector3 (planePos.x, planePos.y, planePos.z);
+		dogFood.transform.position = new Vector3 (planePos.x, planePos.y -.1f, planePos.z);
 		dogFood.transform.rotation = Quaternion.Euler (Vector3.zero);
 		foodPos = dogFood.transform.position;
 		dogFood.SetActive (true);
@@ -787,8 +838,7 @@ public class DogControl : MonoBehaviour {
 			FinishInteraction ();
 		} else if (numEatingEvents > 1) {
 			// prompt max feeding
-			triggerInfoBubble ("I'm totally stuffed now!\n Yum!", 3.0f);
-			eatButton.GetComponent<Button> ().interactable = false;
+			promptMaxEating();
 		} else if (numDraggableEvents > 0 && numMeditationEvents == 0) {
 			// prompt post-injection breathing prompt
 			promptMeditation ("When I get anxious, it helps to\n do some deep breathing");
@@ -806,7 +856,14 @@ public class DogControl : MonoBehaviour {
 		}
 
 		// get less tired with each interaction
-		nextTiredVal = curTiredVal - 20;
+		nextTiredVal = curTiredVal - 30; // net change is -20
+		if (nextTiredVal < 30) { // clamp at 30
+			nextTiredVal = 30;
+		}
+		initBlinkVal = initBlinkVal - 10; // blink more fully
+		if (initBlinkVal < 10) { // clamp at 15
+			initBlinkVal = 10;
+		}
 		isDecreasingTiredness = true;
 	}
 
@@ -840,8 +897,12 @@ public class DogControl : MonoBehaviour {
 			syringeButton.GetComponent<Button> ().interactable = false;
 		} 
 
-		// get happier with each interaction
-		nextSmileVal = nextSmileVal + 10;
+
+		// get less tired with each interaction
+		nextTiredVal = curTiredVal - 20; // net change is -10
+		initBlinkVal = 10; // blink more fully
+		nextSmileVal = nextSmileVal + 30; // will be next + 20
+		isDecreasingTiredness = true;
 		isIncreasingSmile = true;
 	}
 	private void getNextLevelThreeInteraction(String lastEvent) {
@@ -876,7 +937,7 @@ public class DogControl : MonoBehaviour {
 		}
 
 		// get happier with each interaction
-		nextSmileVal = nextSmileVal + 20;
+		nextSmileVal = nextSmileVal + 30; // will be next + 20
 		isIncreasingSmile = true;
 	}
 
@@ -902,6 +963,7 @@ public class DogControl : MonoBehaviour {
 
 		// originally start from the last point that the dog was on the plane
 		Vector3 fetchingPos = Vector3.Lerp (startFetchingPos, endFetchingPos, fraction);
+		Debug.Log ("START FETCHING POS: " + startFetchingPos);
 
 		Debug.Log ("fetchingPos: " + startFetchingPos);
 		Debug.Log ("goalPos: " + endFetchingPos);
@@ -969,7 +1031,7 @@ public class DogControl : MonoBehaviour {
 				ball = GameObject.FindWithTag ("propFrisbee");
 				oldParent = ball.transform.parent;
 				ball.transform.parent = corgi.transform;
-				ball.transform.position = corgi.transform.position + Camera.main.transform.forward * 0.25f;
+				ball.transform.position = corgi.transform.position + Camera.main.transform.forward * 0.2f;
 
 			}
 		} else {
@@ -1221,14 +1283,14 @@ public class DogControl : MonoBehaviour {
 			Debug.Log ("aura growing");
 			infoBubble.GetComponentInChildren<Text> ().text = "In through the nose for 4...";
 			aura.transform.localScale += new Vector3 (0.04F, 0.04F, 0.04F);
-			chestVal = chestVal + 1f;
+			chestVal = chestVal + .5f;
 		} else if (auraGrowing && aura.transform.localScale.x >= 14) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
 			AuraWarper ();
 		} else if (!auraGrowing && aura.transform.localScale.x > 5) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Out through the mouth for 4...";
 			aura.transform.localScale -= new Vector3 (0.04F, 0.04F, 0.04F);
-			chestVal = chestVal - 1f;
+			chestVal = chestVal - .5f;
 		} else if (aura.transform.localScale.x <= 5) {
 			StartCoroutine (waitAndBreathe ());
 		}
@@ -1250,14 +1312,16 @@ public class DogControl : MonoBehaviour {
 			Debug.Log ("aura growing");
 			infoBubble.GetComponentInChildren<Text> ().text = "In through the nose for 4...";
 			aura.transform.localScale += new Vector3 (0.04F, 0.04F, 0.04F);
-			chestVal = chestVal + 1f;
+			chestVal = chestVal + .5f;
+			Debug.Log ("CHEST VAL: " + chestVal);
+
 		} else if (auraGrowing && aura.transform.localScale.x >= 14) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
 			AuraWarper ();
 		} else if (!auraGrowing && aura.transform.localScale.x > 5) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Out through the mouth for 4...";
 			aura.transform.localScale -= new Vector3 (0.04F, 0.04F, 0.04F);
-			chestVal = chestVal - 1f;
+			chestVal = chestVal - .5f;
 		} else if (aura.transform.localScale.x <= 5) {
 			auraGrowing = true;
 			nbBreathingCycles += 1;
@@ -1268,7 +1332,7 @@ public class DogControl : MonoBehaviour {
 
 		// End of the 3 cycles of breathing => re-initialize the parameters
 		if (nbBreathingCycles >= 4) {
-			triggerInfoBubble ("Great job! Thanks\n for doing that with me. ", 14.0f);
+			triggerInfoBubble ("Great job! Thanks\n for doing that with me. ", 3.0f);
 			numMeditationEvents += 1;
 			isBreathing = false;
 			nbBreathingCycles = 0;
@@ -1316,10 +1380,29 @@ public class DogControl : MonoBehaviour {
 		LookAt ();
 		corgi.SetActive (true);
 		dogInScene = true;
+
+		// when dog is in the scene trigger initial message based on level
+		switch (level) {
+		case 1:
+			triggerInfoBubble ("I'm feeling pretty lousy today.\n But I bet I'll feel better\n if you play with me!", 3.0f);
+			break;
+		case 2:
+			triggerInfoBubble ("I'm feeling a bit better today!\n I bet I'll get to 100%\n if we play!", 3.0f);
+			break;
+		case 3:
+			triggerInfoBubble ("I'm feeling great today!\n Let's play!", 3.0f);
+			break;
+		}
+
 	}
 
 	public void LookAt() {
 		corgi.transform.LookAt (Camera.main.transform.position);
+		corgi.transform.eulerAngles = new Vector3(0, corgi.transform.eulerAngles.y, 0);
+	}
+
+	public void LookAtObj(GameObject obj) {
+		corgi.transform.LookAt (obj.transform.position);
 		corgi.transform.eulerAngles = new Vector3(0, corgi.transform.eulerAngles.y, 0);
 	}
 
@@ -1329,9 +1412,9 @@ public class DogControl : MonoBehaviour {
 		introPanel.SetActive (true);
 		levelPanel.SetActive (false);
 		level = 1;
-		initBlinkVal = 15;
+		initBlinkVal = 30;
 		// set tired to 80
-		corgiMesh.SetBlendShapeWeight (2, 80);
+		corgiMesh.SetBlendShapeWeight (2, 100);
 		// set eyes to 20
 		corgiMesh.SetBlendShapeWeight (0, initBlinkVal);
 		// set smile to 0
@@ -1344,9 +1427,9 @@ public class DogControl : MonoBehaviour {
 		introPanel.SetActive (true);
 		levelPanel.SetActive (false);
 		level = 2;
-		initBlinkVal = 5;
-		// set tired to 20
-		corgiMesh.SetBlendShapeWeight (2, 20);
+		initBlinkVal = 20;
+		// set tired to 30
+		corgiMesh.SetBlendShapeWeight (2, 30);
 		// set eyes to 5
 		corgiMesh.SetBlendShapeWeight (0, initBlinkVal);
 		// set smile to 0
@@ -1359,10 +1442,11 @@ public class DogControl : MonoBehaviour {
 		introPanel.SetActive (true);
 		levelPanel.SetActive (false);
 		level = 3;
-		initBlinkVal = 5;
+		speed = speed * 2; // run faster
+		initBlinkVal = 7;
 		// set tired to 0
 		corgiMesh.SetBlendShapeWeight (2, 0);
-		// set eyes to 5
+		// set eyes to 7
 		corgiMesh.SetBlendShapeWeight (0, initBlinkVal);
 		// set smile to 40
 		corgiMesh.SetBlendShapeWeight (1, 40);
@@ -1374,6 +1458,8 @@ public class DogControl : MonoBehaviour {
 			curTiredVal -= 5;
 			corgiMesh.SetBlendShapeWeight (2, curTiredVal);
 		} else {
+			isIncreasingTiredness = true;
+			nextTiredVal = curTiredVal + 10; // go back up again so that the state registers and then settles
 			isDecreasingTiredness = false;
 		}
 	}
@@ -1392,7 +1478,7 @@ public class DogControl : MonoBehaviour {
 			curSmileVal -= 5;
 			corgiMesh.SetBlendShapeWeight (1, curSmileVal);
 		} else {
-			isDecreasingTiredness = false;
+			isDecreasingSmile = false;
 		}
 	}
 
@@ -1401,7 +1487,9 @@ public class DogControl : MonoBehaviour {
 			curSmileVal += 5;
 			corgiMesh.SetBlendShapeWeight (1, curSmileVal);
 		} else {
-			isIncreasingTiredness = false;
+			isIncreasingTiredness = true;
+			nextSmileVal = curSmileVal - 10;
+			isIncreasingSmile = false;
 		}
 	}
 

@@ -97,8 +97,9 @@ public class BallControl : MonoBehaviour {
 
 			GameObject matPlane = GameObject.FindWithTag ("MatPlane");
 			float matLevel = matPlane.transform.position.y;
+			float dogLevel = corgi.transform.position.y;
 			
-			if (currBall.transform.position.y < matLevel - .1f) {
+			if (currBall.transform.position.y < dogLevel - .1f) {
 
 				Debug.Log ("throw over!");
 
@@ -154,7 +155,6 @@ public class BallControl : MonoBehaviour {
 	public void CreateBall() {
 
 		Debug.Log ("creating ball");
-		Debug.Log ("HERE1");
 
 		// have dog sit and look at camera
 		corgi = GameObject.FindWithTag("Corgi");
@@ -165,12 +165,11 @@ public class BallControl : MonoBehaviour {
 		corgi.GetComponent<DogControl> ().LookAt();
 		//corgi.GetComponent<DogControl> ().Sit ();
 		corgi.GetComponent<DogControl> ().Idle ();
-		Debug.Log ("HERE2");
 
 		currBall.SetActive (true);
-	
-		Debug.Log ("HERE3");
 
+		//LookAtObj(currBall);
+	
 		Vector3 pos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y - .1f, Camera.main.transform.position.z);
 		currBall.transform.position = pos + Camera.main.transform.forward * 0.25f;
 
@@ -181,6 +180,11 @@ public class BallControl : MonoBehaviour {
 		ballCollider.enabled = true;
 
 		startBallPos = currBall.transform.position;
-		Debug.Log ("HERE6");
+	}
+
+	public void LookAtObj(GameObject obj) {
+		corgi = GameObject.FindWithTag("Corgi");
+		corgi.transform.LookAt (obj.transform.position);
+		corgi.transform.eulerAngles = new Vector3(0, corgi.transform.eulerAngles.y, 0);
 	}
 }
