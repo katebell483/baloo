@@ -158,6 +158,13 @@ public class DogControl : MonoBehaviour {
 		Application.Quit ();
 	}
 
+	//Daniel 
+	public GameObject progress; //The UI indication of the kid's progress
+	public int points=0;
+	public bool animatePoints = false;
+	public bool increasingProgressSize = true;
+	public Text levelIndicator;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -171,6 +178,10 @@ public class DogControl : MonoBehaviour {
 
 		/* for blend shapes */
 		corgiMesh = GameObject.FindWithTag ("pup_blend_mesh").GetComponent<SkinnedMeshRenderer> ();
+
+		progress = GameObject.FindWithTag ("progress");
+		//progress.GetComponent<Text> ().text = "TEST";
+
 	}
 
 	// Update is called once per frame
@@ -187,6 +198,13 @@ public class DogControl : MonoBehaviour {
 		if (fingerCount > 0)
 			Debug.Log("User has " + fingerCount + " finger(s) touching the screen");
 		*/
+
+		//Animate progress indicator:
+		if (animatePoints){
+			//progress.transform.localScale += new Vector3 (0.05f, 0.05);
+			incrementPointsAnimation();
+		}
+
 
 		// drag object feature
 		if (dragObjectActive) {
@@ -274,6 +292,38 @@ public class DogControl : MonoBehaviour {
 		if (isIncreasingSmile) {
 			increaseSmile ();
 		}
+	}
+
+	public void updateProgress(){
+		progress.GetComponent<Text> ().text = points.ToString();
+	}
+
+
+	public void incrementPoints(){
+		points += 1;
+		animatePoints = true;
+	}
+	public void incrementPointsAnimation(){
+		//progress.GetComponent<Text> ().fontSize += 1;
+		if (increasingProgressSize) {
+			//Debug.Log ("increasingProgressSize: " + increasingProgressSize + " and: " + progress.transform.localScale.x);
+			if (progress.transform.localScale.x < 5.0f) {
+				progress.transform.localScale += new Vector3 (0.05f, 0.05f);
+			} else {
+				increasingProgressSize = false;
+			}
+		}
+		else{
+			if (progress.transform.localScale.x > 1.0f) {
+				progress.transform.localScale -= new Vector3 (0.05f, 0.05f);
+			} else {
+				progress.transform.localScale = new Vector3(1.0f,1.0f,1.0f);
+				animatePoints = false;
+				increasingProgressSize = true;
+			}
+		}
+		//Debug.Log ("sizeTExt: "+ progress.transform.localScale);
+		//Debug.Log ("sizeTExt: "+ progress.GetComponent<Text> ().fontSize);
 	}
 
 	private void setDragObject() {
@@ -721,6 +771,9 @@ public class DogControl : MonoBehaviour {
 	public IEnumerator postInjectionMsg(String msg) {
 		triggerInfoBubble(msg, 3.0f); 
 		yield return new WaitForSeconds(3.0f); 
+
+		//incrementPoints ();
+		//updateProgress ();
 		getNextInteraction ("draggable");
 	}
 
@@ -796,6 +849,8 @@ public class DogControl : MonoBehaviour {
 		// remove bowl
 		dogFood.SetActive (false);
 
+		//incrementPoints ();
+		//updateProgress ();
 		getNextInteraction ("eating");
 
 		/*
@@ -811,6 +866,8 @@ public class DogControl : MonoBehaviour {
 	}
 
 	private void getNextInteraction(String lastEvent) {
+		incrementPoints ();
+		updateProgress ();
 		
 		switch (level) {
 		case 1:
@@ -1339,6 +1396,9 @@ public class DogControl : MonoBehaviour {
 			auraGrowing = false;
 			aura.SetActive (false);
 			hasBreathed = true;
+
+			//incrementPoints ();
+			//updateProgress ();
 			getNextInteraction ("breathing");
 		}
 	}
@@ -1412,6 +1472,8 @@ public class DogControl : MonoBehaviour {
 		introPanel.SetActive (true);
 		levelPanel.SetActive (false);
 		level = 1;
+		levelIndicator.text = "level " + level.ToString ();
+		points = 0;
 		initBlinkVal = 30;
 		// set tired to 80
 		corgiMesh.SetBlendShapeWeight (2, 100);
@@ -1427,6 +1489,8 @@ public class DogControl : MonoBehaviour {
 		introPanel.SetActive (true);
 		levelPanel.SetActive (false);
 		level = 2;
+		levelIndicator.text = "level " + level.ToString ();
+		points = 0;
 		initBlinkVal = 20;
 		// set tired to 30
 		corgiMesh.SetBlendShapeWeight (2, 30);
@@ -1442,6 +1506,8 @@ public class DogControl : MonoBehaviour {
 		introPanel.SetActive (true);
 		levelPanel.SetActive (false);
 		level = 3;
+		levelIndicator.text = "level " + level.ToString ();
+		points = 0;
 		speed = speed * 2; // run faster
 		initBlinkVal = 7;
 		// set tired to 0
