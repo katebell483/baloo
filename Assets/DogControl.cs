@@ -95,6 +95,7 @@ public class DogControl : MonoBehaviour {
 	private IEnumerator sittingCoroutine;
 	private bool waitingToSit = false;
 	private IEnumerator layingCoroutine;
+	public GameObject heartSystem;
 
 	// breathing params
 	private bool isBreathing = false;
@@ -124,6 +125,10 @@ public class DogControl : MonoBehaviour {
 	private float nextSmileVal;
 	private bool isDecreasingSmile = false;
 	private bool isIncreasingSmile = false;
+
+	private float prePetTiredVal;
+	private float prePetSmileVal;
+	private float prePetBlinkVal;
 
 	// rotating params
 	public bool rotating = false;
@@ -169,6 +174,10 @@ public class DogControl : MonoBehaviour {
 	void Start () {
 		
 		animator = corgi.GetComponent<Animator> ();
+		//heartSystem = GameObject.FindWithTag ("heartParticleSystem");
+		ParticleSystem heartSystem = GameObject.FindWithTag ("heartParticleSystem").GetComponent<ParticleSystem> ();
+		var emission = heartSystem.emission;
+		emission.enabled = false;
 
 		/* panels */
 		levelPanel.SetActive (true);
@@ -255,16 +264,17 @@ public class DogControl : MonoBehaviour {
 		} 
 			
 		// laydown on swipe
+		/*
 		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down) && !waitingToSit) {
 			LayDown ();
-		}
+		}*/
 
-		/*
+
 
 		// PETTING
-		if (!fetching && !goingToFood) {
+		if (!fetching && !goingToFood && !dragObjectActive) {
 			CheckForPetting();
-		}*/
+		}
 			
 		// FETCHING
 		if (fetching) {
@@ -307,7 +317,7 @@ public class DogControl : MonoBehaviour {
 		//progress.GetComponent<Text> ().fontSize += 1;
 		if (increasingProgressSize) {
 			//Debug.Log ("increasingProgressSize: " + increasingProgressSize + " and: " + progress.transform.localScale.x);
-			if (progress.transform.localScale.x < 5.0f) {
+			if (progress.transform.localScale.x < 3.0f) {
 				progress.transform.localScale += new Vector3 (0.05f, 0.05f);
 			} else {
 				increasingProgressSize = false;
@@ -491,9 +501,9 @@ public class DogControl : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		Debug.Log ("onTriggerEnter " + other.tag);
-		if (other.tag == "syringe" ||
+		if ((other.tag == "syringe" ||
 			other.tag == "pill" ||
-			other.tag == "bandaid") {
+			other.tag == "bandaid") && dogInScene && dragObjectActive) {
 			Debug.Log ("COLLISION SO DRAG DONE"); 
 
 			dragObjectCollided = true;
@@ -634,6 +644,12 @@ public class DogControl : MonoBehaviour {
 
 	}
 
+	public IEnumerator WaitAndLay(float waitTime) {
+		Debug.Log ("waiting to lay");
+		yield return new WaitForSeconds (waitTime);
+		LayDown();
+	}
+
 	public void FinishInteraction() {
 		// rotate towards home
 		isFinishingInteraction = true;
@@ -671,7 +687,6 @@ public class DogControl : MonoBehaviour {
 		exitPanel.SetActive (true);
 	}
 		
-	/*
 	public void CheckForPetting() {
 		if (Input.touchCount > 0) {
 
@@ -681,27 +696,46 @@ public class DogControl : MonoBehaviour {
 			RaycastHit hit;
 			Ray ray = Camera.main.ScreenPointToRay (pos); 
 
+			ParticleSystem heartSystem = GameObject.FindWithTag ("heartParticleSystem").GetComponent<ParticleSystem> ();
+			var emission = heartSystem.emission;
+
 			if (touch.phase == TouchPhase.Began) {
 				if (Physics.Raycast (ray, out hit) && hit.transform.gameObject.tag == "Corgi") {
-					Debug.Log ("corgi touched");
-					randomBehavior = false;
-					isRandomlyWalking = false;
+					Debug.Log("PETTING TAG: " + hit.transform.gameObject.tag);
+					Debug.Log ("PETTING: corgi touched");
+
 					corgiTouched = true;
-					if (waitingToSit)
-						StopCoroutine (sittingCoroutine);
-					layingCoroutine = WaitAndLay (.1f);
-					StartCoroutine (layingCoroutine);
+					emission.enabled = true;
+
+					/* make him seem happier */
+					prePetTiredVal = curTiredVal;
+					prePetSmileVal = curSmileVal;
+					prePetBlinkVal = initBlinkVal;
+
+					/* make dog super happy! */
+					nextTiredVal = curTiredVal - 100; // net change is -10
+					initBlinkVal = 5; // blink more fully
+					nextSmileVal = nextSmileVal + 100; // will be next + 20
+					isDecreasingTiredness = true;
+					isIncreasingSmile = true;
 				}
 			}
 
 			if (touch.phase == TouchPhase.Ended && corgiTouched) {
-				sittingCoroutine = WaitAndSit (2.5f, true);
-				StartCoroutine (sittingCoroutine);
+				Debug.Log ("PETTING: petting over");
+				emission.enabled = false;
 				corgiTouched = false;
+
+				/* make him seem sadder again */
+				nextTiredVal = prePetTiredVal + 5; 
+				initBlinkVal = prePetBlinkVal - 3; 
+				nextSmileVal = prePetSmileVal + 10; 
+				isDecreasingSmile = true;
+				isIncreasingTiredness = true;
+				incrementPoints ();
 			}
 		}
-	}*/
-
+	}
 
 	public void StartDragObjectSequence(){
 		Debug.Log ("StartDragObjectSequence called");
@@ -722,12 +756,12 @@ public class DogControl : MonoBehaviour {
 		dragObjectPos = corgi.transform.position - dragObject.transform.position;
 		Debug.Log ("drag object distance: "+ dragObjectPos.sqrMagnitude);
 
+		/*
 		float minDist = .04f;
 		if (level == 1) {
 			minDist = .03f; // the syringe should go more in
 		}
 			
-		/*
 		if (dragObjectPos.sqrMagnitude < minDist) { // was .02
 			dragObjectDraggable = false;
 		}*/
@@ -926,7 +960,7 @@ public class DogControl : MonoBehaviour {
 		}
 
 		// get less tired with each interaction
-		nextTiredVal = curTiredVal - 30; // net change is -20
+		nextTiredVal = curTiredVal - 20; 
 		if (nextTiredVal < 30) { // clamp at 30
 			nextTiredVal = 30;
 		}
@@ -969,9 +1003,9 @@ public class DogControl : MonoBehaviour {
 
 
 		// get less tired with each interaction
-		nextTiredVal = curTiredVal - 20; // net change is -10
+		nextTiredVal = curTiredVal - 10; 
 		initBlinkVal = 10; // blink more fully
-		nextSmileVal = nextSmileVal + 30; // will be next + 20
+		nextSmileVal = nextSmileVal + 20;
 		isDecreasingTiredness = true;
 		isIncreasingSmile = true;
 	}
@@ -1007,7 +1041,7 @@ public class DogControl : MonoBehaviour {
 		}
 
 		// get happier with each interaction
-		nextSmileVal = nextSmileVal + 30; // will be next + 20
+		nextSmileVal = nextSmileVal + 20; 
 		isIncreasingSmile = true;
 	}
 
@@ -1399,7 +1433,7 @@ public class DogControl : MonoBehaviour {
 
 
 		// End of the 3 cycles of breathing => re-initialize the parameters
-		if (nbBreathingCycles >= 4) {
+		if (nbBreathingCycles >= 3) {
 			triggerInfoBubble ("Great job! Thanks\n for doing that with me. ", 3.0f);
 			numMeditationEvents += 1;
 			isBreathing = false;
@@ -1535,8 +1569,6 @@ public class DogControl : MonoBehaviour {
 			curTiredVal -= 5;
 			corgiMesh.SetBlendShapeWeight (2, curTiredVal);
 		} else {
-			isIncreasingTiredness = true;
-			nextTiredVal = curTiredVal + 10; // go back up again so that the state registers and then settles
 			isDecreasingTiredness = false;
 		}
 	}
@@ -1564,8 +1596,6 @@ public class DogControl : MonoBehaviour {
 			curSmileVal += 5;
 			corgiMesh.SetBlendShapeWeight (1, curSmileVal);
 		} else {
-			isIncreasingTiredness = true;
-			nextSmileVal = curSmileVal - 10;
 			isIncreasingSmile = false;
 		}
 	}

@@ -33,6 +33,7 @@ TagManager:
   - bandaid
   - progress
   - pupMesh
+  - heartParticleSystem
   layers:
   - Default
   - TransparentFX
