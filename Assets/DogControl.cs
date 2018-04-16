@@ -61,6 +61,7 @@ public class DogControl : MonoBehaviour {
 	public int numberOfRandomTargetReached = 0;
 	public float randomStaticTime = 5f; // The random time of a static action between 2 random walks
 	public string randomStaticAction= "Sit";
+	//private IEnumerator waitAndRandomWalkCoroutine;
 
 	// going home params
 	private bool isGoingHome = false;
@@ -80,6 +81,7 @@ public class DogControl : MonoBehaviour {
 	// rotating params
 	public bool rotating = false;
 	private Vector3 rotatingTargetPos;
+	public float rotationSpeed=1.5f;
 
 	// quit app when in background
 	void OnApplicationPause(bool pauseStatus){
@@ -204,6 +206,7 @@ public class DogControl : MonoBehaviour {
 
 
 	public void InitialSequenceWrapper() {
+		//rotatingTargetPos = newRandomDirection ();
 		initialCorgiTransform = corgi.transform;
 		StartCoroutine(InitialSequence());
 	}
@@ -215,13 +218,13 @@ public class DogControl : MonoBehaviour {
 		yield return new WaitForSeconds(2.0f); 
 		//isRandomlyWalking = true;
 		//yield return new WaitForSeconds (3.0f);
-		print ("random walking over");
 		//isRandomlyWalking = false;
 		//rotating = false;
-		LookAt();
+		//LookAt();
 		StartCoroutine(TimedBark(1.0f));
-		//activateRandomWalking ();
-		warpRandomWalkAgain(5f);
+		activateRandomWalking ();
+		//waitAndRandomWalkCoroutine = RandomWalkAgain(5f);
+		//StartCoroutine(waitAndRandomWalkCoroutine);
 	}
 		
 	public void rotateDog(Vector3 targetPos) {
@@ -229,14 +232,14 @@ public class DogControl : MonoBehaviour {
 		Vector3 targetPoint = new Vector3(targetPos.x, corgi.transform.position.y, targetPos.z) - corgi.transform.position;
 		Quaternion targetRotation = Quaternion.LookRotation (targetPoint, Vector3.up);
 		//corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 4.0f);
-		corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * 1.5f);
+		corgi.transform.rotation = Quaternion.Slerp(corgi.transform.rotation, targetRotation, Time.deltaTime * this.rotationSpeed);
 		if(targetRotation == corgi.transform.rotation) {
 			rotating = false;
 		}
 	}
 
 	void OnTriggerExit(Collider other) {
-		Debug.Log (other.tag);
+		Debug.Log ("OnTriggerExit: " + other.tag);
 
 		if (initialFetchSequence) {
 
@@ -252,6 +255,7 @@ public class DogControl : MonoBehaviour {
 		} else if (isRandomlyWalking) {
 			Debug.Log ("HIT WALL Randomly walking");
 			rotatingTargetPos = mat.transform.position;
+			rotationSpeed = 1.5f;
 			rotating = true;
 		} else {
 			Debug.Log ("HIT WALL GENERAL CASE: " + other.tag);
@@ -271,7 +275,7 @@ public class DogControl : MonoBehaviour {
 
 		//fetchOrigin = corgi.transform.position;
 		endFetchingPos = ballPos;
-
+		rotationSpeed = 4f;
 		rotating = true;
 		rotatingTargetPos = endFetchingPos;
 
@@ -378,6 +382,7 @@ public class DogControl : MonoBehaviour {
 	public void StartGoingHome() {
 		// rotate towards home
 		isGoingHome = true;
+		rotationSpeed = 4f;
 		rotating = true;
 		rotatingTargetPos = dogHouse.transform.position;
 		Walk ();
@@ -457,6 +462,7 @@ public class DogControl : MonoBehaviour {
 		goingToFood = true;
 		rotatingTargetPos = dogFood.transform.position;
 		Debug.Log ("BOWL POS: " + rotatingTargetPos);
+		rotationSpeed = 4f;
 		rotating = true;
 		Walk ();
 	}
@@ -469,10 +475,19 @@ public class DogControl : MonoBehaviour {
 		Debug.Log ("DISTANCE: " + distance);
 
 		// got to food so stop + eat
+		/*
 		if (distance < .1 && rotating) {
 			Debug.Log ("GOT TO FOOD!");
 			WalkInPlace ();
 		} else if (distance < .1 && !rotating) {
+			numEatingEvents += 1;
+			fraction = 0;
+			goingToFood = false;
+			isLastEatingEvent = numEatingEvents == 2;
+			EatWrapper ();
+		}*/
+		if (distance < .1) {
+			corgi.transform.LookAt (dogFood.transform.position);
 			numEatingEvents += 1;
 			fraction = 0;
 			goingToFood = false;
@@ -609,8 +624,9 @@ public class DogControl : MonoBehaviour {
 					} else if (numFetches % 3 == 0 && numEatingEvents == 0) {
 						promptFeeding ();
 					} else {
-						Debug.Log ("warpRandomWalkAgain called");
-						warpRandomWalkAgain (20f);
+						Debug.Log ("Coroutine RandomWalkAgain can be called again");
+						//waitAndRandomWalkCoroutine = RandomWalkAgain (20f);
+						//StartCoroutine (waitAndRandomWalkCoroutine);
 					}
 				
 				}
@@ -626,6 +642,7 @@ public class DogControl : MonoBehaviour {
 				Debug.Log(startFetchingPos);
 
 				// rotate
+				rotationSpeed = 4f;
 				rotating = true;
 				rotatingTargetPos = mat.transform.position;
 
@@ -666,20 +683,13 @@ public class DogControl : MonoBehaviour {
 		}else if (randomStaticAction == "Lay"){
 			Lay ();
 		}
-		warpRandomWalkAgain (randomStaticTime);
+		//waitAndRandomWalkCoroutine = RandomWalkAgain (randomStaticTime);
+		//StartCoroutine (waitAndRandomWalkCoroutine);
 	}
-
-
-	public void warpRandomWalkAgain(float time) {
-		StartCoroutine(RandomWalkAgain(time));
-	}
-
+		
+	/*
 	public IEnumerator RandomWalkAgain(float time) {
 		yield return new WaitForSeconds(time);
-		rotatingTargetPos = newRandomDirection ();
-		Debug.Log ("rotatingTargetPos: "+rotatingTargetPos);
-		Debug.Log ("activateRandomWalking called");
-		Debug.Log ("Parameters Value : isBreathing: " + isBreathing + ", isRandomly walking: "+ isRandomlyWalking+ ", shouldMove: "+ shouldMove);
 		numberOfRandomTargetReached=0;
 		//Here we can add a random number of numberOfRandomTargetReached
 		//HERE
@@ -688,6 +698,7 @@ public class DogControl : MonoBehaviour {
 		shouldMove = true;
 		rotating = true; 
 	}
+	*/
 
 	public string getRandomStaticAction(float randomNumber){
 		if (randomNumber <= .25f) {
@@ -716,13 +727,15 @@ public class DogControl : MonoBehaviour {
 
 
 
-	// Random Walking
+	// Random Walking : Parameters to trigger Random Walking
+
 	public void activateRandomWalking(){
 		//Walk ();
 		randomBehavior = true;
 		isRandomlyWalking = true;
 		numberOfRandomTargetReached = 0;
 		shouldMove = true;
+		rotationSpeed = 1.5f;
 		rotating = true;
 		//fraction = 0;
 		rotatingTargetPos = newRandomDirection ();
@@ -730,6 +743,7 @@ public class DogControl : MonoBehaviour {
 		Debug.Log ("activateRandomWalking called");
 		Debug.Log ("Parameters Value : isBreathing: " + isBreathing + ", isRandomly walking: "+ isRandomlyWalking+ ", shouldMove: "+ shouldMove);
 	}
+
 
 
 	//// Returns a return value among {-1,0,1}
@@ -826,6 +840,7 @@ public class DogControl : MonoBehaviour {
 			nbBreathingCycles = 0;
 			auraGrowing = false;
 			aura.SetActive (false);
+			LookAt ();
 			Sit ();
 			isInteractionComplete ();
 		}
@@ -880,6 +895,7 @@ public class DogControl : MonoBehaviour {
 		corgi.transform.LookAt (Camera.main.transform.position);
 		corgi.transform.eulerAngles = new Vector3(0, corgi.transform.eulerAngles.y, 0);
 	}
+
 
 	public void goBackToMenu(){
 		SceneController.CrossSceneInformation = "menu";

@@ -23,6 +23,7 @@ TagManager:
   - exitPanel
   - kidNamePanel
   - dogHouse
+  - CubeHouse
   layers:
   - Default
   - TransparentFX
