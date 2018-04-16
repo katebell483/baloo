@@ -1,0 +1,1459 @@
+fileFormatVersion: 2
+guid: 6d680030db0ea62489f6ffe93b018c2b
+timeCreated: 1475932905
+licenseType: Store
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Very_high_res_1024_0
+    21300002: Very_high_res_1024_1
+    21300004: Very_high_res_1024_2
+    21300006: Very_high_res_1024_3
+    21300008: Very_high_res_1024_4
+    21300010: Very_high_res_1024_5
+    21300012: Very_high_res_1024_6
+    21300014: Very_high_res_1024_7
+    21300016: Very_high_res_1024_8
+    21300018: Very_high_res_1024_9
+    21300020: Very_high_res_1024_10
+    21300022: Very_high_res_1024_11
+    21300024: Very_high_res_1024_12
+    21300026: Very_high_res_1024_13
+    21300028: Very_high_res_1024_14
+    21300030: Very_high_res_1024_15
+    21300032: Very_high_res_1024_16
+    21300034: Very_high_res_1024_17
+    21300036: Very_high_res_1024_18
+    21300038: Very_high_res_1024_19
+    21300040: Very_high_res_1024_20
+    21300042: Very_high_res_1024_21
+    21300044: Very_high_res_1024_22
+    21300046: Very_high_res_1024_23
+    21300048: Very_high_res_1024_24
+    21300050: Very_high_res_1024_25
+    21300052: Very_high_res_1024_26
+    21300054: Very_high_res_1024_27
+    21300056: Very_high_res_1024_28
+    21300058: Very_high_res_1024_29
+    21300060: Very_high_res_1024_30
+    21300062: Very_high_res_1024_31
+    21300064: Very_high_res_1024_32
+    21300066: Very_high_res_1024_33
+    21300068: Very_high_res_1024_34
+    21300070: Very_high_res_1024_35
+    21300072: Very_high_res_1024_36
+    21300074: Very_high_res_1024_37
+    21300076: Very_high_res_1024_38
+    21300078: Very_high_res_1024_39
+    21300080: Very_high_res_1024_40
+    21300082: Very_high_res_1024_41
+    21300084: Very_high_res_1024_42
+    21300086: Very_high_res_1024_43
+    21300088: Very_high_res_1024_44
+    21300090: Very_high_res_1024_45
+    21300092: Very_high_res_1024_46
+    21300094: Very_high_res_1024_47
+    21300096: Very_high_res_1024_48
+    21300098: Very_high_res_1024_49
+    21300100: Very_high_res_1024_50
+    21300102: Very_high_res_1024_51
+    21300104: Very_high_res_1024_52
+    21300106: Very_high_res_1024_53
+    21300108: Very_high_res_1024_54
+    21300110: Very_high_res_1024_55
+    21300112: Very_high_res_1024_56
+    21300114: Very_high_res_1024_57
+    21300116: Very_high_res_1024_58
+    21300118: Very_high_res_1024_59
+    21300120: Very_high_res_1024_60
+    21300122: Very_high_res_1024_61
+    21300124: Very_high_res_1024_62
+    21300126: Very_high_res_1024_63
+    21300128: Very_high_res_1024_64
+    21300130: Very_high_res_1024_65
+    21300132: Very_high_res_1024_66
+    21300134: Very_high_res_1024_67
+    21300136: Very_high_res_1024_68
+    21300138: Very_high_res_1024_69
+    21300140: Very_high_res_1024_70
+    21300142: Very_high_res_1024_71
+    21300144: Very_high_res_1024_72
+    21300146: Very_high_res_1024_73
+    21300148: Very_high_res_1024_74
+    21300150: Very_high_res_1024_75
+    21300152: Very_high_res_1024_76
+    21300154: Very_high_res_1024_77
+    21300156: Very_high_res_1024_78
+    21300158: Very_high_res_1024_79
+    21300160: Very_high_res_1024_80
+    21300162: Very_high_res_1024_81
+    21300164: Very_high_res_1024_82
+    21300166: Very_high_res_1024_83
+    21300168: Very_high_res_1024_84
+    21300170: Very_high_res_1024_85
+    21300172: Very_high_res_1024_86
+    21300174: Very_high_res_1024_87
+    21300176: Very_high_res_1024_88
+    21300178: Very_high_res_1024_89
+    21300180: Very_high_res_1024_90
+    21300182: Very_high_res_1024_91
+    21300184: Very_high_res_1024_92
+    21300186: Very_high_res_1024_93
+    21300188: Very_high_res_1024_94
+    21300190: Very_high_res_1024_95
+    21300192: Very_high_res_1024_96
+    21300194: Very_high_res_1024_97
+    21300196: Very_high_res_1024_98
+    21300198: Very_high_res_1024_99
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 8192
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 1
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 0
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Very_high_res_1024_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8939.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_1
+      rect:
+        serializedVersion: 2
+        x: 993
+        y: 8939.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_2
+      rect:
+        serializedVersion: 2
+        x: 1986
+        y: 8939.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_3
+      rect:
+        serializedVersion: 2
+        x: 2979
+        y: 8939.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_4
+      rect:
+        serializedVersion: 2
+        x: 3972
+        y: 8939.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_5
+      rect:
+        serializedVersion: 2
+        x: 4965
+        y: 8939.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_6
+      rect:
+        serializedVersion: 2
+        x: 5958
+        y: 8939.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_7
+      rect:
+        serializedVersion: 2
+        x: 6951
+        y: 8939.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_8
+      rect:
+        serializedVersion: 2
+        x: 7944
+        y: 8939.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_9
+      rect:
+        serializedVersion: 2
+        x: 8937
+        y: 8939.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 7946.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_11
+      rect:
+        serializedVersion: 2
+        x: 993
+        y: 7946.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_12
+      rect:
+        serializedVersion: 2
+        x: 1986
+        y: 7946.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_13
+      rect:
+        serializedVersion: 2
+        x: 2979
+        y: 7946.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_14
+      rect:
+        serializedVersion: 2
+        x: 3972
+        y: 7946.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_15
+      rect:
+        serializedVersion: 2
+        x: 4965
+        y: 7946.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_16
+      rect:
+        serializedVersion: 2
+        x: 5958
+        y: 7946.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_17
+      rect:
+        serializedVersion: 2
+        x: 6951
+        y: 7946.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_18
+      rect:
+        serializedVersion: 2
+        x: 7944
+        y: 7946.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_19
+      rect:
+        serializedVersion: 2
+        x: 8937
+        y: 7946.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6953.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_21
+      rect:
+        serializedVersion: 2
+        x: 993
+        y: 6953.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_22
+      rect:
+        serializedVersion: 2
+        x: 1986
+        y: 6953.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_23
+      rect:
+        serializedVersion: 2
+        x: 2979
+        y: 6953.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_24
+      rect:
+        serializedVersion: 2
+        x: 3972
+        y: 6953.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_25
+      rect:
+        serializedVersion: 2
+        x: 4965
+        y: 6953.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_26
+      rect:
+        serializedVersion: 2
+        x: 5958
+        y: 6953.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_27
+      rect:
+        serializedVersion: 2
+        x: 6951
+        y: 6953.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_28
+      rect:
+        serializedVersion: 2
+        x: 7944
+        y: 6953.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_29
+      rect:
+        serializedVersion: 2
+        x: 8937
+        y: 6953.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5960.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_31
+      rect:
+        serializedVersion: 2
+        x: 993
+        y: 5960.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_32
+      rect:
+        serializedVersion: 2
+        x: 1986
+        y: 5960.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_33
+      rect:
+        serializedVersion: 2
+        x: 2979
+        y: 5960.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_34
+      rect:
+        serializedVersion: 2
+        x: 3972
+        y: 5960.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_35
+      rect:
+        serializedVersion: 2
+        x: 4965
+        y: 5960.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_36
+      rect:
+        serializedVersion: 2
+        x: 5958
+        y: 5960.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_37
+      rect:
+        serializedVersion: 2
+        x: 6951
+        y: 5960.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_38
+      rect:
+        serializedVersion: 2
+        x: 7944
+        y: 5960.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_39
+      rect:
+        serializedVersion: 2
+        x: 8937
+        y: 5960.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4967.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_41
+      rect:
+        serializedVersion: 2
+        x: 993
+        y: 4967.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_42
+      rect:
+        serializedVersion: 2
+        x: 1986
+        y: 4967.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_43
+      rect:
+        serializedVersion: 2
+        x: 2979
+        y: 4967.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_44
+      rect:
+        serializedVersion: 2
+        x: 3972
+        y: 4967.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_45
+      rect:
+        serializedVersion: 2
+        x: 4965
+        y: 4967.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_46
+      rect:
+        serializedVersion: 2
+        x: 5958
+        y: 4967.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_47
+      rect:
+        serializedVersion: 2
+        x: 6951
+        y: 4967.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_48
+      rect:
+        serializedVersion: 2
+        x: 7944
+        y: 4967.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_49
+      rect:
+        serializedVersion: 2
+        x: 8937
+        y: 4967.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_50
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3974.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_51
+      rect:
+        serializedVersion: 2
+        x: 993
+        y: 3974.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_52
+      rect:
+        serializedVersion: 2
+        x: 1986
+        y: 3974.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_53
+      rect:
+        serializedVersion: 2
+        x: 2979
+        y: 3974.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_54
+      rect:
+        serializedVersion: 2
+        x: 3972
+        y: 3974.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_55
+      rect:
+        serializedVersion: 2
+        x: 4965
+        y: 3974.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_56
+      rect:
+        serializedVersion: 2
+        x: 5958
+        y: 3974.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_57
+      rect:
+        serializedVersion: 2
+        x: 6951
+        y: 3974.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_58
+      rect:
+        serializedVersion: 2
+        x: 7944
+        y: 3974.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_59
+      rect:
+        serializedVersion: 2
+        x: 8937
+        y: 3974.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2981.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_61
+      rect:
+        serializedVersion: 2
+        x: 993
+        y: 2981.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_62
+      rect:
+        serializedVersion: 2
+        x: 1986
+        y: 2981.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_63
+      rect:
+        serializedVersion: 2
+        x: 2979
+        y: 2981.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_64
+      rect:
+        serializedVersion: 2
+        x: 3972
+        y: 2981.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_65
+      rect:
+        serializedVersion: 2
+        x: 4965
+        y: 2981.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_66
+      rect:
+        serializedVersion: 2
+        x: 5958
+        y: 2981.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_67
+      rect:
+        serializedVersion: 2
+        x: 6951
+        y: 2981.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_68
+      rect:
+        serializedVersion: 2
+        x: 7944
+        y: 2981.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_69
+      rect:
+        serializedVersion: 2
+        x: 8937
+        y: 2981.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_70
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1988.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_71
+      rect:
+        serializedVersion: 2
+        x: 993
+        y: 1988.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_72
+      rect:
+        serializedVersion: 2
+        x: 1986
+        y: 1988.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_73
+      rect:
+        serializedVersion: 2
+        x: 2979
+        y: 1988.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_74
+      rect:
+        serializedVersion: 2
+        x: 3972
+        y: 1988.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_75
+      rect:
+        serializedVersion: 2
+        x: 4965
+        y: 1988.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_76
+      rect:
+        serializedVersion: 2
+        x: 5958
+        y: 1988.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_77
+      rect:
+        serializedVersion: 2
+        x: 6951
+        y: 1988.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_78
+      rect:
+        serializedVersion: 2
+        x: 7944
+        y: 1988.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_79
+      rect:
+        serializedVersion: 2
+        x: 8937
+        y: 1988.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_80
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 995.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_81
+      rect:
+        serializedVersion: 2
+        x: 993
+        y: 995.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_82
+      rect:
+        serializedVersion: 2
+        x: 1986
+        y: 995.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_83
+      rect:
+        serializedVersion: 2
+        x: 2979
+        y: 995.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_84
+      rect:
+        serializedVersion: 2
+        x: 3972
+        y: 995.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_85
+      rect:
+        serializedVersion: 2
+        x: 4965
+        y: 995.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_86
+      rect:
+        serializedVersion: 2
+        x: 5958
+        y: 995.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_87
+      rect:
+        serializedVersion: 2
+        x: 6951
+        y: 995.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_88
+      rect:
+        serializedVersion: 2
+        x: 7944
+        y: 995.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_89
+      rect:
+        serializedVersion: 2
+        x: 8937
+        y: 995.7
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_90
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2.7000122
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_91
+      rect:
+        serializedVersion: 2
+        x: 993
+        y: 2.7000122
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_92
+      rect:
+        serializedVersion: 2
+        x: 1986
+        y: 2.7000122
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_93
+      rect:
+        serializedVersion: 2
+        x: 2979
+        y: 2.7000122
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_94
+      rect:
+        serializedVersion: 2
+        x: 3972
+        y: 2.7000122
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_95
+      rect:
+        serializedVersion: 2
+        x: 4965
+        y: 2.7000122
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_96
+      rect:
+        serializedVersion: 2
+        x: 5958
+        y: 2.7000122
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_97
+      rect:
+        serializedVersion: 2
+        x: 6951
+        y: 2.7000122
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_98
+      rect:
+        serializedVersion: 2
+        x: 7944
+        y: 2.7000122
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Very_high_res_1024_99
+      rect:
+        serializedVersion: 2
+        x: 8937
+        y: 2.7000122
+        width: 993.3
+        height: 993.3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
