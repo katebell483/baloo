@@ -1518,11 +1518,26 @@ BoxCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 258528443}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1500, y: 100, z: 100}
   m_Center: {x: 150, y: 110, z: 0}
+--- !u!54 &258528445
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 258528443}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &287790136
 GameObject:
   m_ObjectHideFlags: 0
@@ -3557,9 +3572,9 @@ MeshCollider:
   m_GameObject: {fileID: 655077918}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Convex: 0
+  m_Convex: 1
   m_InflateMesh: 1
   m_SkinWidth: 0.1
   m_Mesh: {fileID: 4300004, guid: df22ae052eb294b1881c0220a0c3a7ce, type: 3}
@@ -4836,11 +4851,26 @@ BoxCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 966760202}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 200, y: 560, z: 200}
   m_Center: {x: 0, y: 360, z: 0}
+--- !u!54 &966760204
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 966760202}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1000442783
 GameObject:
   m_ObjectHideFlags: 0
@@ -6071,6 +6101,20 @@ MonoBehaviour:
   animatePoints: 0
   increasingProgressSize: 1
   levelIndicator: {fileID: 585557046}
+--- !u!64 &1180945784
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1180945782}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_InflateMesh: 1
+  m_SkinWidth: 0.001
+  m_Mesh: {fileID: 4300004, guid: df22ae052eb294b1881c0220a0c3a7ce, type: 3}
 --- !u!4 &1180945785 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400004, guid: df22ae052eb294b1881c0220a0c3a7ce, type: 3}
@@ -7760,7 +7804,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1001.46
+      value: 1003.92
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e0e64c8f08b7b4520891ab44c62d3256, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9127,11 +9171,26 @@ BoxCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1808258332}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.5, y: 1, z: 7}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &1808258334
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1808258332}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1808425997
 GameObject:
   m_ObjectHideFlags: 0
@@ -10104,7 +10163,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
       propertyPath: m_LocalRotation.x
@@ -10132,15 +10191,15 @@ Prefab:
       objectReference: {fileID: 2100000, guid: 1093489536ab249a480642d44b69d368, type: 2}
     - target: {fileID: 400000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
       propertyPath: m_LocalScale.x
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
       propertyPath: m_LocalScale.y
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
       propertyPath: m_LocalScale.z
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
       propertyPath: m_IsActive
