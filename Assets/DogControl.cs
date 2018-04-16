@@ -477,11 +477,23 @@ public class DogControl : MonoBehaviour {
 		}*/
 	}
 
+	/*
 	void OnCollisionEnter(Collision other) {
 		Debug.Log ("COLLISION TAG:  " + other.gameObject.tag); 
 		if (other.gameObject.tag == "syringe" ||
 			other.gameObject.tag == "pill" ||
 			other.gameObject.tag == "bandaid") {
+			Debug.Log ("COLLISION SO DRAG DONE"); 
+
+			dragObjectCollided = true;
+		}
+	}*/
+
+	void OnTriggerEnter(Collider other) {
+		Debug.Log ("onTriggerEnter " + other.tag);
+		if (other.tag == "syringe" ||
+			other.tag == "pill" ||
+			other.tag == "bandaid") {
 			Debug.Log ("COLLISION SO DRAG DONE"); 
 
 			dragObjectCollided = true;
@@ -715,14 +727,15 @@ public class DogControl : MonoBehaviour {
 			minDist = .03f; // the syringe should go more in
 		}
 			
+		/*
 		if (dragObjectPos.sqrMagnitude < minDist) { // was .02
 			dragObjectDraggable = false;
-		}
+		}*/
 
-		/*
+
 		if (dragObjectCollided) {
 			dragObjectDraggable = false;
-		}*/
+		}
 
 		if (!dragObjectDraggable) {
 			// if we are close enough from the dog, we stop moving it and the animation starts
@@ -735,7 +748,7 @@ public class DogControl : MonoBehaviour {
 				dragObjectDraggable = false;
 				injectionDone = true;
 				numDraggableEvents += 1;
-				StartCoroutine (postInjectionMsg ("Not my favorite,\n but I know it helps me get well"));
+				StartCoroutine (postInjectionMsg ("Not my favorite,\n but it helps me get well"));
 			}
 		} else {
 			if (Input.touchCount > 0) {
@@ -822,7 +835,7 @@ public class DogControl : MonoBehaviour {
 			StartCoroutine(StartEat());
 		} else {
 			// move dog forward
-			fraction += Time.deltaTime * .015f;
+			fraction += Time.deltaTime * .01f; // used to be .015f
 			Vector3 currPos  = Vector3.Lerp(corgi.transform.position, foodPos, fraction);
 			corgi.transform.position = currPos;
 		}
@@ -898,7 +911,7 @@ public class DogControl : MonoBehaviour {
 			promptMaxEating();
 		} else if (numDraggableEvents > 0 && numMeditationEvents == 0) {
 			// prompt post-injection breathing prompt
-			promptMeditation ("When I get anxious, it helps to\n do some deep breathing");
+			StartCoroutine(promptMeditation ("When I get scared, it helps to\n do some deep breathing"));
 			syringeButton.GetComponent<Button> ().interactable = false;
 		} else if (numDraggableEvents == 0 && numMeditationEvents > 0 || numDraggableEvents == 0 && numEatingEvents > 0) {
 			// prompt syringe
@@ -943,7 +956,7 @@ public class DogControl : MonoBehaviour {
 			promptMaxEating();
 		} else if (numDraggableEvents > 0 && numMeditationEvents == 0 && lastEvent == "draggable") {
 			// prompt post-injection breathing prompt
-			promptMeditation ("When I get anxious, it helps to\n do some deep breathing");
+			StartCoroutine(promptMeditation ("Medicine, work your magic!\n Now that's done, let's \ndo some breathing together"));
 			pillButton.GetComponent<Button> ().interactable = false;
 		} else if (numDraggableEvents == 0 && numMeditationEvents > 0 || numDraggableEvents == 0 && numEatingEvents > 0) {
 			// prompt syringe
@@ -982,7 +995,7 @@ public class DogControl : MonoBehaviour {
 			promptMaxEating();
 		} else if (numDraggableEvents > 0 && numMeditationEvents == 0 && lastEvent == "draggable") {
 			// prompt post-injection breathing prompt
-			promptMeditation ("When I get anxious, it helps to\n do some deep breathing");
+			StartCoroutine(promptMeditation ("Let’s do some more breathing\n with my new bandaid on!"));
 			bandaidButton.GetComponent<Button> ().interactable = false;
 		} else if (numDraggableEvents == 0 && numMeditationEvents > 0 || numDraggableEvents == 0 && numEatingEvents > 0) {
 			// prompt syringe
@@ -1096,12 +1109,13 @@ public class DogControl : MonoBehaviour {
 		}
 	}
 		
-	public void promptMeditation(String msg) {
+	public IEnumerator promptMeditation(String msg) {
 		Debug.Log ("prompt MEDIATAIPODJSF");
-		Bark ();
-		breatheButton.GetComponent<Button>().Select();
+		//Bark ();
 		//StartBreathingSequence();
-		triggerInfoBubble (msg, 5.0f);
+		triggerInfoBubble (msg, 3.0f);
+		yield return new WaitForSeconds(3.5f); 
+		breatheButton.GetComponent<Button>().Select();
 	}
 
 	public void promptFeeding() {
@@ -1124,16 +1138,15 @@ public class DogControl : MonoBehaviour {
 		triggerInfoBubble ("I think I need a bandaid!\n Will you give me one?", 5.0f);
 	}
 
-	public void promptFetch
-	() {
+	public void promptFetch () {
 		fetchButton.GetComponent<Button>().Select();
 		triggerInfoBubble ("I feel great! \n Let's play fetch!", 5.0f);
 	}
 
 	public void promptMaxFetches() {
-		if (numEatingEvents > 1) {
-			pillButton.GetComponent<Button>().Select();
-			triggerInfoBubble ("I'm tired! \n It's time for my medicine.\n Will you give me my pill?", 5.0f);
+		if (level == 3) {
+			//pillButton.GetComponent<Button>().Select();
+			triggerInfoBubble ("Woof! I'm fetched out!", 5.0f);
 		} else {
 			eatButton.GetComponent<Button>().Select();
 			triggerInfoBubble ("All that fetching made me hungry! \n Will you feed me?", 5.0f);
@@ -1141,12 +1154,11 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void promptMaxEating() {
-		if (numFetches > 4) {
-			pillButton.GetComponent<Button>().Select();
-			triggerInfoBubble ("I'm full! \n It's time for my medicine.\n Will you give me my pill?", 5.0f);
+		if (level == 3) {
+			triggerInfoBubble ("So delicious!", 5.0f);
 		} else {
 			fetchButton.GetComponent<Button>().Select();
-			triggerInfoBubble ("I'm stuffed! \n Let's play fetch!", 5.0f);
+			triggerInfoBubble ("I'm totally stuffed now! \n Let's play fetch!", 5.0f);
 		}
 	}
 
@@ -1297,31 +1309,30 @@ public class DogControl : MonoBehaviour {
 		if (numMeditationEvents > 0) {
 			Breathe ();
 		} else {
-			String activity = "get a shot";
+			String msg = "";
 			if (numDraggableEvents == 0) {
 				switch(level) {
 					case 1:
-						activity = "get a shot";
+						msg = "I get scared when I \n when I have to get a shot.\n It helps to do deep breathing.";
 						break;
 					case 2:
-						activity = "take a pill";
+						msg = "I have to take medicine today...\n It helps to be calm first.";
 						break;
 					case 3:	
-						activity = "get a bandage";
+						msg = "Let’s do some deep breathing before I get my bandaid.";
 						break;
 				}
-				string msg = "Sometimes I get anxious \n when I know I have to " + activity + ".\n It helps to do deep breathing.";
-				triggerInfoBubble(msg, 2.0f);
-				yield return new WaitForSeconds(2.5f); 
+				triggerInfoBubble(msg, 4.0f);
+				yield return new WaitForSeconds(4.5f); 
 			}
 			infoBubble.SetActive (true);
-			infoBubble.GetComponentInChildren<Text> ().text = "First, we start by getting as\n comfy as possible, and\n relaxing our bodies";
+			infoBubble.GetComponentInChildren<Text> ().text = "First, get comfy as possible";
 			breatheInstructionButton1.SetActive (true);
 		}
 	}
 
 	public void breathingStepOneClose() {
-		infoBubble.GetComponentInChildren<Text> ().text = "Next, we’ll breathe in through\n our nose for 4 seconds, then\n breathe out from our mouths\n for 4 seconds. You can\n watch me first!";
+		infoBubble.GetComponentInChildren<Text> ().text = "Next, we’ll breathe in through\n our nose for 4 seconds, then\n breathe out for 4 seconds.\n Watch me!";
 		breatheInstructionButton1.SetActive(false);
 		breatheInstructionButton2.SetActive(true);
 	}
@@ -1345,7 +1356,7 @@ public class DogControl : MonoBehaviour {
 			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
 			AuraWarper ();
 		} else if (!auraGrowing && aura.transform.localScale.x > 5) {
-			infoBubble.GetComponentInChildren<Text> ().text = "Out through the mouth for 4...";
+			infoBubble.GetComponentInChildren<Text> ().text = "Out through the nose for 4...";
 			aura.transform.localScale -= new Vector3 (0.04F, 0.04F, 0.04F);
 			chestVal = chestVal - .5f;
 		} else if (aura.transform.localScale.x <= 5) {
@@ -1367,16 +1378,16 @@ public class DogControl : MonoBehaviour {
 		// Transformation of the sphere
 		if (auraGrowing && aura.transform.localScale.x < 14) {
 			Debug.Log ("aura growing");
-			infoBubble.GetComponentInChildren<Text> ().text = "In through the nose for 4...";
+			infoBubble.GetComponentInChildren<Text> ().text = "IN";
 			aura.transform.localScale += new Vector3 (0.04F, 0.04F, 0.04F);
 			chestVal = chestVal + .5f;
 			Debug.Log ("CHEST VAL: " + chestVal);
 
 		} else if (auraGrowing && aura.transform.localScale.x >= 14) {
-			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
+			infoBubble.GetComponentInChildren<Text> ().text = "Hold";
 			AuraWarper ();
 		} else if (!auraGrowing && aura.transform.localScale.x > 5) {
-			infoBubble.GetComponentInChildren<Text> ().text = "Out through the mouth for 4...";
+			infoBubble.GetComponentInChildren<Text> ().text = "OUT";
 			aura.transform.localScale -= new Vector3 (0.04F, 0.04F, 0.04F);
 			chestVal = chestVal - .5f;
 		} else if (aura.transform.localScale.x <= 5) {
@@ -1444,13 +1455,13 @@ public class DogControl : MonoBehaviour {
 		// when dog is in the scene trigger initial message based on level
 		switch (level) {
 		case 1:
-			triggerInfoBubble ("I'm feeling pretty lousy today.\n But I bet I'll feel better\n if you play with me!", 3.0f);
+			triggerInfoBubble ("Baloo is happy to have you\n as a new friend! \n\n Baloo's not feeling well. \n Interact with him to help him \n feel better!", 3.0f);
 			break;
 		case 2:
-			triggerInfoBubble ("I'm feeling a bit better today!\n I bet I'll get to 100%\n if we play!", 3.0f);
+			triggerInfoBubble ("Woof! You're back!\n Good to see you.", 3.0f);
 			break;
 		case 3:
-			triggerInfoBubble ("I'm feeling great today!\n Let's play!", 3.0f);
+			triggerInfoBubble ("Woof! You're back!\n Good to see you.", 3.0f);
 			break;
 		}
 

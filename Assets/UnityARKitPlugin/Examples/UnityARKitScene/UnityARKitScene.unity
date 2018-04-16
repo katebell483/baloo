@@ -77,15 +77,17 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
-    m_PVRFiltering: 0
+    m_PVRFilterTypeDirect: 0
+    m_PVRFilterTypeIndirect: 0
+    m_PVRFilterTypeAO: 0
     m_PVRFilteringMode: 1
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
     m_PVRFilteringGaussRadiusAO: 2
-    m_PVRFilteringAtrousColorSigma: 1
-    m_PVRFilteringAtrousNormalSigma: 1
-    m_PVRFilteringAtrousPositionSigma: 1
+    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+    m_PVRFilteringAtrousPositionSigmaIndirect: 2
+    m_PVRFilteringAtrousPositionSigmaAO: 1
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &5
@@ -320,7 +322,7 @@ RectTransform:
   m_Children:
   - {fileID: 1742529136}
   m_Father: {fileID: 354170976}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -1128,7 +1130,7 @@ RectTransform:
   m_Children:
   - {fileID: 523874210}
   m_Father: {fileID: 354170976}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -1832,7 +1834,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -100}
+  m_AnchoredPosition: {x: 0, y: -117}
   m_SizeDelta: {x: 452, y: 106}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &334450290
@@ -2080,11 +2082,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 877369029}
+  - {fileID: 2050186696}
   - {fileID: 1000442784}
   - {fileID: 565707017}
   - {fileID: 186790728}
   - {fileID: 35704929}
-  - {fileID: 1755790926}
   - {fileID: 1491582932}
   - {fileID: 445087132}
   - {fileID: 2040078240}
@@ -2095,10 +2097,10 @@ RectTransform:
   - {fileID: 772031699}
   - {fileID: 1825507330}
   - {fileID: 1707069825}
+  - {fileID: 1755790926}
   - {fileID: 1329671685}
   - {fileID: 1314380538}
   - {fileID: 1244313245}
-  - {fileID: 2050186696}
   - {fileID: 2090866115}
   - {fileID: 585557045}
   - {fileID: 1368920469}
@@ -3018,6 +3020,10 @@ Prefab:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 406a35574c16c41858c3a124df4cc2c7, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 406a35574c16c41858c3a124df4cc2c7, type: 3}
   m_IsPrefabParent: 0
@@ -3188,7 +3194,7 @@ RectTransform:
   - {fileID: 197323566}
   - {fileID: 1605579688}
   m_Father: {fileID: 354170976}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4865,7 +4871,7 @@ RectTransform:
   m_Children:
   - {fileID: 1525707145}
   m_Father: {fileID: 354170976}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -5528,7 +5534,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: d5b243a1080434b36ac116b9a865c7e9, type: 3}
-    m_FontSize: 35
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -6223,7 +6229,7 @@ RectTransform:
   - {fileID: 2047351163}
   - {fileID: 560726667}
   m_Father: {fileID: 354170976}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6518,7 +6524,7 @@ RectTransform:
   m_Children:
   - {fileID: 1836657547}
   m_Father: {fileID: 354170976}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6588,7 +6594,7 @@ RectTransform:
   - {fileID: 1182625239}
   - {fileID: 1015900826}
   m_Father: {fileID: 354170976}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -8711,11 +8717,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: d5b243a1080434b36ac116b9a865c7e9, type: 3}
-    m_FontSize: 38
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 100
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -8833,7 +8839,7 @@ RectTransform:
   m_Children:
   - {fileID: 1820344430}
   m_Father: {fileID: 354170976}
-  m_RootOrder: 5
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -9333,18 +9339,19 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: e750daf2271c04f15bb3d469a47f1633, type: 3}
-    m_FontSize: 30
+    m_FontSize: 40
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 120
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.2
-  m_Text: "Welcome to Baloo. \nShow me the QR Code!"
+  m_Text: "Medicine, work your magic!\nNow that's done, let's \ndo some breathing
+    together\""
 --- !u!222 &1820344432
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9655,7 +9662,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 578, y: 364}
+  m_SizeDelta: {x: 578, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1836657548
 MonoBehaviour:
@@ -9750,7 +9757,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: d5b243a1080434b36ac116b9a865c7e9, type: 3}
-    m_FontSize: 35
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -10034,7 +10041,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -120}
+  m_AnchoredPosition: {x: 0, y: -140}
   m_SizeDelta: {x: 452, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1993463555
@@ -10058,11 +10065,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: d5b243a1080434b36ac116b9a865c7e9, type: 3}
-    m_FontSize: 35
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -10073,13 +10080,75 @@ MonoBehaviour:
 
     You can find him by
 
-    pointing the phone at flat surface!'
+    pointing the phone at a flat surface!'
 --- !u!222 &1993463556
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1993463553}
+--- !u!1001 &2031526496
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 868146843}
+    m_Modifications:
+    - target: {fileID: 400000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.017089842
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2747191
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1093489536ab249a480642d44b69d368, type: 2}
+    - target: {fileID: 400000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: eaa0ceaba5906451f9faa8d89d755871, type: 3}
+  m_IsPrefabParent: 0
 --- !u!1001 &2032096143
 Prefab:
   m_ObjectHideFlags: 0
@@ -10483,7 +10552,7 @@ RectTransform:
   m_Children:
   - {fileID: 1155730480}
   m_Father: {fileID: 354170976}
-  m_RootOrder: 19
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

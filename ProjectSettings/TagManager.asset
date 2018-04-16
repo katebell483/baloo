@@ -32,6 +32,7 @@ TagManager:
   - pill
   - bandaid
   - progress
+  - pupMesh
   layers:
   - Default
   - TransparentFX
