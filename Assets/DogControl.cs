@@ -304,12 +304,15 @@ public class DogControl : MonoBehaviour {
 		}
 	}
 
+	/*
 	public void updateProgress(){
 		progress.GetComponent<Text> ().text = points.ToString();
-	}
+	}*/
 
 
 	public void incrementPoints(){
+		//updateProgress ();
+		progress.GetComponent<Text> ().text = points.ToString();
 		points += 1;
 		animatePoints = true;
 	}
@@ -914,7 +917,7 @@ public class DogControl : MonoBehaviour {
 
 	private void getNextInteraction(String lastEvent) {
 		incrementPoints ();
-		updateProgress ();
+		//updateProgress ();
 		
 		switch (level) {
 		case 1:
