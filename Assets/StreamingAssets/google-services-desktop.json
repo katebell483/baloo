@@ -1,0 +1,37 @@
+{
+  "client": [
+    {
+      "services": {
+        "appinvite_service": {
+          "status": 1
+        }, 
+        "analytics_service": {
+          "status": 0
+        }
+      }, 
+      "oauth_client": [
+        {
+          "client_id": "160704000301-6tsc25s4eu46rck6mpp9fc4fndcvpdo7.apps.googleusercontent.com"
+        }
+      ], 
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6W92iAnNS1p7k_EmVGAAjalP-ZdsbD2Q"
+        }
+      ], 
+      "client_info": {
+        "mobilesdk_app_id": "1:160704000301:ios:3e4f874e8ae12f2a", 
+        "android_client_info": {
+          "package_name": "com.katebell.baloo"
+        }
+      }
+    }
+  ], 
+  "configuration_version": "1", 
+  "project_info": {
+    "storage_bucket": "baloo-bfbb8.appspot.com", 
+    "project_id": "baloo-bfbb8", 
+    "firebase_url": "https://baloo-bfbb8.firebaseio.com", 
+    "project_number": "160704000301"
+  }
+}

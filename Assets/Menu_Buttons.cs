@@ -1,14 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Firebase;
+using Firebase.Database;
+using Firebase.Unity.Editor;
 
+public class UserData {
+	public string username, emoji_start, emoji_end, sentiment_start, sentiment_end;
+	public double total_session_time;
+	public DateTime date;
+
+	public UserData() {
+	}
+
+	public UserData(string username, string emoji_start, string emoji_end, string sentiment_start, string sentiment_end, double total_session_time, DateTime date) {
+		this.username = username;
+		this.emoji_start = emoji_start;
+		this.emoji_end = emoji_end;
+		this.sentiment_end = sentiment_end;
+		this.sentiment_start = sentiment_start;
+		this.total_session_time = total_session_time;
+		this.date = date;
+	}
+}
 
 public class Menu_Buttons : MonoBehaviour {
 	public GameObject MenuPanel;
 	public GameObject LevelSelectPanel;
 	public GameObject LoginPanel;
 	public GameObject SignUpPanel;
+	public GameObject FinalPanel;
 	public InputField nameField;
 	public Text howFeelingText;
 	Vector3 endPos;
@@ -39,6 +62,9 @@ public class Menu_Buttons : MonoBehaviour {
 	public byte[] bytes;
 	public bool check;
 
+	// db
+	public DatabaseReference mDatabaseRef;
+	private FirebaseDatabase mDatabase;
 
 	static public int accessed = 0;    // this is reachable from everywhere
 
@@ -46,6 +72,15 @@ public class Menu_Buttons : MonoBehaviour {
 	void Start () {
 		check = false;
 		print ("cross scene info: " + SceneController.CrossSceneInformation);
+
+		// set up db
+		FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://baloo-bfbb8.firebaseio.com/");
+		mDatabase = FirebaseDatabase.DefaultInstance;
+		mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
+		FirebaseApp.LogLevel = LogLevel.Debug;
+
+		//testDB ();
+		//saveMetrics();
 
 		switch (SceneController.CrossSceneInformation) {
 		case "emojis":
@@ -95,6 +130,18 @@ public class Menu_Buttons : MonoBehaviour {
 		//scaredUnselected = Resources.Load("Assets/scaredUnselected") as Sprite;
 	}
 
+	void testDB() {
+		UserMetrics.Time_in_app = Time.realtimeSinceStartup;
+
+		UserData metrics = new UserData(UserMetrics.Username, UserMetrics.Emoji_start, UserMetrics.Emoji_end, UserMetrics.Face_emotion_start, UserMetrics.Face_emotion_end, UserMetrics.Time_in_app, UserMetrics.Date);
+		string json = JsonUtility.ToJson(metrics);
+
+		Debug.Log ("JSON FOR DB " + json);
+
+		string key = mDatabaseRef.Child("metrics").Push().Key;
+		mDatabaseRef.Child (key).SetRawJsonValueAsync (json);
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if (!camAvailable)
@@ -132,6 +179,7 @@ public class Menu_Buttons : MonoBehaviour {
 	public void ShowSignUpPanel()
 	{
 		nameUser = nameField.text;
+		UserMetrics.Username = nameUser; // save the username
 		Debug.Log (nameUser);
 		MenuPanel.SetActive(false);
 		SignUpPanel.SetActive(true);
@@ -145,7 +193,18 @@ public class Menu_Buttons : MonoBehaviour {
 		//LoginPanel.SetActive(false);
 	}
 
+	public void setEmojiMetric(string emoji) {
+		if (isExitTime) {
+			UserMetrics.Emoji_end = emoji; 
+			Debug.Log("EXIT EMOJI: " + UserMetrics.Emoji_end);
+		} else {
+			UserMetrics.Emoji_start = emoji;
+			Debug.Log("START EMOJI: " + UserMetrics.Emoji_start);
+		}
+	}
+
 	public void selectScared(){
+		setEmojiMetric ("scared");
 		Image scaredImage = GameObject.Find("scaredButton").GetComponent<Image>();
 		scaredImage.sprite = scaredSelected;
 		Image happyImage = GameObject.Find("happyButton").GetComponent<Image>();
@@ -166,6 +225,7 @@ public class Menu_Buttons : MonoBehaviour {
 	}
 
 	public void selectHappy(){
+		setEmojiMetric ("happy");
 		Image scaredImage = GameObject.Find("scaredButton").GetComponent<Image>();
 		scaredImage.sprite = scaredUnselected;
 		Image happyImage = GameObject.Find("happyButton").GetComponent<Image>();
@@ -186,6 +246,7 @@ public class Menu_Buttons : MonoBehaviour {
 	}
 
 	public void selectAngry(){
+		setEmojiMetric ("angry");
 		Image scaredImage = GameObject.Find("scaredButton").GetComponent<Image>();
 		scaredImage.sprite = scaredUnselected;
 		Image happyImage = GameObject.Find("happyButton").GetComponent<Image>();
@@ -206,6 +267,7 @@ public class Menu_Buttons : MonoBehaviour {
 	}
 
 	public void selectSad(){
+		setEmojiMetric ("sad");
 		Image scaredImage = GameObject.Find("scaredButton").GetComponent<Image>();
 		scaredImage.sprite = scaredUnselected;
 		Image happyImage = GameObject.Find("happyButton").GetComponent<Image>();
@@ -226,6 +288,7 @@ public class Menu_Buttons : MonoBehaviour {
 	}
 
 	public void selectWorried(){
+		setEmojiMetric ("worried");
 		Image scaredImage = GameObject.Find("scaredButton").GetComponent<Image>();
 		scaredImage.sprite = scaredUnselected;
 		Image happyImage = GameObject.Find("happyButton").GetComponent<Image>();
@@ -246,6 +309,7 @@ public class Menu_Buttons : MonoBehaviour {
 	}
 
 	public void selectExcited(){
+		setEmojiMetric ("excited");
 		Image scaredImage = GameObject.Find("scaredButton").GetComponent<Image>();
 		scaredImage.sprite = scaredUnselected;
 		Image happyImage = GameObject.Find("happyButton").GetComponent<Image>();
@@ -336,6 +400,7 @@ public class Menu_Buttons : MonoBehaviour {
 		yield return www;
 		string responseData = www.text;
 		responseData = fixJson(responseData);
+		string maxName = "";
 
 		QuestionList listFaces = JsonUtility.FromJson<QuestionList> (responseData);
 
@@ -350,7 +415,6 @@ public class Menu_Buttons : MonoBehaviour {
 			int suprise = Mathf.RoundToInt ((float)listFaces.Items [0].scores.surprise * 100);
 
 			double maxValue = 0.0;
-			string maxName = "";
 
 			if (maxValue < listFaces.Items [0].scores.anger) {
 				maxValue = listFaces.Items [0].scores.anger;
@@ -392,13 +456,33 @@ public class Menu_Buttons : MonoBehaviour {
 			Debug.Log ("NO FACE DETECTED");
 			Debug.Log ("=================");
 		}
+
+		if (isExitTime) {
+			UserMetrics.Face_emotion_end = maxName;
+			Debug.Log ("END FACE EMOTION " + UserMetrics.Face_emotion_end);
+		} else {
+			UserMetrics.Face_emotion_start = maxName;
+			Debug.Log ("START FACE EMOTION " + UserMetrics.Face_emotion_start);
+		}
+
 		check = true;
 	}
 
+	private void saveMetrics() {
 
+		UserMetrics.Time_in_app = Time.realtimeSinceStartup;
+		UserMetrics.Date = System.DateTime.Now;
 
-	public void ShowMenuFromSignUpPanel()
-	{
+		UserData metrics = new UserData(UserMetrics.Username, UserMetrics.Emoji_start, UserMetrics.Emoji_end, UserMetrics.Face_emotion_start, UserMetrics.Face_emotion_end, UserMetrics.Time_in_app, UserMetrics.Date);
+		string json = JsonUtility.ToJson(metrics);
+
+		Debug.Log ("JSON FOR DB " + json);
+
+		string key = mDatabaseRef.Child("metrics").Push().Key;
+		mDatabaseRef.Child (key).SetRawJsonValueAsync (json);
+	}
+
+	public void ShowMenuFromSignUpPanel() {
 		//Create a Texture2D with the size of the rendered image on the screen.
 		Texture2D texture = new Texture2D(frontCam.texture.width, frontCam.texture.height, TextureFormat.ARGB32, false);
 
@@ -423,7 +507,7 @@ public class Menu_Buttons : MonoBehaviour {
 		check = false;
 		if (selectedEmoji) {
 
-			frontCamTexture.Stop ();
+			frontCamTexture.Stop ();		
 
 			//StartCoroutine (Upload (bytes));
 			StartCoroutine(loadARKitSceneAndFaceDetection());
@@ -433,15 +517,25 @@ public class Menu_Buttons : MonoBehaviour {
 		}
 	}
 
+	public void ExitApplication() {
+		Debug.Log ("HERE3333!");
+		Application.Quit ();
+		//saveMetrics();
+
+	}
+
 	IEnumerator loadARKitSceneAndFaceDetection()
 	{
 		yield return StartCoroutine(Upload (bytes));
 
 		if (isExitTime && check) {
-			Application.Quit ();
+			Debug.Log ("HERE111111111111");
+			saveMetrics();
+			SignUpPanel.SetActive (false);
+			FinalPanel.SetActive (true);
 		} else if(check) {
 			Application.LoadLevel ("UnityARKitScene");
-			Application.LoadLevel ("UnityARKitScene");
+			//Application.LoadLevel ("UnityARKitScene");
 		}
 	}
 }

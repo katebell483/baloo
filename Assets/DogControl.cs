@@ -304,16 +304,9 @@ public class DogControl : MonoBehaviour {
 		}
 	}
 
-	/*
-	public void updateProgress(){
-		progress.GetComponent<Text> ().text = points.ToString();
-	}*/
-
-
 	public void incrementPoints(){
-		//updateProgress ();
-		progress.GetComponent<Text> ().text = points.ToString();
 		points += 1;
+		progress.GetComponent<Text> ().text = points.ToString();
 		animatePoints = true;
 	}
 	public void incrementPointsAnimation(){
@@ -821,9 +814,6 @@ public class DogControl : MonoBehaviour {
 	public IEnumerator postInjectionMsg(String msg) {
 		triggerInfoBubble(msg, 3.0f); 
 		yield return new WaitForSeconds(3.0f); 
-
-		//incrementPoints ();
-		//updateProgress ();
 		getNextInteraction ("draggable");
 	}
 
@@ -843,7 +833,7 @@ public class DogControl : MonoBehaviour {
 
 		// set the food on the platform
 		Vector3 planePos = UnityARMatrixOps.GetPosition (result.worldTransform);
-		dogFood.transform.position = new Vector3 (planePos.x, planePos.y -.1f, planePos.z);
+		dogFood.transform.position = new Vector3 (planePos.x, planePos.y, planePos.z);
 		dogFood.transform.rotation = Quaternion.Euler (Vector3.zero);
 		foodPos = dogFood.transform.position;
 		dogFood.SetActive (true);
@@ -899,8 +889,6 @@ public class DogControl : MonoBehaviour {
 		// remove bowl
 		dogFood.SetActive (false);
 
-		//incrementPoints ();
-		//updateProgress ();
 		getNextInteraction ("eating");
 
 		/*
@@ -917,8 +905,7 @@ public class DogControl : MonoBehaviour {
 
 	private void getNextInteraction(String lastEvent) {
 		incrementPoints ();
-		//updateProgress ();
-		
+
 		switch (level) {
 		case 1:
 			getNextLevelOneInteraction ();
@@ -1445,8 +1432,6 @@ public class DogControl : MonoBehaviour {
 			aura.SetActive (false);
 			hasBreathed = true;
 
-			//incrementPoints ();
-			//updateProgress ();
 			getNextInteraction ("breathing");
 		}
 	}
