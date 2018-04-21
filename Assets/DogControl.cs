@@ -107,7 +107,7 @@ public class DogControl : MonoBehaviour {
 	public bool hasBreathed = false; // true if the breathing feature has been done already
 
 	// blinking params
-	public float blinkRate = 1.0F;
+	public float blinkRate = 1.5F;
 	private float nextBlinkCheck = 0.0F;
 	private float blinkVal = 0.0F;
 	private float initBlinkVal = 0.0F;
@@ -174,7 +174,6 @@ public class DogControl : MonoBehaviour {
 	void Start () {
 		
 		animator = corgi.GetComponent<Animator> ();
-		//heartSystem = GameObject.FindWithTag ("heartParticleSystem");
 		ParticleSystem heartSystem = GameObject.FindWithTag ("heartParticleSystem").GetComponent<ParticleSystem> ();
 		var emission = heartSystem.emission;
 		emission.enabled = false;
@@ -189,28 +188,13 @@ public class DogControl : MonoBehaviour {
 		corgiMesh = GameObject.FindWithTag ("pup_blend_mesh").GetComponent<SkinnedMeshRenderer> ();
 
 		progress = GameObject.FindWithTag ("progress");
-		//progress.GetComponent<Text> ().text = "TEST";
-
 	}
 
 	// Update is called once per frame
 	void Update () {
 
-
-		//Daniel
-		/* // Return the number of fingers on the screen
-		int fingerCount = 0;
-		foreach (Touch touch in Input.touches) {
-			if (touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Canceled)
-				fingerCount++;
-		}
-		if (fingerCount > 0)
-			Debug.Log("User has " + fingerCount + " finger(s) touching the screen");
-		*/
-
 		//Animate progress indicator:
 		if (animatePoints){
-			//progress.transform.localScale += new Vector3 (0.05f, 0.05);
 			incrementPointsAnimation();
 		}
 
@@ -247,10 +231,6 @@ public class DogControl : MonoBehaviour {
 		} else {
 			aura.SetActive (false);
 		}
-
-		if (isFinishingInteraction) {
-			Finish ();
-		}
 			
 		// is the dog rotating?
 		if (rotating) {
@@ -268,8 +248,6 @@ public class DogControl : MonoBehaviour {
 		if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down) && !waitingToSit) {
 			LayDown ();
 		}*/
-
-
 
 		// PETTING
 		if (!fetching && !goingToFood && !dragObjectActive) {
@@ -306,11 +284,11 @@ public class DogControl : MonoBehaviour {
 
 	public void incrementPoints(){
 		points += 1;
+		UserMetrics.Points = points;
 		progress.GetComponent<Text> ().text = points.ToString();
 		animatePoints = true;
 	}
 	public void incrementPointsAnimation(){
-		//progress.GetComponent<Text> ().fontSize += 1;
 		if (increasingProgressSize) {
 			//Debug.Log ("increasingProgressSize: " + increasingProgressSize + " and: " + progress.transform.localScale.x);
 			if (progress.transform.localScale.x < 3.0f) {
@@ -328,8 +306,6 @@ public class DogControl : MonoBehaviour {
 				increasingProgressSize = true;
 			}
 		}
-		//Debug.Log ("sizeTExt: "+ progress.transform.localScale);
-		//Debug.Log ("sizeTExt: "+ progress.GetComponent<Text> ().fontSize);
 	}
 
 	private void setDragObject() {
@@ -403,10 +379,12 @@ public class DogControl : MonoBehaviour {
 			return;
 
 		nextBlinkCheck = Time.time + blinkRate;
-		int idx = UnityEngine.Random.Range (1, 2);
+		int idx = UnityEngine.Random.Range (0, 2);
+
+		Debug.Log ("BLINK IDX " + idx);
 
 		// if its modulo 3 blink (aka have dog blink every 3 seconds)
-		if (idx % 2 == 0) {
+		if (idx == 0) {
 			isBlinking = true;
 			blinkClose = true;
 			Blink ();
@@ -414,6 +392,8 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void Blink() {
+		Debug.Log ("INIT BLINK VAL " + initBlinkVal);
+		Debug.Log ("Is opening BLINK " + blinkOpen);
 		if (blinkClose && blinkVal > 95) {
 			blinkOpen = true;
 			blinkClose = false;
@@ -456,52 +436,12 @@ public class DogControl : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerExit(Collider other) {
-		Debug.Log (other.tag);
-		/*
-		if (initialFetchSequence) {
-			Debug.Log ("HIT WALLs starting to run");
-
-			// disable colliders
-			corgiCollider = corgi.GetComponent<Collider> ();
-			corgiCollider.enabled = false;
-
-			Run (); 
-
-			fetching = true;
-			initialFetchSequence = false;
-
-		} else if (isRandomlyWalking) {
-			Debug.Log ("HIT WALL Randomly walking");
-			rotatingTargetPos = mat.transform.position;
-			rotating = true;
-		} else {
-			Debug.Log ("HIT WALL GENERAL CASE: " + other.tag);
-			corgi.transform.LookAt (mat.transform.position);
-			//Sit ();
-			WalkToIdle();
-		}*/
-	}
-
-	/*
-	void OnCollisionEnter(Collision other) {
-		Debug.Log ("COLLISION TAG:  " + other.gameObject.tag); 
-		if (other.gameObject.tag == "syringe" ||
-			other.gameObject.tag == "pill" ||
-			other.gameObject.tag == "bandaid") {
-			Debug.Log ("COLLISION SO DRAG DONE"); 
-
-			dragObjectCollided = true;
-		}
-	}*/
-
 	void OnTriggerEnter(Collider other) {
 		Debug.Log ("onTriggerEnter " + other.tag);
 		if ((other.tag == "syringe" ||
 			other.tag == "pill" ||
 			other.tag == "bandaid") && dogInScene && dragObjectActive) {
 			Debug.Log ("COLLISION SO DRAG DONE"); 
-
 			dragObjectCollided = true;
 		}
 	}
@@ -513,24 +453,10 @@ public class DogControl : MonoBehaviour {
 		startFetchingPos = corgi.transform.position;
 		Debug.Log ("START FETCHIN POS 1: " + startFetchingPos);
 
-		//fetchOrigin = corgi.transform.position;
 		endFetchingPos = ballPos;
 
 		rotating = true;
 		rotatingTargetPos = endFetchingPos;
-
-		//ball = GameObject.FindWithTag ("propFrisbee");
-		//LookAtObj(ball);
-
-		// walk to the edge
-		//Walk ();
-
-		// then turn and walk towards edge of platform
-		//initialFetchSequence = true;
-
-		// disable colliders
-		//corgiCollider = corgi.GetComponent<Collider> ();
-		//corgiCollider.enabled = false;
 
 		if (level == 2) {
 			RunSlow ();
@@ -647,30 +573,8 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void FinishInteraction() {
-		// rotate towards home
-		isFinishingInteraction = true;
-		rotating = true;
-		rotatingTargetPos = mat.transform.position;
-		Walk ();
-	}
-
-	public void Finish() {
-		//check distance
-		float distance = Math.Abs(Vector3.Distance(corgi.transform.position, mat.transform.position));
-		Debug.Log ("DISTANCE: " + distance);
-
-		if (distance < .02) {
-			Debug.Log ("CORGI IN FINAL SPOT");
-			isFinishingInteraction = false;
-			LookAt ();
-			StartCoroutine (startExitSequence ());
-		} else {
-			// move dog forward
-			Debug.Log ("CORGI STILL GOING TO FINAL SPOT");
-			fraction += Time.deltaTime * .015f;
-			Vector3 currPos = Vector3.Lerp (corgi.transform.position, mat.transform.position, fraction);
-			corgi.transform.position = currPos;
-		} 
+		LookAt ();
+		StartCoroutine (startExitSequence ());
 	}
 
 	public IEnumerator startExitSequence() {
@@ -752,17 +656,6 @@ public class DogControl : MonoBehaviour {
 		dragObjectPos = corgi.transform.position - dragObject.transform.position;
 		Debug.Log ("drag object distance: "+ dragObjectPos.sqrMagnitude);
 
-		/*
-		float minDist = .04f;
-		if (level == 1) {
-			minDist = .03f; // the syringe should go more in
-		}
-			
-		if (dragObjectPos.sqrMagnitude < minDist) { // was .02
-			dragObjectDraggable = false;
-		}*/
-
-
 		if (dragObjectCollided) {
 			dragObjectDraggable = false;
 		}
@@ -787,8 +680,6 @@ public class DogControl : MonoBehaviour {
 					RaycastHit hit;
 
 					if (Physics.Raycast (mouseRay.origin, mouseRay.direction, out hit)) {
-						//gObj = hit.collider.transform.gameObject;
-						//gObj = hit.transform.gameObject;
 						gObj = dragObject;
 						Debug.Log ("tag gObj: " + gObj.tag);
 						Debug.Log ("tag collider: " + hit.collider.transform.tag);
@@ -890,17 +781,6 @@ public class DogControl : MonoBehaviour {
 		dogFood.SetActive (false);
 
 		getNextInteraction ("eating");
-
-		/*
-		// check for end conditions
-		// if interaction complete then start exit sequence
-		// if max food events reached disable eat button
-		if (!isInteractionComplete () &&  isLastEatingEvent) {
-			triggerInfoBubble ("I'm totally stuffed now!\n Yum!", 3.0f);
-			eatButton.GetComponent<Button> ().interactable = false;
-			//fetchButton.GetComponent<Button> ().Select ();
-		}
-		*/
 	}
 
 	private void getNextInteraction(String lastEvent) {
@@ -1085,27 +965,7 @@ public class DogControl : MonoBehaviour {
 
 				// restore corgi settings
 				rotating = false;
-				//corgiCollider = corgi.GetComponent<Collider>();
-				//corgiCollider.enabled = true;
-
-				// bring back prop
-				//propFrisbee.SetActive(true);
-
 				getNextInteraction ("fetching");
-
-				/*
-				// first check if thi means we are done
-				if (isInteractionComplete ()) {
-					return;
-				}
-
-				// is this the third fetch?
-				if (numFetches % 2 == 0 && numMeditationEvents == 0) {
-					Debug.Log ("prompt HERE!!!!!!");
-					promptMeditation ();
-				} else if (numFetches % 3 == 0 && numEatingEvents == 0) {
-					promptFeeding ();
-				} */
 
 			} else {
 				Debug.Log ("turning around");
@@ -1135,8 +995,6 @@ public class DogControl : MonoBehaviour {
 		
 	public IEnumerator promptMeditation(String msg) {
 		Debug.Log ("prompt MEDIATAIPODJSF");
-		//Bark ();
-		//StartBreathingSequence();
 		triggerInfoBubble (msg, 3.0f);
 		yield return new WaitForSeconds(3.5f); 
 		breatheButton.GetComponent<Button>().Select();
@@ -1185,133 +1043,7 @@ public class DogControl : MonoBehaviour {
 			triggerInfoBubble ("I'm totally stuffed now! \n Let's play fetch!", 5.0f);
 		}
 	}
-
-	/*
-	//Random Static Action :
-	public void doRandomStaticAction(){
-		shouldMove = false;
-		rotating = false; 
-		//Random static actiona and random time
-		if (randomStaticAction == "Sit"){
-			Sit ();
-			LookAt ();
-		}else if (randomStaticAction == "Dig"){
-			Dig ();
-		}else if (randomStaticAction == "SitScratch"){
-			SitScratch ();
-		}else if (randomStaticAction == "Lay"){
-			Lay ();
-		}
-		warpRandomWalkAgain (randomStaticTime);
-	}
-
-
-	public void warpRandomWalkAgain(float time) {
-		StartCoroutine(RandomWalkAgain(time));
-	}
-
-	public IEnumerator RandomWalkAgain(float time) {
-		yield return new WaitForSeconds(time);
-		numberOfRandomTargetReached=0;
-		//Here we can add a random number of numberOfRandomTargetReached
-		//HERE
-		isRandomlyWalking = true;
-		rotating = true; 
-	}
-
-	public string getRandomStaticAction(float randomNumber){
-		if (randomNumber <= .25f) {
-			return "Sit";
-		} else if (randomNumber <= .5f) {
-			return "Dig";
-		} else if (randomNumber <= .75f) {
-			return "SitScratch";
-		} else {
-			return "Lay";
-		}
-	}
-	public float getRandomStaticTime(string randomAction){
-		if (randomAction == "Sit") {
-			return 14f;
-		} else if (randomAction == "Dig") {
-			return 10f;
-		} else if (randomAction == "SitScratch") {
-			return 6f;
-		} else if (randomAction == "Lay") {
-			return 14f;
-		} else {
-			return 7f;
-		}
-	}
-
-
-
-	// Random Walking
-	public void activateRandomWalking(){
-		//Walk ();
-		randomBehavior = true;
-		isRandomlyWalking = true;
-		numberOfRandomTargetReached = 0;
-		shouldMove = true;
-		rotating = true;
-		//fraction = 0;
-		rotatingTargetPos = newRandomDirection ();
-		Debug.Log ("rotatingTargetPos: "+rotatingTargetPos);
-		Debug.Log ("activateRandomWalking called");
-		Debug.Log ("Parameters Value : isBreathing: " + isBreathing + ", isRandomly walking: "+ isRandomlyWalking+ ", shouldMove: "+ shouldMove);
-	}
-
-
-	//// Returns a return value among {-1,0,1}
-	//// randomNumber is between 0.0 and 1.0
-	public float returnRandomInteger(float randomNumber){
-		if (randomNumber <= .2f) {
-			return -2;
-		} else if (randomNumber <= .4f) {
-			return -1;
-		} else if (randomNumber <= .6f) {
-			return 0;
-		} else if (randomNumber <= .8f) {
-			return 1;
-		} else {
-			return 2;
-		}
-	}
-	public Vector3 newRandomDirection(){
-		randX = returnRandomInteger (UnityEngine.Random.value);
-		randZ = returnRandomInteger (UnityEngine.Random.value);
-		Debug.Log("New direction: randX: "+ randX + ", randZ: "+randZ);
-		Vector3 randVector = new Vector3 (randX, 0, randZ);
-		if (randVector.magnitude > 0) {
-			randVector = randVector / randVector.magnitude;
-		}
-		randVector = corgi.transform.position + randVector*corgi.transform.localScale.x * .025f ;//Random position next to the dog
-		return randVector;
-	}
-
-	public void RandomWalk(){
-		//Debug.Log ("Random Walk called");
-		//Debug.Log ("Parameters Value : isBreathing: " + isBreathing + ", isRandomly walking: "+ isRandomlyWalking+ ", shouldMove: "+ shouldMove);
-		//Debug.Log ("rotatingTargetPos: "+rotatingTargetPos);
-
-		if(!isRandomlyWalking) return;
-		Walk ();
-		float distance = Math.Abs(Vector3.Distance(corgi.transform.position, rotatingTargetPos));
-		if (distance < 0.06) {
-			Debug.Log ("Arrived at Random Destination" + distance);
-			numberOfRandomTargetReached += 1;
-			if (numberOfRandomTargetReached == 2) {
-				Debug.Log ("Stop Random Walking");
-				randomStaticAction = getRandomStaticAction (UnityEngine.Random.value);
-				randomStaticTime = getRandomStaticTime (randomStaticAction);
-				isRandomlyWalking = false;
-			} else {
-				rotatingTargetPos = newRandomDirection ();
-			}
-		}
-	}
-	*/
-	
+		
 	public void triggerInfoBubble(string infoMsg, float time) {
 		infoBubble.SetActive (true);
 		infoBubble.GetComponentInChildren<Text> ().text = infoMsg;
@@ -1372,7 +1104,6 @@ public class DogControl : MonoBehaviour {
 	public void BreatheTest(){
 		// Transformation of the sphere
 		if (auraGrowing && aura.transform.localScale.x < 14) {
-			Debug.Log ("aura growing");
 			infoBubble.GetComponentInChildren<Text> ().text = "In through the nose for 4...";
 			aura.transform.localScale += new Vector3 (0.04F, 0.04F, 0.04F);
 			chestVal = chestVal + .5f;
@@ -1401,12 +1132,9 @@ public class DogControl : MonoBehaviour {
 	public void Breathe(){
 		// Transformation of the sphere
 		if (auraGrowing && aura.transform.localScale.x < 14) {
-			Debug.Log ("aura growing");
 			infoBubble.GetComponentInChildren<Text> ().text = "IN";
 			aura.transform.localScale += new Vector3 (0.04F, 0.04F, 0.04F);
 			chestVal = chestVal + .5f;
-			Debug.Log ("CHEST VAL: " + chestVal);
-
 		} else if (auraGrowing && aura.transform.localScale.x >= 14) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Hold";
 			AuraWarper ();
@@ -1502,6 +1230,7 @@ public class DogControl : MonoBehaviour {
 	// TODO: set initial blend shapes
 	public void setLevelOne() {
 		Debug.Log ("level 1");
+		UserMetrics.Level = 1;
 		introPanel.SetActive (true);
 		levelPanel.SetActive (false);
 		level = 1;
@@ -1519,6 +1248,7 @@ public class DogControl : MonoBehaviour {
 
 	public void setLevelTwo() {
 		Debug.Log ("level 2");
+		UserMetrics.Level = 2;
 		introPanel.SetActive (true);
 		levelPanel.SetActive (false);
 		level = 2;
@@ -1536,6 +1266,7 @@ public class DogControl : MonoBehaviour {
 
 	public void setLevelThree() {
 		Debug.Log ("level 3");
+		UserMetrics.Level = 3;
 		introPanel.SetActive (true);
 		levelPanel.SetActive (false);
 		level = 3;

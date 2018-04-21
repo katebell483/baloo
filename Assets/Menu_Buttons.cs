@@ -11,11 +11,12 @@ public class UserData {
 	public string username, emoji_start, emoji_end, sentiment_start, sentiment_end;
 	public double total_session_time;
 	public DateTime date;
+	public int points, level;
 
 	public UserData() {
 	}
 
-	public UserData(string username, string emoji_start, string emoji_end, string sentiment_start, string sentiment_end, double total_session_time, DateTime date) {
+	public UserData(string username, string emoji_start, string emoji_end, string sentiment_start, string sentiment_end, double total_session_time, DateTime date, int points, int level) {
 		this.username = username;
 		this.emoji_start = emoji_start;
 		this.emoji_end = emoji_end;
@@ -23,6 +24,8 @@ public class UserData {
 		this.sentiment_start = sentiment_start;
 		this.total_session_time = total_session_time;
 		this.date = date;
+		this.points = points;
+		this.level = level;
 	}
 }
 
@@ -133,7 +136,16 @@ public class Menu_Buttons : MonoBehaviour {
 	void testDB() {
 		UserMetrics.Time_in_app = Time.realtimeSinceStartup;
 
-		UserData metrics = new UserData(UserMetrics.Username, UserMetrics.Emoji_start, UserMetrics.Emoji_end, UserMetrics.Face_emotion_start, UserMetrics.Face_emotion_end, UserMetrics.Time_in_app, UserMetrics.Date);
+		UserData metrics = new UserData(UserMetrics.Username, 
+			UserMetrics.Emoji_start, 
+			UserMetrics.Emoji_end, 
+			UserMetrics.Face_emotion_start, 
+			UserMetrics.Face_emotion_end, 
+			UserMetrics.Time_in_app, 
+			UserMetrics.Date, 
+			UserMetrics.Points, 
+			UserMetrics.Level);
+		
 		string json = JsonUtility.ToJson(metrics);
 
 		Debug.Log ("JSON FOR DB " + json);
@@ -473,7 +485,15 @@ public class Menu_Buttons : MonoBehaviour {
 		UserMetrics.Time_in_app = Time.realtimeSinceStartup;
 		UserMetrics.Date = System.DateTime.Now;
 
-		UserData metrics = new UserData(UserMetrics.Username, UserMetrics.Emoji_start, UserMetrics.Emoji_end, UserMetrics.Face_emotion_start, UserMetrics.Face_emotion_end, UserMetrics.Time_in_app, UserMetrics.Date);
+		UserData metrics = new UserData(UserMetrics.Username, 
+			UserMetrics.Emoji_start, 
+			UserMetrics.Emoji_end, 
+			UserMetrics.Face_emotion_start, 
+			UserMetrics.Face_emotion_end, 
+			UserMetrics.Time_in_app, 
+			UserMetrics.Date,
+			UserMetrics.Points,
+			UserMetrics.Level);
 		string json = JsonUtility.ToJson(metrics);
 
 		Debug.Log ("JSON FOR DB " + json);

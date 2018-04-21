@@ -7,6 +7,7 @@ public static class UserMetrics {
 	private static string username, emoji_start, emoji_end, face_emotion_start, face_emotion_end;
 	private static double time_in_app;
 	private static DateTime date;
+	private static int points, level;
 
 	public static string Username {
 		get {
@@ -75,6 +76,24 @@ public static class UserMetrics {
 
 		set {
 			date = value;
+		}
+	}
+	public static int Points {
+		get {
+			return points;
+		}
+
+		set {
+			points = value;
+		}
+	}
+	public static int Level {
+		get {
+			return level;
+		}
+
+		set {
+			level = value;
 		}
 	}
 }
