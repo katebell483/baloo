@@ -52,6 +52,7 @@ public class DogControl : MonoBehaviour {
 	private bool dragObjectCollided = false;
 	public GameObject gObj; //used for drag object interaction
 	private int numDraggableEvents = 0;
+	private bool isMsgShowing = false;
 
 	// walking params
 	private float walkSpeed = .25f;
@@ -77,6 +78,7 @@ public class DogControl : MonoBehaviour {
 	public bool goingToFood = false;
 	public Vector3 foodPos;
 	private int numEatingEvents = 0;
+	private bool isEating = false;
 	private bool isLastEatingEvent = false;
 
 	// Random Behavior parameters
@@ -105,6 +107,9 @@ public class DogControl : MonoBehaviour {
 	private int numMeditationEvents = 0;
 	private float chestVal = 0.0F;
 	public bool hasBreathed = false; // true if the breathing feature has been done already
+	public bool isBreathingPrompt = false;
+	private bool isBreathingIn = false;
+	private bool isBreathingOut = false;
 
 	// blinking params
 	public float blinkRate = 1.5F;
@@ -198,12 +203,6 @@ public class DogControl : MonoBehaviour {
 			incrementPointsAnimation();
 		}
 
-
-		// drag object feature
-		if (dragObjectActive) {
-			dragObjectAnimate ();
-		}
-
 		// blinking
 		if (isBlinking) {
 			Blink ();
@@ -218,9 +217,9 @@ public class DogControl : MonoBehaviour {
 			hideButtons ();
 		}
 
-		// even rotating but no more distance walk in place
-		if (rotating && !shouldMove) {
-			//WalkInPlace ();
+		// drag object feature
+		if (dragObjectActive) {
+			dragObjectAnimate ();
 		}
 	
 		//Breathing phase:
@@ -249,17 +248,20 @@ public class DogControl : MonoBehaviour {
 			LayDown ();
 		}*/
 
+
 		// PETTING
-		if (!fetching && !goingToFood && !dragObjectActive) {
+		if (!isPreoccupied()) {
 			CheckForPetting();
 		}
 			
+
+		dealWithButtonStates ();
+
 		// FETCHING
 		if (fetching) {
 			Fetch (); 
 		}
-			
-		// EATING
+
 		if (goingToFood) {
 			GoToFoodAndEat();
 		}
@@ -282,8 +284,74 @@ public class DogControl : MonoBehaviour {
 		}
 	}
 
+	public void dealWithButtonStates() {
+
+		// disable buttons if dog busy
+		if (isPreoccupied () && !isBreathingPrompt && !isMsgShowing) {
+			syringeButton.GetComponent<Button> ().interactable = false;
+			pillButton.GetComponent<Button> ().interactable = false;
+			bandaidButton.GetComponent<Button> ().interactable = false;
+			fetchButton.GetComponent<Button> ().interactable = false;
+			eatButton.GetComponent<Button> ().interactable = false;
+			breatheButton.GetComponent<Button> ().interactable = false;
+		} else {
+			pillButton.GetComponent<Button> ().interactable = true;
+			syringeButton.GetComponent<Button> ().interactable = true;
+			bandaidButton.GetComponent<Button> ().interactable = true;
+			fetchButton.GetComponent<Button> ().interactable = true;
+			eatButton.GetComponent<Button> ().interactable = true;
+			breatheButton.GetComponent<Button> ().interactable = true;
+		}
+
+		// FETCHING
+		if (fetching) {
+			fetchButton.GetComponent<Button> ().interactable = true;
+			fetchButton.GetComponent<Button> ().Select ();
+		}
+
+		// EATING
+		if (isEating) {
+			eatButton.GetComponent<Button> ().interactable = true;
+			eatButton.GetComponent<Button> ().Select ();
+
+		}
+
+		// BREATHING
+		if (isBreathingTest || isBreathing) {
+			breatheButton.GetComponent<Button> ().interactable = true;
+			breatheButton.GetComponent<Button> ().Select ();
+		}
+
+		// DRAG OBJECT
+		if (dragObjectActive) {
+
+			switch(level) {
+			case 1:
+				syringeButton.GetComponent<Button> ().interactable = true;
+				syringeButton.GetComponent<Button> ().Select ();
+				break;
+			case 2:
+				pillButton.GetComponent<Button> ().interactable = true;
+				pillButton.GetComponent<Button> ().Select ();
+				break;
+			case 3:
+				bandaidButton.GetComponent<Button> ().interactable = true;
+				bandaidButton.GetComponent<Button> ().Select ();
+				break;
+			}
+
+		}
+
+	}
+
 	public void incrementPoints(){
 		points += 1;
+
+		if (points % 5 == 0) {
+			AudioSource audio = progress.GetComponent<AudioSource> ();
+			audio.Play ();
+		}
+
 		UserMetrics.Points = points;
 		progress.GetComponent<Text> ().text = points.ToString();
 		animatePoints = true;
@@ -501,7 +569,26 @@ public class DogControl : MonoBehaviour {
 	public void StopEat() {
 		Debug.Log ("Eating Done!");
 		shouldMove = false;
+		isEating = false;
 		animator.Play ("StopEating");
+	}
+
+	public void BreatheIn() {
+		isSitting = false;
+		shouldMove = false;
+		if (!isBreathingIn) {
+			animator.Play ("BreatheIn");
+			isBreathingIn = true;
+		}
+	}
+
+	public void BreatheOut() {
+		isSitting = false;
+		shouldMove = false;
+		if (!isBreathingOut) {
+			animator.Play ("BreatheOut");
+			isBreathingOut = true;
+		}
 	}
 
 	public void RunSlow() {
@@ -637,8 +724,22 @@ public class DogControl : MonoBehaviour {
 		}
 	}
 
+	public bool isPreoccupied() {
+		// only do one thing at a time
+		if (isBreathing || isBreathingTest || dragObjectActive || isEating || fetching || isBreathingPrompt || isMsgShowing) {
+			return true;
+		} 
+		return false;
+	}
+
 	public void StartDragObjectSequence(){
 		Debug.Log ("StartDragObjectSequence called");
+
+		// only do one thing at a time
+		if (isPreoccupied()) {
+			return;
+		}
+
 		if (!injectionDone) {
 			dragObject.SetActive (true);
 			dragObjectActive = true; // drag object appears
@@ -704,13 +805,22 @@ public class DogControl : MonoBehaviour {
 
 	public IEnumerator postInjectionMsg(String msg) {
 		triggerInfoBubble(msg, 3.0f); 
+		isMsgShowing = true;
 		yield return new WaitForSeconds(3.0f); 
+		isMsgShowing = false;
 		getNextInteraction ("draggable");
 	}
 
 
 	public void StartEatingSequence() {
-		
+
+		// only one thing at a time
+		if (isPreoccupied()) {
+			return;
+		}
+			
+		isEating = true;
+
 		// check for planes
 		var screenPosition = Camera.main.ScreenToViewportPoint (new Vector2 (Screen.width / 4f, Screen.height / 4f));
 		List<ARHitTestResult> hitResults = getHitTest(screenPosition);
@@ -1002,27 +1112,27 @@ public class DogControl : MonoBehaviour {
 
 	public void promptFeeding() {
 		eatButton.GetComponent<Button>().Select();
-		triggerInfoBubble ("I'm hungry! \n Will you feed me?", 5.0f);
+		triggerInfoBubble ("I'm hungry! \n Will you feed me?", 2.5f);
 	}
 
 	public void promptInjection() {
 		syringeButton.GetComponent<Button>().Select();
-		triggerInfoBubble ("I'm not feeling great.\n Will you give me my shot?", 5.0f);
+		triggerInfoBubble ("I'm not feeling great.\n Will you give me my shot?", 2.5f);
 	}
 
 	public void promptPill() {
 		pillButton.GetComponent<Button>().Select();
-		triggerInfoBubble ("It's time for my medicine.\n Will you give me my pill?", 5.0f);
+		triggerInfoBubble ("It's time for my medicine.\n Will you give me my pill?", 2.5f);
 	}
 
 	public void promptBandaid() {
 		bandaidButton.GetComponent<Button>().Select();
-		triggerInfoBubble ("I think I need a bandaid!\n Will you give me one?", 5.0f);
+		triggerInfoBubble ("I think I need a bandaid!\n Will you give me one?", 2.5f);
 	}
 
 	public void promptFetch () {
 		fetchButton.GetComponent<Button>().Select();
-		triggerInfoBubble ("I feel great! \n Let's play fetch!", 5.0f);
+		triggerInfoBubble ("I feel great! \n Let's play fetch!", 2.5f);
 	}
 
 	public void promptMaxFetches() {
@@ -1031,31 +1141,42 @@ public class DogControl : MonoBehaviour {
 			triggerInfoBubble ("Woof! I'm fetched out!", 5.0f);
 		} else {
 			eatButton.GetComponent<Button>().Select();
-			triggerInfoBubble ("All that fetching made me hungry! \n Will you feed me?", 5.0f);
+			triggerInfoBubble ("All that fetching made me hungry! \n Will you feed me?", 2.5f);
 		}
 	}
 
 	public void promptMaxEating() {
 		if (level == 3) {
-			triggerInfoBubble ("So delicious!", 5.0f);
+			triggerInfoBubble ("So delicious!", 2.5f);
+		} else if (level == 2) {
+			fetchButton.GetComponent<Button> ().Select ();
+			triggerInfoBubble ("I'm totally stuffed now! \n Let's play fetch!", 2.5f);
 		} else {
-			fetchButton.GetComponent<Button>().Select();
-			triggerInfoBubble ("I'm totally stuffed now! \n Let's play fetch!", 5.0f);
+			triggerInfoBubble ("I'm totally stuffed!", 2.5f);
+
 		}
 	}
 		
 	public void triggerInfoBubble(string infoMsg, float time) {
 		infoBubble.SetActive (true);
 		infoBubble.GetComponentInChildren<Text> ().text = infoMsg;
+		isMsgShowing = true;
 		StartCoroutine(InfoBubbleClose(time));
 	}
 
 	public IEnumerator InfoBubbleClose(float time) {
 		yield return new WaitForSeconds(time);  
 		infoBubble.SetActive (false);
+		isMsgShowing = false;
 	}
 
 	public void StartBreathingSequence() {
+
+		// only do one thing at a time
+		if (isPreoccupied()) {
+			return;
+		}
+			
 		LookAt ();
 		Sit ();
 		StartCoroutine (startBreathing ());
@@ -1078,12 +1199,13 @@ public class DogControl : MonoBehaviour {
 						msg = "Let’s do some deep breathing before I get my bandaid.";
 						break;
 				}
-				triggerInfoBubble(msg, 4.0f);
-				yield return new WaitForSeconds(4.5f); 
+				triggerInfoBubble(msg, 2.0f);
+				yield return new WaitForSeconds(2.5f); 
 			}
 			infoBubble.SetActive (true);
 			infoBubble.GetComponentInChildren<Text> ().text = "First, get comfy as possible";
 			breatheInstructionButton1.SetActive (true);
+			isBreathingPrompt = true;
 		}
 	}
 
@@ -1094,6 +1216,7 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void breathingStepTwoClose() {
+		isBreathingPrompt = false;
 		aura.transform.position = new Vector3 (corgi.transform.position.x, aura.transform.position.y, corgi.transform.position.z);
 		aura.SetActive (true);
 		isBreathingTest = true;
@@ -1107,6 +1230,7 @@ public class DogControl : MonoBehaviour {
 			infoBubble.GetComponentInChildren<Text> ().text = "In through the nose for 4...";
 			aura.transform.localScale += new Vector3 (0.04F, 0.04F, 0.04F);
 			chestVal = chestVal + .5f;
+			BreatheIn ();
 		} else if (auraGrowing && aura.transform.localScale.x >= 14) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Hold your breath";
 			AuraWarper ();
@@ -1114,9 +1238,13 @@ public class DogControl : MonoBehaviour {
 			infoBubble.GetComponentInChildren<Text> ().text = "Out through the nose for 4...";
 			aura.transform.localScale -= new Vector3 (0.04F, 0.04F, 0.04F);
 			chestVal = chestVal - .5f;
+			BreatheOut ();
 		} else if (aura.transform.localScale.x <= 5) {
 			StartCoroutine (waitAndBreathe ());
 		}
+
+		isBreathingIn = false;
+		isBreathingOut = false;
 
 		corgiMesh.SetBlendShapeWeight (3, chestVal);
 	}
@@ -1135,6 +1263,7 @@ public class DogControl : MonoBehaviour {
 			infoBubble.GetComponentInChildren<Text> ().text = "IN";
 			aura.transform.localScale += new Vector3 (0.04F, 0.04F, 0.04F);
 			chestVal = chestVal + .5f;
+			BreatheIn ();
 		} else if (auraGrowing && aura.transform.localScale.x >= 14) {
 			infoBubble.GetComponentInChildren<Text> ().text = "Hold";
 			AuraWarper ();
@@ -1142,9 +1271,12 @@ public class DogControl : MonoBehaviour {
 			infoBubble.GetComponentInChildren<Text> ().text = "OUT";
 			aura.transform.localScale -= new Vector3 (0.04F, 0.04F, 0.04F);
 			chestVal = chestVal - .5f;
+			BreatheOut ();
 		} else if (aura.transform.localScale.x <= 5) {
 			auraGrowing = true;
 			nbBreathingCycles += 1;
+			isBreathingIn = false;
+			isBreathingOut = false;
 		}
 
 		corgiMesh.SetBlendShapeWeight (3, chestVal);
@@ -1234,7 +1366,7 @@ public class DogControl : MonoBehaviour {
 		introPanel.SetActive (true);
 		levelPanel.SetActive (false);
 		level = 1;
-		levelIndicator.text = "level " + level.ToString ();
+		levelIndicator.text = "level 1";
 		points = 0;
 		initBlinkVal = 30;
 		// set tired to 80
@@ -1252,7 +1384,7 @@ public class DogControl : MonoBehaviour {
 		introPanel.SetActive (true);
 		levelPanel.SetActive (false);
 		level = 2;
-		levelIndicator.text = "level " + level.ToString ();
+		levelIndicator.text = "level 2";
 		points = 0;
 		initBlinkVal = 20;
 		// set tired to 30
@@ -1270,7 +1402,7 @@ public class DogControl : MonoBehaviour {
 		introPanel.SetActive (true);
 		levelPanel.SetActive (false);
 		level = 3;
-		levelIndicator.text = "level " + level.ToString ();
+		levelIndicator.text = "level 3";
 		points = 0;
 		speed = speed * 2; // run faster
 		initBlinkVal = 7;

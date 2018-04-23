@@ -61,6 +61,7 @@ public class BallControl : MonoBehaviour {
 				Ray ray = Camera.main.ScreenPointToRay (touchStart); 
 				if (Physics.Raycast (ray, out hit) && hit.transform.tag == "propFrisbee") {
 					Debug.Log ("other tag" + hit.transform.tag);
+
 					Debug.Log ("HIT BALL");
 					fetchEnabled = true;
 				}
@@ -98,8 +99,36 @@ public class BallControl : MonoBehaviour {
 			GameObject matPlane = GameObject.FindWithTag ("MatPlane");
 			float matLevel = matPlane.transform.position.y;
 			float dogLevel = corgi.transform.position.y;
-			
-			if (currBall.transform.position.y < dogLevel - .1f) {
+
+			RaycastHit hit;
+			float distanceToWall = 1000f;
+
+			/*
+			Ray ray = currBall.transform.forward;
+			if (Physics.Raycast (ray, out hit)) {
+				Debug.Log ("distance to wall" + hit.distance);
+				distanceToWall = hit.distance;
+			}*/
+			// prioritize reults types
+			ARHitTestResultType[] resultTypes = { 
+				ARHitTestResultType.ARHitTestResultTypeEstimatedVerticalPlane, 
+			}; 
+
+			Vector3 fwd = currBall.transform.TransformDirection(Vector3.forward);
+			Debug.DrawRay(currBall.transform.position, fwd * 50, Color.green);
+			if (Physics.Raycast (currBall.transform.position, fwd, out hit, 50)) {
+				Debug.Log ("distance to wall" + hit.distance);
+				distanceToWall = hit.distance;
+			}
+
+			/*
+			if (distanceToWall < .1f) {
+				Rigidbody rb = currBall.GetComponent<Rigidbody> ();
+				rb.velocity = Vector3.zero;
+				rb.angularVelocity = Vector3.zero; 
+			}*/
+
+			if (currBall.transform.position.y < dogLevel - 1f) {
 
 				Debug.Log ("throw over!");
 
@@ -153,11 +182,18 @@ public class BallControl : MonoBehaviour {
 	}
 		
 	public void CreateBall() {
+		// corgi
+		corgi = GameObject.FindWithTag("Corgi");
+
+		// only do one thing at a time
+		if (corgi.GetComponent<DogControl> ().isPreoccupied()) {
+			return;
+		}
 
 		Debug.Log ("creating ball");
 
 		// have dog sit and look at camera
-		corgi = GameObject.FindWithTag("Corgi");
+
 		corgi.GetComponent<DogControl> ().isRandomlyWalking = false;     
 
 		corgi.GetComponent<DogControl> ().randomBehavior = false; 

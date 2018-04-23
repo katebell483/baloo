@@ -6,214 +6,25 @@ using UnityEngine.XR.iOS;
 public class BallMaker : MonoBehaviour {
 
 	public GameObject ballPrefab;
-	public float Force;
-	public GameObject currBall;
 	public float createHeight;
+	public float maxRayDistance = 30.0f;
+	public LayerMask collisionLayer = 1 << 10;  //ARKitPlane layer
 	private MaterialPropertyBlock props;
-
-	private GameObject corgi;
-
-	Vector3 touchPosWorld;
-
-	private bool inAir;
-
-	public Vector3 origBallPos;
-	private Vector3 startBallPos;
-	private Vector3 endBallPos;
-	private Vector3 nonTouchBallStart;
-
-	private float dist;
-	private bool dragging = false;
-	private Vector3 offset;
-	private Transform toDrag;
-
-	// for swiping code
-	bool isSwiping;
-	float maxTime = .5f;
-	float minSwipeDist = .07f;
-	float startTime;
-	Vector3 startSwipePos;
 
 	// Use this for initialization
 	void Start () {
 		props = new MaterialPropertyBlock ();
-		corgi = GameObject.FindWithTag("Corgi");
-		currBall = GameObject.FindWithTag("Ball");
+
 	}
 
-
-	// Update is called once per frame
-	void Update () {
-		Vector3 v;
-
-		//Debug.Log ("CUR BALL POS: " + currBall.transform.position);
-
-		if (corgi.GetComponent<DogControl> ().fetching) {
-			return;
-		}
+	void CreateBall(Vector3 atPosition)
+	{
+		GameObject ballGO = Instantiate (ballPrefab, atPosition, Quaternion.identity);
 			
-		if (Input.touchCount > 0 && currBall != null) {
-
-			Touch touch = Input.touches [0];
-
-			Vector3 pos = touch.position;
-
-			if (touch.phase == TouchPhase.Began) {
-				Debug.Log ("touch started");
-
-				nonTouchBallStart = currBall.transform.position;
-
-				startTime = Time.time;
-
-				startBallPos = touch.position;
-				startBallPos.z = currBall.transform.position.z - Camera.main.transform.position.z;
-				startBallPos = Camera.main.ScreenToWorldPoint(startBallPos);
-
-				RaycastHit hit;
-				Ray ray = Camera.main.ScreenPointToRay (pos); 
-				if (Physics.Raycast (ray, out hit) && hit.transform.gameObject.tag == "Ball") {
-
-					Debug.Log ("ball hit");
-					toDrag = hit.transform;
-					dist = hit.transform.position.z - Camera.main.transform.position.z;
-					v = new Vector3 (pos.x, pos.y, dist);
-					v = Camera.main.ScreenToWorldPoint (v);
-					offset = toDrag.position - v;
-					dragging = true;
-				}
-					
-			}
-
-			/*
-			if (dragging && touch.phase == TouchPhase.Moved) {
-				Debug.Log ("dragging ball");
-				v = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, dist);
-				v = Camera.main.ScreenToWorldPoint (v);
-				Vector3 dragPos = v + offset;
-				Debug.Log ("Ball Drag, Pos" + dragPos);
-
-				if (dragPos.y < origBallPos.y) {
-					dragPos.y = origBallPos.y;
-				}
-
-				if(dragPos.z > origBallPos.z) {
-					dragPos.z = origBallPos.z;
-				}
-
-				toDrag.position = dragPos;
-			}
-			*/
-
-			// touch released. check if the movement was a swipe to indicate fetch
-			if (dragging && (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)) {
-				
-				Debug.Log ("dragging complete");
-				dragging = false;
-
-				// compare the duration and movement of drag
-				Vector3 endPos = touch.position;
-				endPos.z = currBall.transform.position.z - Camera.main.transform.position.z;
-				endPos = Camera.main.ScreenToWorldPoint(endPos);
-
-				float endTime = Time.time;
-
-				float swipeDistance = Vector3.Distance(endPos, startBallPos);
-				float swipeTime = endTime - startTime;
-
-				Debug.Log ("Ball Drag, Swipe Time: " + swipeTime);
-				Debug.Log ("Ball Drag, Swipe Dist: " + swipeDistance);
-
-				// if time is sig short and movement sig large shoot the ball
-				if (swipeTime < maxTime && swipeDistance > minSwipeDist) {
-					
-					isSwiping = true;
-					Debug.Log ("Ball Drag, Launching ball");
-
-					// get swipe direction
-					var dir = endPos - startBallPos;
-					dir.Normalize ();
-
-					// don't shoot down
-					if (dir.y < 0f)
-						return;
-
-					// clamp up dir at .7
-					if (dir.y > .6f) {
-						dir.y = .6f;
-					}
-						
-					Debug.Log ("**********************************************");
-					Debug.Log ("VVVdir: " + dir);
-				
-					// now send ball flying in that direction
-					Rigidbody rb = currBall.GetComponent<Rigidbody> ();
-					rb.transform.LookAt (dir);
-					rb.useGravity = true;
-					rb.isKinematic = false;
-					rb.AddForce(dir * Force);
-
-					// keep track of flying ball
-					inAir = true;
-				}
-			}
-
-		}
-
-		if (inAir) {
-			
-			Debug.Log ("BALL MOVING Y " + currBall.transform.position.y);
-			Debug.Log ("BALL MOVING ORIG Y " + startBallPos.y);
-
-			if (currBall.transform.position.y < startBallPos.y - .1f) {
-				
-				Debug.Log ("throw over!");
-
-				// remove velocity + gravity from ball so it hovers in the air
-				Rigidbody rb = currBall.GetComponent<Rigidbody> ();
-				rb.velocity = Vector3.zero;
-				rb.angularVelocity = Vector3.zero; 
-				rb.useGravity = false;
-
-				// track the landing spot so the dog can find it
-				endBallPos = currBall.transform.position;
-
-				// work of the ball is done
-				inAir = false;
-
-				// send the dog to fetch it
-				if(corgi.GetComponent<DogControl> ().dogInScene) {
-					corgi.GetComponent<DogControl> ().StartFetchingSequence (endBallPos);
-				}
-
-				//StartCoroutine(sendDogForBall(endBallPos));
-			}
-		}
-	}
-
-	public void setOrigPos(Vector3 pos) {
-		origBallPos = pos;
-	}
-
-	public void CreateBall() {
-
-		// destroy any old balls
-		Destroy(currBall);
-
-		Vector3 position = Camera.main.transform.position + Camera.main.transform.forward * .1f;
-		position.y = position.y - .3f;
-
-		GameObject ballGO = Instantiate (ballPrefab, position, Quaternion.identity);
-
-		Rigidbody rb = ballGO.GetComponent<Rigidbody> ();
-		rb.useGravity = false;
-		currBall = ballGO;
-		ballGO.tag = "Ball";
-
-		startBallPos = currBall.transform.position;
-
-		float r = 1.0f;
-		float g = 0.0f;
-		float b = 0.0f;
+		
+		float r = Random.Range(0.0f, 1.0f);
+		float g = Random.Range(0.0f, 1.0f);
+		float b = Random.Range(0.0f, 1.0f);
 
 		props.SetColor("_InstanceColor", new Color(r, g, b));
 
@@ -222,24 +33,50 @@ public class BallMaker : MonoBehaviour {
 
 	}
 
-	public void throwBall() {
-		Rigidbody rb = currBall.GetComponent<Rigidbody> ();
-		rb.useGravity = true;
-		rb.isKinematic = false;
-		var fwd = Camera.main.transform.forward;
-		currBall.transform.LookAt(fwd);
-		Vector3 dir = new Vector3 (transform.forward.x, transform.forward.y +.6f, transform.forward.z);
-		rb.AddForce (dir * Force);
-		inAir = true;
+	// Update is called once per frame
+	void Update () {
+		#if UNITY_EDITOR   //we will only use this script on the editor side, though there is nothing that would prevent it from working on device
+		if (Input.GetMouseButtonDown (0)) 
+		{
+			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+			RaycastHit hit;
+
+			//we'll try to hit one of the plane collider gameobjects that were generated by the plugin
+			//effectively similar to calling HitTest with ARHitTestResultType.ARHitTestResultTypeExistingPlaneUsingExtent
+			if (Physics.Raycast (ray, out hit, maxRayDistance, collisionLayer)) 
+			{
+				CreateBall (new Vector3 (hit.point.x, hit.point.y + createHeight, hit.point.z));
+
+				//we're going to get the position from the contact point
+				Debug.Log (string.Format ("x:{0:0.######} y:{1:0.######} z:{2:0.######}", hit.point.x, hit.point.y, hit.point.z));
+			}
+		}
+		#else
+		if (Input.touchCount > 0 )
+		{
+			var touch = Input.GetTouch(0);
+			if (touch.phase == TouchPhase.Began)
+			{
+				var screenPosition = Camera.main.ScreenToViewportPoint(touch.position);
+				ARPoint point = new ARPoint {
+					x = screenPosition.x,
+					y = screenPosition.y
+				};
+						
+				List<ARHitTestResult> hitResults = UnityARSessionNativeInterface.GetARSessionNativeInterface ().HitTest (point, 
+					ARHitTestResultType.ARHitTestResultTypeExistingPlaneUsingExtent);
+				if (hitResults.Count > 0) {
+					foreach (var hitResult in hitResults) {
+						Vector3 position = UnityARMatrixOps.GetPosition (hitResult.worldTransform);
+						CreateBall (new Vector3 (position.x, position.y + createHeight, position.z));
+						break;
+					}
+				}
+
+			}
+		}
+		#endif
+
 	}
 
-
-	/* TODO: add delay by uncommenting this funciton + call
-	IEnumerator sendDogForBall(Vector3 endPos) {
-		// wait for one second and then send the dog to get it
-		yield return new WaitForSeconds(1);
-		DogControl dc = new DogControl ();
-		dc.fetchBall (endBallPos);
-	}
-	*/
 }
