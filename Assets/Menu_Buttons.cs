@@ -35,6 +35,7 @@ public class Menu_Buttons : MonoBehaviour {
 	public GameObject LoginPanel;
 	public GameObject SignUpPanel;
 	public GameObject FinalPanel;
+	public GameObject LoadingPanel;
 	public InputField nameField;
 	public Text howFeelingText;
 	Vector3 endPos;
@@ -82,9 +83,6 @@ public class Menu_Buttons : MonoBehaviour {
 		mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
 		FirebaseApp.LogLevel = LogLevel.Debug;
 
-		//testDB ();
-		//saveMetrics();
-
 		switch (SceneController.CrossSceneInformation) {
 		case "emojis":
 			MenuPanel.SetActive (false);
@@ -116,6 +114,7 @@ public class Menu_Buttons : MonoBehaviour {
 
 		for (int i = 0; i < devices.Length; i++) {
 			if (devices [i].isFrontFacing) {
+				Debug.Log ("FRONT CAMERA DETECTED");
 				frontCamTexture = new WebCamTexture (devices [i].name, Screen.width, Screen.height);
 			}
 		}
@@ -133,29 +132,9 @@ public class Menu_Buttons : MonoBehaviour {
 		//scaredUnselected = Resources.Load("Assets/scaredUnselected") as Sprite;
 	}
 
-	void testDB() {
-		UserMetrics.Time_in_app = Time.realtimeSinceStartup;
-
-		UserData metrics = new UserData(UserMetrics.Username, 
-			UserMetrics.Emoji_start, 
-			UserMetrics.Emoji_end, 
-			UserMetrics.Face_emotion_start, 
-			UserMetrics.Face_emotion_end, 
-			UserMetrics.Time_in_app, 
-			UserMetrics.Date, 
-			UserMetrics.Points, 
-			UserMetrics.Level);
-		
-		string json = JsonUtility.ToJson(metrics);
-
-		Debug.Log ("JSON FOR DB " + json);
-
-		string key = mDatabaseRef.Child("metrics").Push().Key;
-		mDatabaseRef.Child (key).SetRawJsonValueAsync (json);
-	}
-
 	// Update is called once per frame
 	void Update () {
+		/*
 		if (!camAvailable)
 			return;
 
@@ -167,6 +146,7 @@ public class Menu_Buttons : MonoBehaviour {
 
 		int orient = -frontCamTexture.videoRotationAngle;
 		frontCam.rectTransform.localEulerAngles = new Vector3 (0, 0, orient);
+		*/
 	}
 
 	public void ShowLevelPanel()
@@ -372,6 +352,12 @@ public class Menu_Buttons : MonoBehaviour {
 	}
 
 	[System.Serializable]
+	public class FaceAttributes
+	{
+		public Scores emotion;
+	}
+
+	[System.Serializable]
 	public class Scores
 	{
 		public double anger;
@@ -388,7 +374,8 @@ public class Menu_Buttons : MonoBehaviour {
 	public class Face
 	{
 		public FaceRectangle faceRectangle;
-		public Scores scores;
+		public String faceId;
+		public FaceAttributes faceAttributes;
 	}
 
 	[System.Serializable]
@@ -398,9 +385,8 @@ public class Menu_Buttons : MonoBehaviour {
 	}
 
 	IEnumerator Upload(byte[] bytes){
-		string EMOTIONKEY = "6370fdd9f7d64a00a9b81cab6078db32";
-		string emotionURL = "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize";
-
+		string EMOTIONKEY = "5839f361664e4363b4c793a14d23e089";
+		string emotionURL = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceLandmarks=false&returnFaceAttributes=emotion";
 
 		var headers = new Dictionary<string, string>() {
 			{ "Ocp-Apim-Subscription-Key", EMOTIONKEY },
@@ -412,52 +398,56 @@ public class Menu_Buttons : MonoBehaviour {
 		yield return www;
 		string responseData = www.text;
 		responseData = fixJson(responseData);
+		Debug.Log (responseData);
+
 		string maxName = "";
 
 		QuestionList listFaces = JsonUtility.FromJson<QuestionList> (responseData);
 
 		if (listFaces.Items.Count != 0) {
-			int anger = Mathf.RoundToInt ((float)listFaces.Items [0].scores.anger * 100);
-			int contempt = Mathf.RoundToInt ((float)listFaces.Items [0].scores.contempt * 100);
-			int disgust = Mathf.RoundToInt ((float)listFaces.Items [0].scores.disgust * 100);
-			int fear = Mathf.RoundToInt ((float)listFaces.Items [0].scores.fear * 100);
-			int happiness = Mathf.RoundToInt ((float)listFaces.Items [0].scores.happiness * 100);
-			int neutral = Mathf.RoundToInt ((float)listFaces.Items [0].scores.neutral * 100);
-			int sadness = Mathf.RoundToInt ((float)listFaces.Items [0].scores.sadness * 100);
-			int suprise = Mathf.RoundToInt ((float)listFaces.Items [0].scores.surprise * 100);
+			/*
+			int anger = Mathf.RoundToInt ((float)listFaces.Items [0].faceAttributes.emotion.anger * 100);
+			int contempt = Mathf.RoundToInt ((float)listFaces.Items [0].faceAttributes.emotion.contempt * 100);
+			int disgust = Mathf.RoundToInt ((float)listFaces.Items [0].faceAttributes.emotion.disgust * 100);
+			int fear = Mathf.RoundToInt ((float)listFaces.Items [0].faceAttributes.emotion.fear * 100);
+			int happiness = Mathf.RoundToInt ((float)listFaces.Items [0].faceAttributes.emotion.happiness * 100);
+			int neutral = Mathf.RoundToInt ((float)listFaces.Items [0].faceAttributes.emotion.neutral * 100);
+			int sadness = Mathf.RoundToInt ((float)listFaces.Items [0].faceAttributes.emotion.sadness * 100);
+			int suprise = Mathf.RoundToInt ((float)listFaces.Items [0].faceAttributes.emotion.surprise * 100);
+			*/
 
 			double maxValue = 0.0;
 
-			if (maxValue < listFaces.Items [0].scores.anger) {
-				maxValue = listFaces.Items [0].scores.anger;
+			if (maxValue < listFaces.Items [0].faceAttributes.emotion.anger) {
+				maxValue = listFaces.Items [0].faceAttributes.emotion.anger;
 				maxName = "ANGER";
 			}
-			if (maxValue < listFaces.Items [0].scores.contempt) {
-				maxValue = listFaces.Items [0].scores.contempt;
+			if (maxValue < listFaces.Items [0].faceAttributes.emotion.contempt) {
+				maxValue = listFaces.Items [0].faceAttributes.emotion.contempt;
 				maxName = "CONTEMPT";
 			}
-			if (maxValue < listFaces.Items [0].scores.disgust) {
-				maxValue = listFaces.Items [0].scores.disgust;
+			if (maxValue < listFaces.Items [0].faceAttributes.emotion.disgust) {
+				maxValue = listFaces.Items [0].faceAttributes.emotion.disgust;
 				maxName = "DISGUST";
 			}
-			if (maxValue < listFaces.Items [0].scores.fear) {
-				maxValue = listFaces.Items [0].scores.fear;
+			if (maxValue < listFaces.Items [0].faceAttributes.emotion.fear) {
+				maxValue = listFaces.Items [0].faceAttributes.emotion.fear;
 				maxName = "FEAR";
 			}
-			if (maxValue < listFaces.Items [0].scores.happiness) {
-				maxValue = listFaces.Items [0].scores.happiness;
+			if (maxValue < listFaces.Items [0].faceAttributes.emotion.happiness) {
+				maxValue = listFaces.Items [0].faceAttributes.emotion.happiness;
 				maxName = "HAPPY";
 			}
-			if (maxValue < listFaces.Items [0].scores.neutral) {
-				maxValue = listFaces.Items [0].scores.neutral;
+			if (maxValue < listFaces.Items [0].faceAttributes.emotion.neutral) {
+				maxValue = listFaces.Items [0].faceAttributes.emotion.neutral;
 				maxName = "NEUTRAL";
 			}
-			if (maxValue < listFaces.Items [0].scores.sadness) {
-				maxValue = listFaces.Items [0].scores.sadness;
+			if (maxValue < listFaces.Items [0].faceAttributes.emotion.sadness) {
+				maxValue = listFaces.Items [0].faceAttributes.emotion.sadness;
 				maxName = "SAD";
 			}
-			if (maxValue < listFaces.Items [0].scores.surprise) {
-				maxValue = listFaces.Items [0].scores.surprise;
+			if (maxValue < listFaces.Items [0].faceAttributes.emotion.surprise) {
+				maxValue = listFaces.Items [0].faceAttributes.emotion.surprise;
 				maxName = "SURPRISE";
 			}
 			Debug.Log ("=================");
@@ -503,12 +493,19 @@ public class Menu_Buttons : MonoBehaviour {
 	}
 
 	public void ShowMenuFromSignUpPanel() {
+
+		// show loading
+		if (!isExitTime) {
+			SignUpPanel.SetActive (false);
+			LoadingPanel.SetActive (true);
+		}
+
 		//Create a Texture2D with the size of the rendered image on the screen.
 		Texture2D texture = new Texture2D(frontCam.texture.width, frontCam.texture.height, TextureFormat.ARGB32, false);
 
-
 		//Save the image to the Texture2D
 		texture.SetPixels(frontCamTexture.GetPixels());
+		Debug.Log (texture);
 		texture.Apply();
 
 		//Encode it as a PNG.
@@ -538,24 +535,20 @@ public class Menu_Buttons : MonoBehaviour {
 	}
 
 	public void ExitApplication() {
-		Debug.Log ("HERE3333!");
 		Application.Quit ();
-		//saveMetrics();
-
 	}
 
 	IEnumerator loadARKitSceneAndFaceDetection()
 	{
+
 		yield return StartCoroutine(Upload (bytes));
 
 		if (isExitTime && check) {
-			Debug.Log ("HERE111111111111");
 			saveMetrics();
 			SignUpPanel.SetActive (false);
 			FinalPanel.SetActive (true);
 		} else if(check) {
 			Application.LoadLevel ("UnityARKitScene");
-			//Application.LoadLevel ("UnityARKitScene");
 		}
 	}
 }

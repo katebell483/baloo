@@ -4,7 +4,7 @@
 [Aa]ssets/AssetStoreTools*
 [Bb]uild/
 [Bb]uild_master/
-[Bb]uild_1/
+[Bb]uild_*/
 [Ll]ibrary/
 [Ll]ocal[Cc]ache/
 [Oo]bj/

@@ -449,8 +449,6 @@ public class DogControl : MonoBehaviour {
 		nextBlinkCheck = Time.time + blinkRate;
 		int idx = UnityEngine.Random.Range (0, 2);
 
-		Debug.Log ("BLINK IDX " + idx);
-
 		// if its modulo 3 blink (aka have dog blink every 3 seconds)
 		if (idx == 0) {
 			isBlinking = true;
@@ -460,8 +458,6 @@ public class DogControl : MonoBehaviour {
 	}
 
 	public void Blink() {
-		Debug.Log ("INIT BLINK VAL " + initBlinkVal);
-		Debug.Log ("Is opening BLINK " + blinkOpen);
 		if (blinkClose && blinkVal > 95) {
 			blinkOpen = true;
 			blinkClose = false;
@@ -1319,9 +1315,13 @@ public class DogControl : MonoBehaviour {
 		var screenPosition = Camera.main.ScreenToViewportPoint (new Vector2 (Screen.width / 2f, Screen.height / 2f));
 		List<ARHitTestResult> hitResults = getHitTest(screenPosition);
 
+		Debug.Log ("placing dog: hit count " + hitResults.Count);
+
 		// if plane exists, place the dog
-		if (hitResults.Count == 0)
+		if (hitResults.Count == 0) {
+			PlaceDog (); // do it again
 			return;
+		}
 
 		ARHitTestResult result = hitResults[0];
 
